@@ -1,0 +1,1362 @@
+[
+    {
+        "id": "chunk_coaxial_illumination_line_scan_lens_optical",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Optical Attributes: focus_length_mm: Focal length of the lens measured in millimeters | f_no_min: Minimum (most open) F-number supported by the lens | f_no_max: Maximum (most closed) F-number supported by the lens | tv_distortion_percent: TV distortion value expressed as a percentage | magnification_min: Minimum optical magnification ratio supported | magnification_max: Maximum optical magnification ratio supported",
+        "metadata": {
+            "parent_table": "coaxial_illumination_line_scan_lens",
+            "chunk_type": "attribute_group",
+            "semantic_group": "optical_core",
+            "aliases": [
+                "focal length",
+                "aperture",
+                "F-number",
+                "f-stop",
+                "distortion",
+                "FOV",
+                "field of view",
+                "magnification",
+                "brightness",
+                "speed"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": null,
+            "pixel_pitch_um": null,
+            "is_coaxial": true,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_coaxial_illumination_line_scan_lens_conjugate",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Conjugate & Mount Attributes: wd_mm: Working distance between the lens front element and the object/target surface, measured in millimeters | o_i: Object-to-image distance ratio or total conjugate distance | flange_distance: Distance from the camera mounting flange to the image sensor plane, measured in millimeters | mount_raw: Raw text describing the camera mount type (e.g., C-mount, F-mount, M42)",
+        "metadata": {
+            "parent_table": "coaxial_illumination_line_scan_lens",
+            "chunk_type": "attribute_group",
+            "semantic_group": "conjugate_mount",
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance",
+                "working distance",
+                "track length",
+                "conjugate",
+                "mount",
+                "thread",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": null,
+            "pixel_pitch_um": null,
+            "is_coaxial": true,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_coaxial_illumination_line_scan_lens_dimensions",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Dimension Attributes: list_price: Catalogue sales price of the lens | weight_g: Physical weight of the lens body in grams",
+        "metadata": {
+            "parent_table": "coaxial_illumination_line_scan_lens",
+            "chunk_type": "attribute_group",
+            "semantic_group": "dimensions",
+            "aliases": [
+                "price",
+                "cost",
+                "weight",
+                "mass",
+                "diameter",
+                "width",
+                "size",
+                "length",
+                "compact",
+                "heavy"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": null,
+            "pixel_pitch_um": null,
+            "is_coaxial": true,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_coaxial_illumination_line_scan_lens_sql_3",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Query Type: Specification Lookup. Natural Language: What are the focal length, working distance, and weight of all coaxial illumination line scan lenses? Engineering Reasoning: Select the identifying column and the three requested specification columns. No filtering needed \u2014 return all rows. SQL: SELECT model_name, focus_length_mm, wd_mm, weight_g\nFROM coaxial_illumination_line_scan_lens;",
+        "metadata": {
+            "parent_table": "coaxial_illumination_line_scan_lens",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [],
+            "lens_family": "line_scan",
+            "resolution_target": null,
+            "pixel_pitch_um": null,
+            "is_coaxial": true,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_coaxial_illumination_line_scan_lens_sql_4",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Query Type: Attribute Filtering. Natural Language: Find all coaxial illumination line scan lenses with a minimum F-number of 2.8 or lower (i.e., fast aperture lenses). Engineering Reasoning: Filter on `f_no_min` to find lenses that support wide aperture settings. Lower F-number = faster lens = better in low-light or high-speed scenarios. SQL: SELECT model_name, f_no_min, f_no_raw\nFROM coaxial_illumination_line_scan_lens\nWHERE f_no_min <= 2.8;",
+        "metadata": {
+            "parent_table": "coaxial_illumination_line_scan_lens",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fast aperture",
+                "low light",
+                "uniformity"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": null,
+            "pixel_pitch_um": null,
+            "is_coaxial": true,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_coaxial_illumination_line_scan_lens_sql_5",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Query Type: Compatibility Reasoning. Natural Language: Which coaxial illumination line scan lenses support a maximum image size of at least 43 mm and use a C-mount? Engineering Reasoning: Filter `max_image_size_value` for large sensor coverage. Filter `mount_raw` for C-mount compatibility. SQL: SELECT model_name, max_image_size_value, mount_raw\nFROM coaxial_illumination_line_scan_lens\nWHERE max_image_size_value >= 43\n  AND mount_raw ILIKE '%C%';",
+        "metadata": {
+            "parent_table": "coaxial_illumination_line_scan_lens",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fit",
+                "mount",
+                "sensor coverage",
+                "thread"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": null,
+            "pixel_pitch_um": null,
+            "is_coaxial": true,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_coaxial_illumination_line_scan_lens_sql_6",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Query Type: Working Distance Search. Natural Language: List all coaxial illumination line scan lenses with a working distance greater than 100 mm. Engineering Reasoning: Filter on `wd_mm` to find lenses suitable for applications requiring clearance between lens and target. SQL: SELECT model_name, wd_mm, focus_length_mm\nFROM coaxial_illumination_line_scan_lens\nWHERE wd_mm > 100;",
+        "metadata": {
+            "parent_table": "coaxial_illumination_line_scan_lens",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": null,
+            "pixel_pitch_um": null,
+            "is_coaxial": true,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_coaxial_illumination_line_scan_lens_sql_7",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Query Type: Ambiguous Engineering Terminology. Natural Language: What does TV distortion look like across coaxial illumination lenses \u2014 are there any lenses with distortion below 0.1%? Engineering Reasoning: `tv_distortion_percent` stores TV distortion. Values close to 0 indicate minimal distortion. Use `ABS()` to handle both barrel (negative) and pincushion (positive) distortion. SQL: SELECT model_name, tv_distortion_percent\nFROM coaxial_illumination_line_scan_lens\nWHERE ABS(tv_distortion_percent) < 0.1;",
+        "metadata": {
+            "parent_table": "coaxial_illumination_line_scan_lens",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "distortion",
+                "illuminance",
+                "o_i",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": null,
+            "pixel_pitch_um": null,
+            "is_coaxial": true,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_12k5u_optical",
+        "text": "[Table: line_scan_lens_12k5u] Optical Attributes: focus_length_mm: Focal length of the lens measured in millimeters | f_no_min: Minimum F-number (maximum aperture) of the lens | f_no_max: Maximum F-number (minimum aperture) of the lens | tv_distortion_percent: TV distortion value expressed as a percentage | fov_mm: Field of view measured in millimeters | magnification_min: Minimum supported optical magnification ratio | magnification_max: Maximum supported optical magnification ratio | relative_illuminance_percent: Relative illuminance at the edge of the image field, expressed as a percentage of center illuminance",
+        "metadata": {
+            "parent_table": "line_scan_lens_12k5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "optical_core",
+            "aliases": [
+                "focal length",
+                "aperture",
+                "F-number",
+                "f-stop",
+                "distortion",
+                "FOV",
+                "field of view",
+                "magnification",
+                "brightness",
+                "speed"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "12K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_12k5u_conjugate",
+        "text": "[Table: line_scan_lens_12k5u] Conjugate & Mount Attributes: wd_mm: Working distance from the lens to the target object surface in millimeters | o_i: Object-to-image distance or total conjugate ratio | flange_distance: Flange-to-sensor distance on the camera side in millimeters | mount_raw: Raw text describing the lens mount type | filter_thread_raw: Raw text describing the filter thread size and pitch",
+        "metadata": {
+            "parent_table": "line_scan_lens_12k5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "conjugate_mount",
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance",
+                "working distance",
+                "track length",
+                "conjugate",
+                "mount",
+                "thread",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "12K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_12k5u_dimensions",
+        "text": "[Table: line_scan_lens_12k5u] Dimension Attributes: list_price: Catalogue sales price of the lens | size_diameter_mm: Physical outer diameter of the lens body in millimeters | size_length_min_mm: Minimum physical length of the lens body in millimeters | weight_g: Physical weight of the lens body in grams",
+        "metadata": {
+            "parent_table": "line_scan_lens_12k5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "dimensions",
+            "aliases": [
+                "price",
+                "cost",
+                "weight",
+                "mass",
+                "diameter",
+                "width",
+                "size",
+                "length",
+                "compact",
+                "heavy"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "12K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_12k5u_sql_11",
+        "text": "[Table: line_scan_lens_12k5u] Query Type: Specification Lookup. Natural Language: List all 12K 5\u00b5m line scan lenses with their focal length, working distance, and list price. Engineering Reasoning: Retrieve the three requested columns plus the identifier. No filtering \u2014 return all models. SQL: SELECT model_name, focus_length_mm, wd_mm, list_price\nFROM line_scan_lens_12k5u;",
+        "metadata": {
+            "parent_table": "line_scan_lens_12k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [],
+            "lens_family": "line_scan",
+            "resolution_target": "12K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_12k5u_sql_12",
+        "text": "[Table: line_scan_lens_12k5u] Query Type: Attribute Filtering. Natural Language: Find 12K 5\u00b5m lenses with relative illuminance of 60% or greater at the field edge. Engineering Reasoning: Filter on `relative_illuminance_percent` to find lenses with uniform illumination. Higher relative illuminance = better edge brightness = less vignetting. SQL: SELECT model_name, relative_illuminance_percent, relative_illuminance_operator\nFROM line_scan_lens_12k5u\nWHERE relative_illuminance_percent >= 60;",
+        "metadata": {
+            "parent_table": "line_scan_lens_12k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fast aperture",
+                "low light",
+                "uniformity"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "12K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_12k5u_sql_13",
+        "text": "[Table: line_scan_lens_12k5u] Query Type: Compatibility Reasoning. Natural Language: Which 12K 5\u00b5m lenses have a filter thread and support a maximum image size of at least 60 mm? Engineering Reasoning: Filter on `filter_thread_raw` for non-null filter thread availability. Filter on `max_image_size_value` for large sensor coverage. SQL: SELECT model_name, filter_thread_raw, max_image_size_value\nFROM line_scan_lens_12k5u\nWHERE filter_thread_raw IS NOT NULL\n  AND max_image_size_value >= 60;",
+        "metadata": {
+            "parent_table": "line_scan_lens_12k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fit",
+                "mount",
+                "sensor coverage",
+                "thread"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "12K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_12k5u_sql_14",
+        "text": "[Table: line_scan_lens_12k5u] Query Type: Working Distance Search. Natural Language: Show all 12K 5\u00b5m line scan lenses with a working distance between 100 mm and 300 mm. Engineering Reasoning: Use a range filter on `wd_mm` to narrow down lenses that fit within a specific mounting envelope. SQL: SELECT model_name, wd_mm, focus_length_mm\nFROM line_scan_lens_12k5u\nWHERE wd_mm BETWEEN 100 AND 300;",
+        "metadata": {
+            "parent_table": "line_scan_lens_12k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "12K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_12k5u_sql_15",
+        "text": "[Table: line_scan_lens_12k5u] Query Type: Ambiguous Engineering Terminology. Natural Language: What is the \"standard magnification\" for each 12K 5\u00b5m lens, and how does it relate to field of view? Engineering Reasoning: `standard_magnification` is a single reference magnification value. `fov_mm` is the corresponding field of view at that magnification. Retrieving both reveals the relationship between magnification and coverage width. SQL: SELECT model_name, standard_magnification, fov_mm\nFROM line_scan_lens_12k5u\nORDER BY standard_magnification;",
+        "metadata": {
+            "parent_table": "line_scan_lens_12k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "distortion",
+                "illuminance",
+                "o_i",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "12K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k3_5u_optical",
+        "text": "[Table: line_scan_lens_16k3_5u] Optical Attributes: focus_length_mm: Focal length of the lens in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion value in percent | fov_degrees: Field of view expressed in degrees | fov_mm: Field of view expressed in millimeters | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k3_5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "optical_core",
+            "aliases": [
+                "focal length",
+                "aperture",
+                "F-number",
+                "f-stop",
+                "distortion",
+                "FOV",
+                "field of view",
+                "magnification",
+                "brightness",
+                "speed"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 3.5,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k3_5u_conjugate",
+        "text": "[Table: line_scan_lens_16k3_5u] Conjugate & Mount Attributes: wd_mm: Working distance from lens front to target in millimeters | o_i: Object-to-image distance or total conjugate distance | flange_distance: Lens flange to image sensor distance in millimeters | mount_raw: Raw text for camera mount type | filter_thread_raw: Raw text for filter thread specification",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k3_5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "conjugate_mount",
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance",
+                "working distance",
+                "track length",
+                "conjugate",
+                "mount",
+                "thread",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 3.5,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k3_5u_dimensions",
+        "text": "[Table: line_scan_lens_16k3_5u] Dimension Attributes: list_price: Catalogue sales price | size_diameter_mm: Physical outer diameter of the lens in millimeters | size_length_mm: Physical length of the lens body in millimeters | weight_g: Weight of the lens in grams",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k3_5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "dimensions",
+            "aliases": [
+                "price",
+                "cost",
+                "weight",
+                "mass",
+                "diameter",
+                "width",
+                "size",
+                "length",
+                "compact",
+                "heavy"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 3.5,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k3_5u_sql_19",
+        "text": "[Table: line_scan_lens_16k3_5u] Query Type: Specification Lookup. Natural Language: Show all 16K 3.5\u00b5m lenses with their focal length, angular field of view, and price. Engineering Reasoning: Select `focus_length_mm`, `fov_degrees`, and `list_price` alongside `model_name`. SQL: SELECT model_name, focus_length_mm, fov_degrees, list_price\nFROM line_scan_lens_16k3_5u;",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k3_5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 3.5,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k3_5u_sql_20",
+        "text": "[Table: line_scan_lens_16k3_5u] Query Type: Attribute Filtering. Natural Language: Find 16K 3.5\u00b5m lenses with TV distortion less than 0.05%. Engineering Reasoning: Filter on `tv_distortion_percent` with a low threshold for precision inspection applications. SQL: SELECT model_name, tv_distortion_percent, tv_distortion_operator\nFROM line_scan_lens_16k3_5u\nWHERE tv_distortion_percent < 0.05;",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k3_5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fast aperture",
+                "low light",
+                "uniformity"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 3.5,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k3_5u_sql_21",
+        "text": "[Table: line_scan_lens_16k3_5u] Query Type: Compatibility Reasoning. Natural Language: Which 16K 3.5\u00b5m lenses support sensors larger than 55 mm and have a filter thread available? Engineering Reasoning: Filter `max_image_size_value` for large format sensor coverage. Filter `filter_thread_raw` for non-null values indicating filter support. SQL: SELECT model_name, max_image_size_value, filter_thread_raw\nFROM line_scan_lens_16k3_5u\nWHERE max_image_size_value > 55\n  AND filter_thread_raw IS NOT NULL;",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k3_5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fit",
+                "mount",
+                "sensor coverage",
+                "thread"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 3.5,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k3_5u_sql_22",
+        "text": "[Table: line_scan_lens_16k3_5u] Query Type: Working Distance Search. Natural Language: List all 16K 3.5\u00b5m lenses with a working distance of at least 200 mm. Engineering Reasoning: Filter on `wd_mm` to find lenses for large-standoff mounting configurations. SQL: SELECT model_name, wd_mm, focus_length_mm\nFROM line_scan_lens_16k3_5u\nWHERE wd_mm >= 200;",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k3_5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 3.5,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k3_5u_sql_23",
+        "text": "[Table: line_scan_lens_16k3_5u] Query Type: Ambiguous Engineering Terminology. Natural Language: What is the difference between \"fov_degrees\" and \"fov_mm\" \u2014 show both for all models. Engineering Reasoning: `fov_degrees` is angular field of view; `fov_mm` is linear field of view at the object plane. Retrieving both side by side clarifies the relationship. SQL: SELECT model_name, fov_degrees, fov_mm\nFROM line_scan_lens_16k3_5u;",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k3_5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "distortion",
+                "illuminance",
+                "o_i",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 3.5,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k5u_optical",
+        "text": "[Table: line_scan_lens_16k5u] Optical Attributes: focus_length_mm: Focal length of the lens in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_degrees: Field of view in degrees (angular) | fov_mm: Field of view in millimeters (linear) at the object plane | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "optical_core",
+            "aliases": [
+                "focal length",
+                "aperture",
+                "F-number",
+                "f-stop",
+                "distortion",
+                "FOV",
+                "field of view",
+                "magnification",
+                "brightness",
+                "speed"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k5u_conjugate",
+        "text": "[Table: line_scan_lens_16k5u] Conjugate & Mount Attributes: wd_mm: Working distance from lens front to target in millimeters | o_i: Object-to-image distance / total conjugate | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread size/pitch",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "conjugate_mount",
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance",
+                "working distance",
+                "track length",
+                "conjugate",
+                "mount",
+                "thread",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k5u_dimensions",
+        "text": "[Table: line_scan_lens_16k5u] Dimension Attributes: list_price: Catalogue price of the lens | size_diameter_mm: Physical outer diameter of the lens in millimeters | weight_g: Weight of the lens in grams",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "dimensions",
+            "aliases": [
+                "price",
+                "cost",
+                "weight",
+                "mass",
+                "diameter",
+                "width",
+                "size",
+                "length",
+                "compact",
+                "heavy"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k5u_sql_27",
+        "text": "[Table: line_scan_lens_16k5u] Query Type: Specification Lookup. Natural Language: List all 16K 5\u00b5m line scan lenses with their focal length, field of view in degrees, and weight. Engineering Reasoning: Select the four relevant columns for all models. SQL: SELECT model_name, focus_length_mm, fov_degrees, weight_g\nFROM line_scan_lens_16k5u;",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k5u_sql_28",
+        "text": "[Table: line_scan_lens_16k5u] Query Type: Attribute Filtering. Natural Language: Find 16K 5\u00b5m lenses with an outer diameter of less than 80 mm for space-constrained installations. Engineering Reasoning: Filter on `size_diameter_mm` to find compact lens options. SQL: SELECT model_name, size_diameter_mm, weight_g\nFROM line_scan_lens_16k5u\nWHERE size_diameter_mm < 80;",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fast aperture",
+                "low light",
+                "uniformity"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k5u_sql_29",
+        "text": "[Table: line_scan_lens_16k5u] Query Type: Compatibility Reasoning. Natural Language: Which 16K 5\u00b5m lenses support F-numbers below 4 and have a maximum image size above 60 mm? Engineering Reasoning: Filter `f_no_min` for fast aperture lenses. Filter `max_image_size_value` for large sensor coverage. SQL: SELECT model_name, f_no_min, max_image_size_value\nFROM line_scan_lens_16k5u\nWHERE f_no_min < 4\n  AND max_image_size_value > 60;",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fit",
+                "mount",
+                "sensor coverage",
+                "thread"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k5u_sql_30",
+        "text": "[Table: line_scan_lens_16k5u] Query Type: Working Distance Search. Natural Language: Show 16K 5\u00b5m lenses where working distance is between 150 mm and 400 mm. Engineering Reasoning: Range filter on `wd_mm` for mid-range standoff mounting configurations. SQL: SELECT model_name, wd_mm, focus_length_mm\nFROM line_scan_lens_16k5u\nWHERE wd_mm BETWEEN 150 AND 400;",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_16k5u_sql_31",
+        "text": "[Table: line_scan_lens_16k5u] Query Type: Ambiguous Engineering Terminology. Natural Language: What is \"flange distance\" and how does it compare to working distance for these lenses? Engineering Reasoning: `flange_distance` is the camera-side optical distance (lens flange to image sensor). `wd_mm` is the object-side distance (lens front to target). Showing both reveals the full optical conjugate layout. SQL: SELECT model_name, wd_mm, flange_distance\nFROM line_scan_lens_16k5u;",
+        "metadata": {
+            "parent_table": "line_scan_lens_16k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "distortion",
+                "illuminance",
+                "o_i",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "16K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_4k7u_optical",
+        "text": "[Table: line_scan_lens_4k7u] Optical Attributes: focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number or limit value | tv_distortion_percent: TV distortion in percent | fov_mm: Field of view in millimeters | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at image field edge as percentage",
+        "metadata": {
+            "parent_table": "line_scan_lens_4k7u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "optical_core",
+            "aliases": [
+                "focal length",
+                "aperture",
+                "F-number",
+                "f-stop",
+                "distortion",
+                "FOV",
+                "field of view",
+                "magnification",
+                "brightness",
+                "speed"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_4k7u_conjugate",
+        "text": "[Table: line_scan_lens_4k7u] Conjugate & Mount Attributes: wd_mm: Working distance from lens to object in millimeters | o_i: Object-to-image distance or total conjugate | flange_distance: Camera flange to image sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
+        "metadata": {
+            "parent_table": "line_scan_lens_4k7u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "conjugate_mount",
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance",
+                "working distance",
+                "track length",
+                "conjugate",
+                "mount",
+                "thread",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_4k7u_dimensions",
+        "text": "[Table: line_scan_lens_4k7u] Dimension Attributes: list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight of the lens in grams",
+        "metadata": {
+            "parent_table": "line_scan_lens_4k7u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "dimensions",
+            "aliases": [
+                "price",
+                "cost",
+                "weight",
+                "mass",
+                "diameter",
+                "width",
+                "size",
+                "length",
+                "compact",
+                "heavy"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_4k7u_sql_35",
+        "text": "[Table: line_scan_lens_4k7u] Query Type: Specification Lookup. Natural Language: Show all 4K 7\u00b5m line scan lenses with focal length, working distance, and field of view. Engineering Reasoning: Select `focus_length_mm`, `wd_mm`, and `fov_mm` for all models. SQL: SELECT model_name, focus_length_mm, wd_mm, fov_mm\nFROM line_scan_lens_4k7u;",
+        "metadata": {
+            "parent_table": "line_scan_lens_4k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_4k7u_sql_36",
+        "text": "[Table: line_scan_lens_4k7u] Query Type: Attribute Filtering. Natural Language: Find 4K 7\u00b5m lenses with relative illuminance of at least 50%. Engineering Reasoning: Filter `relative_illuminance_percent` to find lenses with acceptable field uniformity. SQL: SELECT model_name, relative_illuminance_percent, relative_illuminance_operator\nFROM line_scan_lens_4k7u\nWHERE relative_illuminance_percent >= 50;",
+        "metadata": {
+            "parent_table": "line_scan_lens_4k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fast aperture",
+                "low light",
+                "uniformity"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_4k7u_sql_37",
+        "text": "[Table: line_scan_lens_4k7u] Query Type: Compatibility Reasoning. Natural Language: Which 4K 7\u00b5m lenses support a sensor image size of 29 mm or larger and have a filter thread? Engineering Reasoning: Filter `max_image_size_value` and `filter_thread_raw` for combined compatibility check. SQL: SELECT model_name, max_image_size_value, filter_thread_raw\nFROM line_scan_lens_4k7u\nWHERE max_image_size_value >= 29\n  AND filter_thread_raw IS NOT NULL;",
+        "metadata": {
+            "parent_table": "line_scan_lens_4k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fit",
+                "mount",
+                "sensor coverage",
+                "thread"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_4k7u_sql_38",
+        "text": "[Table: line_scan_lens_4k7u] Query Type: Working Distance Search. Natural Language: List all 4K 7\u00b5m lenses with working distance under 100 mm for close-range inspection. Engineering Reasoning: Filter `wd_mm` for short standoff distance requirements. SQL: SELECT model_name, wd_mm, focus_length_mm\nFROM line_scan_lens_4k7u\nWHERE wd_mm < 100;",
+        "metadata": {
+            "parent_table": "line_scan_lens_4k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_4k7u_sql_39",
+        "text": "[Table: line_scan_lens_4k7u] Query Type: Ambiguous Engineering Terminology. Natural Language: The spec sheet mentions \"f_no_max\" \u2014 why is it stored as text instead of a number? Engineering Reasoning: `f_no_max` is `text` type in this table (unlike other tables where it is `numeric`). This may be because some models use symbolic values (e.g., \"\u221e\", \"closed\") rather than a defined number. Querying with a cast is necessary for numeric comparisons. SQL: SELECT model_name, f_no_raw, f_no_min, f_no_max\nFROM line_scan_lens_4k7u\nWHERE f_no_max ~ '^\\d+(\\.\\d+)?$';",
+        "metadata": {
+            "parent_table": "line_scan_lens_4k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "distortion",
+                "illuminance",
+                "o_i",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k5u_optical",
+        "text": "[Table: line_scan_lens_8k5u] Optical Attributes: focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_mm: Field of view in millimeters (linear) | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "optical_core",
+            "aliases": [
+                "focal length",
+                "aperture",
+                "F-number",
+                "f-stop",
+                "distortion",
+                "FOV",
+                "field of view",
+                "magnification",
+                "brightness",
+                "speed"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k5u_conjugate",
+        "text": "[Table: line_scan_lens_8k5u] Conjugate & Mount Attributes: wd_mm: Working distance from lens to target in millimeters | o_i: Object-to-image distance or total conjugate | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "conjugate_mount",
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance",
+                "working distance",
+                "track length",
+                "conjugate",
+                "mount",
+                "thread",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k5u_dimensions",
+        "text": "[Table: line_scan_lens_8k5u] Dimension Attributes: list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight in grams",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k5u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "dimensions",
+            "aliases": [
+                "price",
+                "cost",
+                "weight",
+                "mass",
+                "diameter",
+                "width",
+                "size",
+                "length",
+                "compact",
+                "heavy"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k5u_sql_43",
+        "text": "[Table: line_scan_lens_8k5u] Query Type: Specification Lookup. Natural Language: List all 8K 5\u00b5m lenses with focal length, standard magnification, and list price. Engineering Reasoning: Retrieve three specification columns and the model identifier. SQL: SELECT model_name, focus_length_mm, standard_magnification, list_price\nFROM line_scan_lens_8k5u;",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k5u_sql_44",
+        "text": "[Table: line_scan_lens_8k5u] Query Type: Attribute Filtering. Natural Language: Find 8K 5\u00b5m lenses with TV distortion less than or equal to 0.1%. Engineering Reasoning: Filter `tv_distortion_percent` for low-distortion lenses. Also retrieve `tv_distortion_operator` for context. SQL: SELECT model_name, tv_distortion_percent, tv_distortion_operator\nFROM line_scan_lens_8k5u\nWHERE tv_distortion_percent <= 0.1;",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fast aperture",
+                "low light",
+                "uniformity"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k5u_sql_45",
+        "text": "[Table: line_scan_lens_8k5u] Query Type: Compatibility Reasoning. Natural Language: Which 8K 5\u00b5m lenses have a diameter under 60 mm and support a filter thread? Engineering Reasoning: Filter `size_diameter_mm` for compact form factor. Filter `filter_thread_raw` for filter support. SQL: SELECT model_name, size_diameter_mm, filter_thread_raw\nFROM line_scan_lens_8k5u\nWHERE size_diameter_mm < 60\n  AND filter_thread_raw IS NOT NULL;",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fit",
+                "mount",
+                "sensor coverage",
+                "thread"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k5u_sql_46",
+        "text": "[Table: line_scan_lens_8k5u] Query Type: Working Distance Search. Natural Language: Show all 8K 5\u00b5m lenses with working distance greater than 200 mm. Engineering Reasoning: Filter `wd_mm` for long-range mounting requirements. SQL: SELECT model_name, wd_mm, focus_length_mm\nFROM line_scan_lens_8k5u\nWHERE wd_mm > 200;",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k5u_sql_47",
+        "text": "[Table: line_scan_lens_8k5u] Query Type: Ambiguous Engineering Terminology. Natural Language: What does \"relative illuminance\" mean, and which 8K 5\u00b5m lenses have the best edge-to-center brightness uniformity? Engineering Reasoning: `relative_illuminance_percent` measures how much light reaches the image edge relative to the center. Higher % = more uniform = less vignetting. Sort descending to find the most uniform lenses. SQL: SELECT model_name, relative_illuminance_percent\nFROM line_scan_lens_8k5u\nORDER BY relative_illuminance_percent DESC;",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k5u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "distortion",
+                "illuminance",
+                "o_i",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 5.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k7u_optical",
+        "text": "[Table: line_scan_lens_8k7u] Optical Attributes: focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_mm: Field of view in millimeters (linear) at object plane | fov_degrees: Field of view in degrees (angular) | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k7u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "optical_core",
+            "aliases": [
+                "focal length",
+                "aperture",
+                "F-number",
+                "f-stop",
+                "distortion",
+                "FOV",
+                "field of view",
+                "magnification",
+                "brightness",
+                "speed"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k7u_conjugate",
+        "text": "[Table: line_scan_lens_8k7u] Conjugate & Mount Attributes: wd_mm: Working distance from lens front to object in millimeters | o_i: Object-to-image distance or total conjugate | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k7u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "conjugate_mount",
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance",
+                "working distance",
+                "track length",
+                "conjugate",
+                "mount",
+                "thread",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k7u_dimensions",
+        "text": "[Table: line_scan_lens_8k7u] Dimension Attributes: list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight in grams",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k7u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "dimensions",
+            "aliases": [
+                "price",
+                "cost",
+                "weight",
+                "mass",
+                "diameter",
+                "width",
+                "size",
+                "length",
+                "compact",
+                "heavy"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k7u_sql_51",
+        "text": "[Table: line_scan_lens_8k7u] Query Type: Specification Lookup. Natural Language: List all 8K 7\u00b5m lenses with focal length, angular field of view, and flange distance. Engineering Reasoning: Select the key specification columns for all models. SQL: SELECT model_name, focus_length_mm, fov_degrees, flange_distance\nFROM line_scan_lens_8k7u;",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k7u_sql_52",
+        "text": "[Table: line_scan_lens_8k7u] Query Type: Attribute Filtering. Natural Language: Find 8K 7\u00b5m lenses with an outer diameter of 60 mm or less and weight under 400 g. Engineering Reasoning: Filter `size_diameter_mm` and `weight_g` for compact, lightweight options. SQL: SELECT model_name, size_diameter_mm, weight_g\nFROM line_scan_lens_8k7u\nWHERE size_diameter_mm <= 60\n  AND weight_g < 400;",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fast aperture",
+                "low light",
+                "uniformity"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k7u_sql_53",
+        "text": "[Table: line_scan_lens_8k7u] Query Type: Compatibility Reasoning. Natural Language: Which 8K 7\u00b5m lenses have a maximum F-number above 16 and support sensor sizes larger than 40 mm? Engineering Reasoning: Filter `f_no_max` for lenses with a wide aperture range. Filter `max_image_size_value` for large sensor coverage. SQL: SELECT model_name, f_no_max, max_image_size_value\nFROM line_scan_lens_8k7u\nWHERE f_no_max > 16\n  AND max_image_size_value > 40;",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fit",
+                "mount",
+                "sensor coverage",
+                "thread"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k7u_sql_54",
+        "text": "[Table: line_scan_lens_8k7u] Query Type: Working Distance Search. Natural Language: Show 8K 7\u00b5m lenses with working distance between 80 mm and 200 mm. Engineering Reasoning: Range filter on `wd_mm`. SQL: SELECT model_name, wd_mm, focus_length_mm\nFROM line_scan_lens_8k7u\nWHERE wd_mm BETWEEN 80 AND 200;",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_line_scan_lens_8k7u_sql_55",
+        "text": "[Table: line_scan_lens_8k7u] Query Type: Ambiguous Engineering Terminology. Natural Language: What is \"o_i\" in this table and how does it relate to total lens track length? Engineering Reasoning: `o_i` is the object-to-image distance (total conjugate distance), representing the full optical path from object to image sensor. `flange_distance` represents only the camera-side portion. Comparing `o_i` vs. `wd_mm + flange_distance` reveals internal lens element spacing. SQL: SELECT model_name, o_i, wd_mm, flange_distance\nFROM line_scan_lens_8k7u;",
+        "metadata": {
+            "parent_table": "line_scan_lens_8k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "distortion",
+                "illuminance",
+                "o_i",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "8K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": false
+        }
+    },
+    {
+        "id": "chunk_new_series_line_scan_lens_4k7u_optical",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Optical Attributes: focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_degrees: Field of view in degrees (angular) | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
+        "metadata": {
+            "parent_table": "new_series_line_scan_lens_4k7u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "optical_core",
+            "aliases": [
+                "focal length",
+                "aperture",
+                "F-number",
+                "f-stop",
+                "distortion",
+                "FOV",
+                "field of view",
+                "magnification",
+                "brightness",
+                "speed"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": true
+        }
+    },
+    {
+        "id": "chunk_new_series_line_scan_lens_4k7u_conjugate",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Conjugate & Mount Attributes: wd_mm: Working distance from lens to target in millimeters | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
+        "metadata": {
+            "parent_table": "new_series_line_scan_lens_4k7u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "conjugate_mount",
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance",
+                "working distance",
+                "track length",
+                "conjugate",
+                "mount",
+                "thread",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": true
+        }
+    },
+    {
+        "id": "chunk_new_series_line_scan_lens_4k7u_dimensions",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Dimension Attributes: list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight in grams",
+        "metadata": {
+            "parent_table": "new_series_line_scan_lens_4k7u",
+            "chunk_type": "attribute_group",
+            "semantic_group": "dimensions",
+            "aliases": [
+                "price",
+                "cost",
+                "weight",
+                "mass",
+                "diameter",
+                "width",
+                "size",
+                "length",
+                "compact",
+                "heavy"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": true
+        }
+    },
+    {
+        "id": "chunk_new_series_line_scan_lens_4k7u_sql_59",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Query Type: Specification Lookup. Natural Language: Show all new series 4K 7\u00b5m lenses with their angular field of view and standard magnification. Engineering Reasoning: Select `fov_degrees` and `standard_magnification` alongside the identifier. SQL: SELECT model_name, fov_degrees, standard_magnification\nFROM new_series_line_scan_lens_4k7u;",
+        "metadata": {
+            "parent_table": "new_series_line_scan_lens_4k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": true
+        }
+    },
+    {
+        "id": "chunk_new_series_line_scan_lens_4k7u_sql_60",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Query Type: Attribute Filtering. Natural Language: Find new series 4K 7\u00b5m lenses with relative illuminance greater than 55% and TV distortion below 0.1%. Engineering Reasoning: Combined filter on `relative_illuminance_percent` and `tv_distortion_percent`. SQL: SELECT model_name, relative_illuminance_percent, tv_distortion_percent\nFROM new_series_line_scan_lens_4k7u\nWHERE relative_illuminance_percent > 55\n  AND tv_distortion_percent < 0.1;",
+        "metadata": {
+            "parent_table": "new_series_line_scan_lens_4k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fast aperture",
+                "low light",
+                "uniformity"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": true
+        }
+    },
+    {
+        "id": "chunk_new_series_line_scan_lens_4k7u_sql_61",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Query Type: Compatibility Reasoning. Natural Language: Compare new series 4K 7\u00b5m lenses by filter thread size \u2014 which models support filters? Engineering Reasoning: Retrieve `filter_thread_raw` for all models; null values mean no filter support. SQL: SELECT model_name, filter_thread_raw, mount_raw\nFROM new_series_line_scan_lens_4k7u\nWHERE filter_thread_raw IS NOT NULL;",
+        "metadata": {
+            "parent_table": "new_series_line_scan_lens_4k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "fit",
+                "mount",
+                "sensor coverage",
+                "thread"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": true
+        }
+    },
+    {
+        "id": "chunk_new_series_line_scan_lens_4k7u_sql_62",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Query Type: Working Distance Search. Natural Language: List new series 4K 7\u00b5m lenses with working distance between 50 mm and 150 mm. Engineering Reasoning: Range filter on `wd_mm` for short-to-mid range integration. SQL: SELECT model_name, wd_mm, focus_length_mm\nFROM new_series_line_scan_lens_4k7u\nWHERE wd_mm BETWEEN 50 AND 150;",
+        "metadata": {
+            "parent_table": "new_series_line_scan_lens_4k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "WD",
+                "standoff",
+                "clearance"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": true
+        }
+    },
+    {
+        "id": "chunk_new_series_line_scan_lens_4k7u_sql_63",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Query Type: Ambiguous Engineering Terminology. Natural Language: How does this new series compare to the original 4K 7\u00b5m series on maximum aperture (f_no_min)? Engineering Reasoning: The original `line_scan_lens_4k7u` also has `f_no_min`. Joining or unioning the two on `f_no_min` enables a cross-generation aperture comparison. SQL: SELECT 'original' AS series, model_name, f_no_min\nFROM line_scan_lens_4k7u\nUNION ALL\nSELECT 'new_series' AS series, model_name, f_no_min\nFROM new_series_line_scan_lens_4k7u\nORDER BY f_no_min;",
+        "metadata": {
+            "parent_table": "new_series_line_scan_lens_4k7u",
+            "chunk_type": "sql_example",
+            "contains_sql": true,
+            "aliases": [
+                "distortion",
+                "illuminance",
+                "o_i",
+                "flange"
+            ],
+            "lens_family": "line_scan",
+            "resolution_target": "4K",
+            "pixel_pitch_um": 7.0,
+            "is_coaxial": false,
+            "is_new_series": true
+        }
+    }
+]
