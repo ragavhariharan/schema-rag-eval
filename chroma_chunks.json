@@ -1,7 +1,7 @@
 [
     {
         "id": "chunk_coaxial_illumination_line_scan_lens_optical",
-        "text": "[Table: coaxial_illumination_line_scan_lens] Optical Attributes: focus_length_mm: Focal length of the lens measured in millimeters | f_no_min: Minimum (most open) F-number supported by the lens | f_no_max: Maximum (most closed) F-number supported by the lens | tv_distortion_percent: TV distortion value expressed as a percentage | magnification_min: Minimum optical magnification ratio supported | magnification_max: Maximum optical magnification ratio supported",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Optical Attributes (aliases/synonyms: focal length, aperture, F-number, f-stop, distortion, warping, FOV, field of view, magnification, brightness, speed): focus_length_mm: Focal length of the lens measured in millimeters | f_no_min: Minimum (most open) F-number supported by the lens | f_no_max: Maximum (most closed) F-number supported by the lens | tv_distortion_percent: TV distortion value expressed as a percentage | magnification_min: Minimum optical magnification ratio supported | magnification_max: Maximum optical magnification ratio supported",
         "metadata": {
             "parent_table": "coaxial_illumination_line_scan_lens",
             "chunk_type": "attribute_group",
@@ -12,6 +12,7 @@
                 "F-number",
                 "f-stop",
                 "distortion",
+                "warping",
                 "FOV",
                 "field of view",
                 "magnification",
@@ -27,7 +28,7 @@
     },
     {
         "id": "chunk_coaxial_illumination_line_scan_lens_conjugate",
-        "text": "[Table: coaxial_illumination_line_scan_lens] Conjugate & Mount Attributes: wd_mm: Working distance between the lens front element and the object/target surface, measured in millimeters | o_i: Object-to-image distance ratio or total conjugate distance | flange_distance: Distance from the camera mounting flange to the image sensor plane, measured in millimeters | mount_raw: Raw text describing the camera mount type (e.g., C-mount, F-mount, M42)",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Conjugate & Mount Attributes (aliases/synonyms: WD, standoff, clearance, working distance, track length, conjugate, mount, thread, flange): wd_mm: Working distance between the lens front element and the object/target surface, measured in millimeters | o_i: Object-to-image distance ratio or total conjugate distance | flange_distance: Distance from the camera mounting flange to the image sensor plane, measured in millimeters | mount_raw: Raw text describing the camera mount type (e.g., C-mount, F-mount, M42)",
         "metadata": {
             "parent_table": "coaxial_illumination_line_scan_lens",
             "chunk_type": "attribute_group",
@@ -52,7 +53,7 @@
     },
     {
         "id": "chunk_coaxial_illumination_line_scan_lens_dimensions",
-        "text": "[Table: coaxial_illumination_line_scan_lens] Dimension Attributes: list_price: Catalogue sales price of the lens | weight_g: Physical weight of the lens body in grams",
+        "text": "[Table: coaxial_illumination_line_scan_lens] Dimension Attributes (aliases/synonyms: price, cost, weight, mass, diameter, width, size, length, compact, heavy): list_price: Catalogue sales price of the lens | weight_g: Physical weight of the lens body in grams",
         "metadata": {
             "parent_table": "coaxial_illumination_line_scan_lens",
             "chunk_type": "attribute_group",
@@ -158,6 +159,7 @@
             "contains_sql": true,
             "aliases": [
                 "distortion",
+                "warping",
                 "illuminance",
                 "o_i",
                 "flange"
@@ -171,7 +173,7 @@
     },
     {
         "id": "chunk_line_scan_lens_12k5u_optical",
-        "text": "[Table: line_scan_lens_12k5u] Optical Attributes: focus_length_mm: Focal length of the lens measured in millimeters | f_no_min: Minimum F-number (maximum aperture) of the lens | f_no_max: Maximum F-number (minimum aperture) of the lens | tv_distortion_percent: TV distortion value expressed as a percentage | fov_mm: Field of view measured in millimeters | magnification_min: Minimum supported optical magnification ratio | magnification_max: Maximum supported optical magnification ratio | relative_illuminance_percent: Relative illuminance at the edge of the image field, expressed as a percentage of center illuminance",
+        "text": "[Table: line_scan_lens_12k5u] Optical Attributes (aliases/synonyms: focal length, aperture, F-number, f-stop, distortion, warping, FOV, field of view, magnification, brightness, speed): focus_length_mm: Focal length of the lens measured in millimeters | f_no_min: Minimum F-number (maximum aperture) of the lens | f_no_max: Maximum F-number (minimum aperture) of the lens | tv_distortion_percent: TV distortion value expressed as a percentage | fov_mm: Field of view measured in millimeters | magnification_min: Minimum supported optical magnification ratio | magnification_max: Maximum supported optical magnification ratio | relative_illuminance_percent: Relative illuminance at the edge of the image field, expressed as a percentage of center illuminance",
         "metadata": {
             "parent_table": "line_scan_lens_12k5u",
             "chunk_type": "attribute_group",
@@ -182,6 +184,7 @@
                 "F-number",
                 "f-stop",
                 "distortion",
+                "warping",
                 "FOV",
                 "field of view",
                 "magnification",
@@ -197,7 +200,7 @@
     },
     {
         "id": "chunk_line_scan_lens_12k5u_conjugate",
-        "text": "[Table: line_scan_lens_12k5u] Conjugate & Mount Attributes: wd_mm: Working distance from the lens to the target object surface in millimeters | o_i: Object-to-image distance or total conjugate ratio | flange_distance: Flange-to-sensor distance on the camera side in millimeters | mount_raw: Raw text describing the lens mount type | filter_thread_raw: Raw text describing the filter thread size and pitch",
+        "text": "[Table: line_scan_lens_12k5u] Conjugate & Mount Attributes (aliases/synonyms: WD, standoff, clearance, working distance, track length, conjugate, mount, thread, flange): wd_mm: Working distance from the lens to the target object surface in millimeters | o_i: Object-to-image distance or total conjugate ratio | flange_distance: Flange-to-sensor distance on the camera side in millimeters | mount_raw: Raw text describing the lens mount type | filter_thread_raw: Raw text describing the filter thread size and pitch",
         "metadata": {
             "parent_table": "line_scan_lens_12k5u",
             "chunk_type": "attribute_group",
@@ -222,7 +225,7 @@
     },
     {
         "id": "chunk_line_scan_lens_12k5u_dimensions",
-        "text": "[Table: line_scan_lens_12k5u] Dimension Attributes: list_price: Catalogue sales price of the lens | size_diameter_mm: Physical outer diameter of the lens body in millimeters | size_length_min_mm: Minimum physical length of the lens body in millimeters | weight_g: Physical weight of the lens body in grams",
+        "text": "[Table: line_scan_lens_12k5u] Dimension Attributes (aliases/synonyms: price, cost, weight, mass, diameter, width, size, length, compact, heavy): list_price: Catalogue sales price of the lens | size_diameter_mm: Physical outer diameter of the lens body in millimeters | size_length_min_mm: Minimum physical length of the lens body in millimeters | weight_g: Physical weight of the lens body in grams",
         "metadata": {
             "parent_table": "line_scan_lens_12k5u",
             "chunk_type": "attribute_group",
@@ -328,6 +331,7 @@
             "contains_sql": true,
             "aliases": [
                 "distortion",
+                "warping",
                 "illuminance",
                 "o_i",
                 "flange"
@@ -341,7 +345,7 @@
     },
     {
         "id": "chunk_line_scan_lens_16k3_5u_optical",
-        "text": "[Table: line_scan_lens_16k3_5u] Optical Attributes: focus_length_mm: Focal length of the lens in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion value in percent | fov_degrees: Field of view expressed in degrees | fov_mm: Field of view expressed in millimeters | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
+        "text": "[Table: line_scan_lens_16k3_5u] Optical Attributes (aliases/synonyms: focal length, aperture, F-number, f-stop, distortion, warping, FOV, field of view, magnification, brightness, speed): focus_length_mm: Focal length of the lens in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion value in percent | fov_degrees: Field of view expressed in degrees | fov_mm: Field of view expressed in millimeters | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
         "metadata": {
             "parent_table": "line_scan_lens_16k3_5u",
             "chunk_type": "attribute_group",
@@ -352,6 +356,7 @@
                 "F-number",
                 "f-stop",
                 "distortion",
+                "warping",
                 "FOV",
                 "field of view",
                 "magnification",
@@ -367,7 +372,7 @@
     },
     {
         "id": "chunk_line_scan_lens_16k3_5u_conjugate",
-        "text": "[Table: line_scan_lens_16k3_5u] Conjugate & Mount Attributes: wd_mm: Working distance from lens front to target in millimeters | o_i: Object-to-image distance or total conjugate distance | flange_distance: Lens flange to image sensor distance in millimeters | mount_raw: Raw text for camera mount type | filter_thread_raw: Raw text for filter thread specification",
+        "text": "[Table: line_scan_lens_16k3_5u] Conjugate & Mount Attributes (aliases/synonyms: WD, standoff, clearance, working distance, track length, conjugate, mount, thread, flange): wd_mm: Working distance from lens front to target in millimeters | o_i: Object-to-image distance or total conjugate distance | flange_distance: Lens flange to image sensor distance in millimeters | mount_raw: Raw text for camera mount type | filter_thread_raw: Raw text for filter thread specification",
         "metadata": {
             "parent_table": "line_scan_lens_16k3_5u",
             "chunk_type": "attribute_group",
@@ -392,7 +397,7 @@
     },
     {
         "id": "chunk_line_scan_lens_16k3_5u_dimensions",
-        "text": "[Table: line_scan_lens_16k3_5u] Dimension Attributes: list_price: Catalogue sales price | size_diameter_mm: Physical outer diameter of the lens in millimeters | size_length_mm: Physical length of the lens body in millimeters | weight_g: Weight of the lens in grams",
+        "text": "[Table: line_scan_lens_16k3_5u] Dimension Attributes (aliases/synonyms: price, cost, weight, mass, diameter, width, size, length, compact, heavy): list_price: Catalogue sales price | size_diameter_mm: Physical outer diameter of the lens in millimeters | size_length_mm: Physical length of the lens body in millimeters | weight_g: Weight of the lens in grams",
         "metadata": {
             "parent_table": "line_scan_lens_16k3_5u",
             "chunk_type": "attribute_group",
@@ -498,6 +503,7 @@
             "contains_sql": true,
             "aliases": [
                 "distortion",
+                "warping",
                 "illuminance",
                 "o_i",
                 "flange"
@@ -511,7 +517,7 @@
     },
     {
         "id": "chunk_line_scan_lens_16k5u_optical",
-        "text": "[Table: line_scan_lens_16k5u] Optical Attributes: focus_length_mm: Focal length of the lens in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_degrees: Field of view in degrees (angular) | fov_mm: Field of view in millimeters (linear) at the object plane | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio",
+        "text": "[Table: line_scan_lens_16k5u] Optical Attributes (aliases/synonyms: focal length, aperture, F-number, f-stop, distortion, warping, FOV, field of view, magnification, brightness, speed): focus_length_mm: Focal length of the lens in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_degrees: Field of view in degrees (angular) | fov_mm: Field of view in millimeters (linear) at the object plane | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio",
         "metadata": {
             "parent_table": "line_scan_lens_16k5u",
             "chunk_type": "attribute_group",
@@ -522,6 +528,7 @@
                 "F-number",
                 "f-stop",
                 "distortion",
+                "warping",
                 "FOV",
                 "field of view",
                 "magnification",
@@ -537,7 +544,7 @@
     },
     {
         "id": "chunk_line_scan_lens_16k5u_conjugate",
-        "text": "[Table: line_scan_lens_16k5u] Conjugate & Mount Attributes: wd_mm: Working distance from lens front to target in millimeters | o_i: Object-to-image distance / total conjugate | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread size/pitch",
+        "text": "[Table: line_scan_lens_16k5u] Conjugate & Mount Attributes (aliases/synonyms: WD, standoff, clearance, working distance, track length, conjugate, mount, thread, flange): wd_mm: Working distance from lens front to target in millimeters | o_i: Object-to-image distance / total conjugate | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread size/pitch",
         "metadata": {
             "parent_table": "line_scan_lens_16k5u",
             "chunk_type": "attribute_group",
@@ -562,7 +569,7 @@
     },
     {
         "id": "chunk_line_scan_lens_16k5u_dimensions",
-        "text": "[Table: line_scan_lens_16k5u] Dimension Attributes: list_price: Catalogue price of the lens | size_diameter_mm: Physical outer diameter of the lens in millimeters | weight_g: Weight of the lens in grams",
+        "text": "[Table: line_scan_lens_16k5u] Dimension Attributes (aliases/synonyms: price, cost, weight, mass, diameter, width, size, length, compact, heavy): list_price: Catalogue price of the lens | size_diameter_mm: Physical outer diameter of the lens in millimeters | weight_g: Weight of the lens in grams",
         "metadata": {
             "parent_table": "line_scan_lens_16k5u",
             "chunk_type": "attribute_group",
@@ -668,6 +675,7 @@
             "contains_sql": true,
             "aliases": [
                 "distortion",
+                "warping",
                 "illuminance",
                 "o_i",
                 "flange"
@@ -681,7 +689,7 @@
     },
     {
         "id": "chunk_line_scan_lens_4k7u_optical",
-        "text": "[Table: line_scan_lens_4k7u] Optical Attributes: focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number or limit value | tv_distortion_percent: TV distortion in percent | fov_mm: Field of view in millimeters | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at image field edge as percentage",
+        "text": "[Table: line_scan_lens_4k7u] Optical Attributes (aliases/synonyms: focal length, aperture, F-number, f-stop, distortion, warping, FOV, field of view, magnification, brightness, speed): focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number or limit value | tv_distortion_percent: TV distortion in percent | fov_mm: Field of view in millimeters | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at image field edge as percentage",
         "metadata": {
             "parent_table": "line_scan_lens_4k7u",
             "chunk_type": "attribute_group",
@@ -692,6 +700,7 @@
                 "F-number",
                 "f-stop",
                 "distortion",
+                "warping",
                 "FOV",
                 "field of view",
                 "magnification",
@@ -707,7 +716,7 @@
     },
     {
         "id": "chunk_line_scan_lens_4k7u_conjugate",
-        "text": "[Table: line_scan_lens_4k7u] Conjugate & Mount Attributes: wd_mm: Working distance from lens to object in millimeters | o_i: Object-to-image distance or total conjugate | flange_distance: Camera flange to image sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
+        "text": "[Table: line_scan_lens_4k7u] Conjugate & Mount Attributes (aliases/synonyms: WD, standoff, clearance, working distance, track length, conjugate, mount, thread, flange): wd_mm: Working distance from lens to object in millimeters | o_i: Object-to-image distance or total conjugate | flange_distance: Camera flange to image sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
         "metadata": {
             "parent_table": "line_scan_lens_4k7u",
             "chunk_type": "attribute_group",
@@ -732,7 +741,7 @@
     },
     {
         "id": "chunk_line_scan_lens_4k7u_dimensions",
-        "text": "[Table: line_scan_lens_4k7u] Dimension Attributes: list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight of the lens in grams",
+        "text": "[Table: line_scan_lens_4k7u] Dimension Attributes (aliases/synonyms: price, cost, weight, mass, diameter, width, size, length, compact, heavy): list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight of the lens in grams",
         "metadata": {
             "parent_table": "line_scan_lens_4k7u",
             "chunk_type": "attribute_group",
@@ -838,6 +847,7 @@
             "contains_sql": true,
             "aliases": [
                 "distortion",
+                "warping",
                 "illuminance",
                 "o_i",
                 "flange"
@@ -851,7 +861,7 @@
     },
     {
         "id": "chunk_line_scan_lens_8k5u_optical",
-        "text": "[Table: line_scan_lens_8k5u] Optical Attributes: focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_mm: Field of view in millimeters (linear) | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
+        "text": "[Table: line_scan_lens_8k5u] Optical Attributes (aliases/synonyms: focal length, aperture, F-number, f-stop, distortion, warping, FOV, field of view, magnification, brightness, speed): focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_mm: Field of view in millimeters (linear) | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
         "metadata": {
             "parent_table": "line_scan_lens_8k5u",
             "chunk_type": "attribute_group",
@@ -862,6 +872,7 @@
                 "F-number",
                 "f-stop",
                 "distortion",
+                "warping",
                 "FOV",
                 "field of view",
                 "magnification",
@@ -877,7 +888,7 @@
     },
     {
         "id": "chunk_line_scan_lens_8k5u_conjugate",
-        "text": "[Table: line_scan_lens_8k5u] Conjugate & Mount Attributes: wd_mm: Working distance from lens to target in millimeters | o_i: Object-to-image distance or total conjugate | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
+        "text": "[Table: line_scan_lens_8k5u] Conjugate & Mount Attributes (aliases/synonyms: WD, standoff, clearance, working distance, track length, conjugate, mount, thread, flange): wd_mm: Working distance from lens to target in millimeters | o_i: Object-to-image distance or total conjugate | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
         "metadata": {
             "parent_table": "line_scan_lens_8k5u",
             "chunk_type": "attribute_group",
@@ -902,7 +913,7 @@
     },
     {
         "id": "chunk_line_scan_lens_8k5u_dimensions",
-        "text": "[Table: line_scan_lens_8k5u] Dimension Attributes: list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight in grams",
+        "text": "[Table: line_scan_lens_8k5u] Dimension Attributes (aliases/synonyms: price, cost, weight, mass, diameter, width, size, length, compact, heavy): list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight in grams",
         "metadata": {
             "parent_table": "line_scan_lens_8k5u",
             "chunk_type": "attribute_group",
@@ -1008,6 +1019,7 @@
             "contains_sql": true,
             "aliases": [
                 "distortion",
+                "warping",
                 "illuminance",
                 "o_i",
                 "flange"
@@ -1021,7 +1033,7 @@
     },
     {
         "id": "chunk_line_scan_lens_8k7u_optical",
-        "text": "[Table: line_scan_lens_8k7u] Optical Attributes: focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_mm: Field of view in millimeters (linear) at object plane | fov_degrees: Field of view in degrees (angular) | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
+        "text": "[Table: line_scan_lens_8k7u] Optical Attributes (aliases/synonyms: focal length, aperture, F-number, f-stop, distortion, warping, FOV, field of view, magnification, brightness, speed): focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_mm: Field of view in millimeters (linear) at object plane | fov_degrees: Field of view in degrees (angular) | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
         "metadata": {
             "parent_table": "line_scan_lens_8k7u",
             "chunk_type": "attribute_group",
@@ -1032,6 +1044,7 @@
                 "F-number",
                 "f-stop",
                 "distortion",
+                "warping",
                 "FOV",
                 "field of view",
                 "magnification",
@@ -1047,7 +1060,7 @@
     },
     {
         "id": "chunk_line_scan_lens_8k7u_conjugate",
-        "text": "[Table: line_scan_lens_8k7u] Conjugate & Mount Attributes: wd_mm: Working distance from lens front to object in millimeters | o_i: Object-to-image distance or total conjugate | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
+        "text": "[Table: line_scan_lens_8k7u] Conjugate & Mount Attributes (aliases/synonyms: WD, standoff, clearance, working distance, track length, conjugate, mount, thread, flange): wd_mm: Working distance from lens front to object in millimeters | o_i: Object-to-image distance or total conjugate | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
         "metadata": {
             "parent_table": "line_scan_lens_8k7u",
             "chunk_type": "attribute_group",
@@ -1072,7 +1085,7 @@
     },
     {
         "id": "chunk_line_scan_lens_8k7u_dimensions",
-        "text": "[Table: line_scan_lens_8k7u] Dimension Attributes: list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight in grams",
+        "text": "[Table: line_scan_lens_8k7u] Dimension Attributes (aliases/synonyms: price, cost, weight, mass, diameter, width, size, length, compact, heavy): list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight in grams",
         "metadata": {
             "parent_table": "line_scan_lens_8k7u",
             "chunk_type": "attribute_group",
@@ -1178,6 +1191,7 @@
             "contains_sql": true,
             "aliases": [
                 "distortion",
+                "warping",
                 "illuminance",
                 "o_i",
                 "flange"
@@ -1191,7 +1205,7 @@
     },
     {
         "id": "chunk_new_series_line_scan_lens_4k7u_optical",
-        "text": "[Table: new_series_line_scan_lens_4k7u] Optical Attributes: focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_degrees: Field of view in degrees (angular) | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Optical Attributes (aliases/synonyms: focal length, aperture, F-number, f-stop, distortion, warping, FOV, field of view, magnification, brightness, speed): focus_length_mm: Focal length in millimeters | f_no_min: Minimum F-number (widest aperture) | f_no_max: Maximum F-number (smallest aperture) | tv_distortion_percent: TV distortion in percent | fov_degrees: Field of view in degrees (angular) | magnification_min: Minimum optical magnification ratio | magnification_max: Maximum optical magnification ratio | relative_illuminance_percent: Relative illuminance at field edge as percentage of center",
         "metadata": {
             "parent_table": "new_series_line_scan_lens_4k7u",
             "chunk_type": "attribute_group",
@@ -1202,6 +1216,7 @@
                 "F-number",
                 "f-stop",
                 "distortion",
+                "warping",
                 "FOV",
                 "field of view",
                 "magnification",
@@ -1217,7 +1232,7 @@
     },
     {
         "id": "chunk_new_series_line_scan_lens_4k7u_conjugate",
-        "text": "[Table: new_series_line_scan_lens_4k7u] Conjugate & Mount Attributes: wd_mm: Working distance from lens to target in millimeters | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Conjugate & Mount Attributes (aliases/synonyms: WD, standoff, clearance, working distance, track length, conjugate, mount, thread, flange): wd_mm: Working distance from lens to target in millimeters | flange_distance: Camera flange to sensor distance in millimeters | mount_raw: Raw text of camera mount type | filter_thread_raw: Raw text of filter thread specification",
         "metadata": {
             "parent_table": "new_series_line_scan_lens_4k7u",
             "chunk_type": "attribute_group",
@@ -1242,7 +1257,7 @@
     },
     {
         "id": "chunk_new_series_line_scan_lens_4k7u_dimensions",
-        "text": "[Table: new_series_line_scan_lens_4k7u] Dimension Attributes: list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight in grams",
+        "text": "[Table: new_series_line_scan_lens_4k7u] Dimension Attributes (aliases/synonyms: price, cost, weight, mass, diameter, width, size, length, compact, heavy): list_price: Catalogue price | size_diameter_mm: Physical outer diameter in millimeters | size_length_min_mm: Minimum physical length of the lens in millimeters | weight_g: Physical weight in grams",
         "metadata": {
             "parent_table": "new_series_line_scan_lens_4k7u",
             "chunk_type": "attribute_group",
@@ -1348,6 +1363,7 @@
             "contains_sql": true,
             "aliases": [
                 "distortion",
+                "warping",
                 "illuminance",
                 "o_i",
                 "flange"

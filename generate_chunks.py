@@ -34,7 +34,8 @@ def extract_lens_metadata(table_name):
 def get_aliases(group_type, title=""):
     """Injects lexical synonyms for BM25/Hybrid Search robustness."""
     if group_type == "optical_core":
-        return ["focal length", "aperture", "F-number", "f-stop", "distortion", "FOV", "field of view", "magnification", "brightness", "speed"]
+        # Added "warping" to optical core synonyms
+        return ["focal length", "aperture", "F-number", "f-stop", "distortion", "warping", "FOV", "field of view", "magnification", "brightness", "speed"]
     elif group_type == "conjugate_mount":
         return ["WD", "standoff", "clearance", "working distance", "track length", "conjugate", "mount", "thread", "flange"]
     elif group_type == "dimensions":
@@ -46,7 +47,8 @@ def get_aliases(group_type, title=""):
         elif "compatibility" in title_lower:
             return ["fit", "mount", "sensor coverage", "thread"]
         elif "ambiguous" in title_lower:
-            return ["distortion", "illuminance", "o_i", "flange"]
+            # Added "warping" to ambiguous terminology synonyms
+            return ["distortion", "warping", "illuminance", "o_i", "flange"]
         elif "filtering" in title_lower:
             return ["fast aperture", "low light", "uniformity"]
     return []
@@ -88,27 +90,30 @@ def generate_chunks():
 
             # Generate Attribute Chunks with enriched metadata
             if optical_core:
-                meta = {"parent_table": table_name, "chunk_type": "attribute_group", "semantic_group": "optical_core", "aliases": get_aliases("optical_core")}
+                aliases_list = get_aliases("optical_core")
+                meta = {"parent_table": table_name, "chunk_type": "attribute_group", "semantic_group": "optical_core", "aliases": aliases_list}
                 meta.update(engineering_meta)
                 final_chunks.append({
                     "id": f"chunk_{table_name}_optical",
-                    "text": f"[Table: {table_name}] Optical Attributes: " + " | ".join(optical_core),
+                    "text": f"[Table: {table_name}] Optical Attributes (aliases/synonyms: {', '.join(aliases_list)}): " + " | ".join(optical_core),
                     "metadata": meta
                 })
             if conjugate_mount:
-                meta = {"parent_table": table_name, "chunk_type": "attribute_group", "semantic_group": "conjugate_mount", "aliases": get_aliases("conjugate_mount")}
+                aliases_list = get_aliases("conjugate_mount")
+                meta = {"parent_table": table_name, "chunk_type": "attribute_group", "semantic_group": "conjugate_mount", "aliases": aliases_list}
                 meta.update(engineering_meta)
                 final_chunks.append({
                     "id": f"chunk_{table_name}_conjugate",
-                    "text": f"[Table: {table_name}] Conjugate & Mount Attributes: " + " | ".join(conjugate_mount),
+                    "text": f"[Table: {table_name}] Conjugate & Mount Attributes (aliases/synonyms: {', '.join(aliases_list)}): " + " | ".join(conjugate_mount),
                     "metadata": meta
                 })
             if dimensions:
-                meta = {"parent_table": table_name, "chunk_type": "attribute_group", "semantic_group": "dimensions", "aliases": get_aliases("dimensions")}
+                aliases_list = get_aliases("dimensions")
+                meta = {"parent_table": table_name, "chunk_type": "attribute_group", "semantic_group": "dimensions", "aliases": aliases_list}
                 meta.update(engineering_meta)
                 final_chunks.append({
                     "id": f"chunk_{table_name}_dimensions",
-                    "text": f"[Table: {table_name}] Dimension Attributes: " + " | ".join(dimensions),
+                    "text": f"[Table: {table_name}] Dimension Attributes (aliases/synonyms: {', '.join(aliases_list)}): " + " | ".join(dimensions),
                     "metadata": meta
                 })
 
