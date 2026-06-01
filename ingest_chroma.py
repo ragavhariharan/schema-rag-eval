@@ -5,8 +5,12 @@ def ingest_to_chroma():
     # 1. Initialize a persistent local ChromaDB client
     client = chromadb.PersistentClient(path="./chroma_db")
     
-    # 2. Create or get the collection
-    collection = client.get_or_create_collection(name="lens_schema_rag")
+    # 2. Delete existing collection to ensure a clean slate, then create new
+    try:
+        client.delete_collection(name="lens_schema_rag")
+    except ValueError:
+        pass # Collection might not exist yet
+    collection = client.create_collection(name="lens_schema_rag")
     
     # 3. Load our enriched semantic chunks
     with open("chroma_chunks.json", "r", encoding="utf-8") as f:
@@ -38,7 +42,7 @@ def ingest_to_chroma():
         
     # 4. Upsert the data into the database
     print(f"Embedding and ingesting {len(chunks)} chunks into ChromaDB...")
-    collection.upsert(
+    collection.add(
         ids=ids,
         documents=texts,
         metadatas=metadatas

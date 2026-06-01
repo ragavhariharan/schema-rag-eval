@@ -91,7 +91,7 @@ ragas.llms.LangchainLLMWrapper.generate = patched_generate
 
 # ─── 4. INITIALIZE LLM AND EMBEDDINGS ─────────────────────────────────────────
 print("⚙️  Initializing Local LLM and Embeddings...")
-local_llm = ChatOllama(model="qwen2.5-coder", base_url="http://localhost:11434")
+local_llm = ChatOllama(model="qwen2.5-coder", base_url="http://localhost:11434", num_ctx=32768)
 local_embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 # ─── 5. CUSTOM CONTEXT PRECISION PROMPT FOR TEXT-TO-SQL ───────────────────────
@@ -186,7 +186,7 @@ RULES:
             {"role": "user", "content": user_query}
         ],
         format="json",
-        options={"temperature": 0}
+        options={"temperature": 0, "num_ctx": 32768}
     )
 
     try:
@@ -248,7 +248,7 @@ Return ONLY the English sentence, nothing else. Do not include any SQL, code, or
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": f"Question: {question}\nSQL: {sql}"}
         ],
-        options={"temperature": 0}
+        options={"temperature": 0, "num_ctx": 32768}
     )
 
     result = response.get("message", {}).get("content", "").strip()
@@ -380,7 +380,8 @@ SCHEMA: {"\n\n".join(contexts)}"""
 
     response = ollama.chat(
         model=OLLAMA_MODEL,
-        messages=[{'role': 'system', 'content': system_prompt}, {'role': 'user', 'content': user_query}]
+        messages=[{'role': 'system', 'content': system_prompt}, {'role': 'user', 'content': user_query}],
+        options={"num_ctx": 32768}
     )
     raw_response = response['message']['content']
     clean_sql = extract_sql_from_text(raw_response)

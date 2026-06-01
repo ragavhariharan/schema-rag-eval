@@ -1226,3 +1226,26 @@ ORDER BY f_no_min;
 - RAG hint: relevant to "new series 4K 7µm", "updated 4K line scan lens", "4000 pixel 7 micron new generation" queries.
 
 ---
+# Table: all_lenses
+
+## Overview
+A unified global view containing all lenses across all resolutions and families. This view is used to perform aggregate dimension queries across the entire catalog.
+
+## Attributes
+| Column Name | Data Type | Description |
+| :--- | :--- | :--- |
+| `model_name` | `text` | The full manufacturer model number identifier (e.g., "LS-8K7U-050") |
+| `size_diameter_mm` | `numeric` | Outer physical diameter of the lens body in millimeters |
+| `size_length_min_mm` | `numeric` | Minimum physical length of the lens in millimeters |
+| `weight_g` | `numeric` | Physical weight of the lens body in grams |
+
+## Example Queries
+
+**1. Query Type: Missing Filters**
+Natural Language: Show me all lenses that weigh under 200g.
+Reasoning: We query the global view `all_lenses` when there are no resolution or pitch constraints, and filter on `weight_g`.
+```sql
+SELECT model_name, size_diameter_mm, size_length_min_mm, weight_g
+FROM all_lenses
+WHERE weight_g < 200;
+```
