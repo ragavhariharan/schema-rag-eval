@@ -1,0 +1,19 @@
+id,question,focus,expected_sql,generated_sql,filters_extracted,num_chunks_retrieved,match,failure_category,gen_execution_error,exp_execution_error,expected_rows,generated_rows,elapsed_seconds
+q2_cross_generation,Compare the maximum aperture of the old 4K 7 micron lenses with the new series.,Tests UNION ALL structural generation and prompt adherence for 'maximum aperture' = f_no_min.,"SELECT 'original' AS series, model_name, f_no_min FROM line_scan_lens_4k7u UNION ALL SELECT 'new_series' AS series, model_name, f_no_min FROM new_series_line_scan_lens_4k7u ORDER BY f_no_min;","SELECT 'old_series' AS series, model_name, f_no_min AS max_aperture
+FROM line_scan_lens_4k7u
+UNION ALL
+SELECT 'new_series' AS series, model_name, f_no_min AS max_aperture
+FROM new_series_line_scan_lens_4k7u
+ORDER BY max_aperture DESC;","{""resolution_target"": ""4K"", ""pixel_pitch_um"": 7.0, ""is_new_series"": true}",1,False,wrong_sort,,,12,12,24.66
+q3_missing_filters,Show me all lenses that weigh under 200g.,Tests behavior when resolution/pitch filters are null. (Will fail currently until unified view is added).,"SELECT model_name, size_diameter_mm, size_length_min_mm, weight_g FROM all_lenses WHERE weight_g < 200;","SELECT model_name, weight_g
+FROM line_scan_lens_12k5u
+WHERE weight_g < 200;",{},5,False,invalid_sql,,"Execution failed on sql 'SELECT model_name, size_diameter_mm, size_length_min_mm, weight_g FROM all_lenses WHERE weight_g < 200;': relation ""all_lenses"" does not exist
+LINE 1: ...ze_diameter_mm, size_length_min_mm, weight_g FROM all_lenses...
+                                                             ^
+",-1,0,75.84
+q16_minimum_aperture_physics,Which coaxial illumination lens can be stopped down the most (smallest minimum aperture)?,Tests prompt engineering glossary ('minimum aperture' = f_no_max) and inverse numerical relationship (highest number = smallest physical aperture).,"SELECT model_name, f_no_max FROM coaxial_illumination_line_scan_lens ORDER BY f_no_max DESC LIMIT 1;","SELECT model_name, f_no_min, f_no_raw
+FROM coaxial_illumination_line_scan_lens
+ORDER BY f_no_max DESC
+LIMIT 1;","{""is_coaxial"": true}",1,False,result_mismatch,,,1,1,31.22
+q20_coaxial_fov,What is the maximum and minimum magnification for coaxial line scan lenses?,Tests retrieval of multiple related attributes (min/max pairs) on a non-standard table name.,"SELECT model_name, magnification_min, magnification_max FROM coaxial_illumination_line_scan_lens;","SELECT MAX(magnification_max) AS max_magnification, MIN(magnification_min) AS min_magnification
+FROM coaxial_illumination_line_scan_lens;","{""is_coaxial"": true}",1,False,wrong_aggregation,,,6,1,38.26
