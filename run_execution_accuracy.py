@@ -23,6 +23,9 @@ Outputs:
 ═════════════════════════════════════════════════════════════════════════════════
 """
 
+from instructor.validation import async_validators
+from instructor.validation import async_validators
+from instructor.validation import async_validators
 import json
 import os
 import re
@@ -208,6 +211,7 @@ def extract_sql_from_text(text: str) -> str:
 
 def run_pipeline(user_query: str) -> tuple:
     """Run the full RAG pipeline: extract filters → retrieve chunks → generate SQL.
+    Includes an SQL Safety Layer with a self-healing retry loop.
 
     Returns:
         (generated_sql, retrieved_contexts, extracted_filters)
@@ -259,16 +263,61 @@ ENGINEERING GLOSSARY (apply these mappings EXACTLY in every query):
 SCHEMA CONTEXT:
 {chr(10).join(contexts)}"""
 
-    response = ollama.chat(
-        model=OLLAMA_MODEL,
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_query},
-        ],
-        options={"temperature": 0, "num_ctx": 32768},
-    )
-    raw_response = response["message"]["content"]
-    clean_sql = extract_sql_from_text(raw_response)
+    # Lazy instantiate the validator to prevent disk I/O overhead on every loop iteration
+    global _validator
+    if '_validator' not in globals() or _validator is None:
+        from sql_validator import SQLValidator
+        _validator = SQLValidator()
+
+    # --------------------------------------------------------------------------
+    # SELF-HEALING RETRY LOOP
+    # --------------------------------------------------------------------------
+    # 1. We allow an initial generation attempt plus up to 2 retries (total 3 tries).
+    # 2. On failure, we append the bad SQL and the validator's failure reason to the 
+    #    message history and ask the LLM to correct its mistake.
+    # 3. If validation passes, we break the loop and return the SQL immediately.
+    # 4. If we hit the retry limit and still fail, we return the last bad SQL so the
+    #    main execution pipeline can log the failure appropriately.
+    # --------------------------------------------------------------------------
+    
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_query},
+    ]
+
+    max_retries = 2
+    attempts = 0
+    clean_sql = ""
+
+    while attempts <= max_retries:
+        response = ollama.chat(
+            model=OLLAMA_MODEL,
+            messages=messages,
+            options={"temperature": 0, "num_ctx": 32768},
+        )
+        raw_response = response["message"]["content"]
+        clean_sql = extract_sql_from_text(raw_response)
+
+        # Validate the generated SQL
+        val_result = _validator.validate(clean_sql)
+        if val_result.is_valid:
+            # SQL is structurally sound and schema-compliant
+            break
+            
+        attempts += 1
+        if attempts <= max_retries:
+            # Self-Heal: Append the failure context as a new user message prompting correction
+            correction_prompt = (
+                f"The SQL you generated failed validation.\n"
+                f"Bad SQL:\n{clean_sql}\n"
+                f"Validation Error: {val_result.reason}\n"
+                f"Please fix the error and output only the corrected raw SQL based strictly on the SCHEMA CONTEXT."
+            )
+            # Add the model's bad response and the user's correction instruction to the conversation
+            messages.append({"role": "assistant", "content": raw_response})
+            messages.append({"role": "user", "content": correction_prompt})
+            print(f"  [Self-Healing] Attempt {attempts}/{max_retries}. Reason: {val_result.reason}")
+
     return clean_sql, contexts, filters
 
 

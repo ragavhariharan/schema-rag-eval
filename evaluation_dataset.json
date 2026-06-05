@@ -1,0 +1,297 @@
+[
+  {
+    "id": "q1_ambiguous_warping",
+    "question": "Which 12K 5u lens has the least warping at the edges?",
+    "expected_sql": "SELECT model_name, tv_distortion_percent FROM line_scan_lens_12k5u ORDER BY ABS(tv_distortion_percent) ASC LIMIT 1;",
+    "focus": "Tests if alias 'warping' maps to tv_distortion_percent and applies ABS() for correct physics sorting.",
+    "patterns": [
+      "ORDER BY"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q2_cross_generation",
+    "question": "Compare the maximum aperture of the old 4K 7 micron lenses with the new series.",
+    "expected_sql": "SELECT 'original' AS series, model_name, f_no_min FROM line_scan_lens_4k7u UNION ALL SELECT 'new_series' AS series, model_name, f_no_min FROM new_series_line_scan_lens_4k7u ORDER BY f_no_min;",
+    "focus": "Tests UNION ALL structural generation and prompt adherence for 'maximum aperture' = f_no_min.",
+    "patterns": [
+      "UNION",
+      "ORDER BY"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q4_simple_lookup",
+    "question": "List the focal length and price of all 16K 3.5 micron lenses.",
+    "expected_sql": "SELECT model_name, focus_length_mm, list_price FROM line_scan_lens_16k3_5u;",
+    "focus": "Tests standard specification retrieval and column mapping.",
+    "patterns": [
+      "SIMPLE LOOKUP"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q5_compatibility_reasoning",
+    "question": "Find 8K 7u lenses that fit a C-mount and support an image size over 40mm.",
+    "expected_sql": "SELECT model_name, mount_raw, max_image_size_value FROM line_scan_lens_8k7u WHERE mount_raw ILIKE '%C%' AND max_image_size_value > 40;",
+    "focus": "Tests multi-condition filtering and partial string matching (ILIKE).",
+    "patterns": [
+      "FILTERING"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q6_ambiguous_illuminance",
+    "question": "Which 12K 5u lens has the best edge brightness?",
+    "expected_sql": "SELECT model_name, relative_illuminance_percent FROM line_scan_lens_12k5u ORDER BY relative_illuminance_percent DESC LIMIT 1;",
+    "focus": "Tests alias mapping from 'edge brightness' to relative_illuminance_percent and proper DESC sorting.",
+    "patterns": [
+      "ORDER BY"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q7_coaxial_dimensions",
+    "question": "Show me coaxial line scan lenses that weigh less than 500g.",
+    "expected_sql": "SELECT model_name, weight_g FROM coaxial_illumination_line_scan_lens WHERE weight_g < 500;",
+    "focus": "Tests boolean flag extraction (is_coaxial) and simple dimension filtering.",
+    "patterns": [
+      "FILTERING"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q8_working_distance_range",
+    "question": "Find new series 4K 7 micron lenses with a working distance between 80mm and 120mm.",
+    "expected_sql": "SELECT model_name, wd_mm, focus_length_mm FROM new_series_line_scan_lens_4k7u WHERE wd_mm BETWEEN 80 AND 120;",
+    "focus": "Tests SQL BETWEEN syntax and proper table targeting for 'new series'.",
+    "patterns": [
+      "FILTERING"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q9_complex_ambiguous_speed",
+    "question": "I need an 8K 5u lens with the fastest speed and a standoff above 150mm.",
+    "expected_sql": "SELECT model_name, f_no_min, wd_mm FROM line_scan_lens_8k5u WHERE wd_mm > 150 ORDER BY f_no_min ASC LIMIT 1;",
+    "focus": "Tests multiple semantic mappings ('fastest speed' -> f_no_min, 'standoff' -> wd_mm) combined with filtering and sorting.",
+    "patterns": [
+      "ORDER BY",
+      "FILTERING"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q10_conjugate_terminology",
+    "question": "Compare the total conjugate distance of the 16K 5 micron lenses.",
+    "expected_sql": "SELECT model_name, o_i FROM line_scan_lens_16k5u;",
+    "focus": "Tests mapping of 'total conjugate distance' to the 'o_i' column.",
+    "patterns": [
+      "SIMPLE LOOKUP"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q11_high_magnification",
+    "question": "What is the highest optical magnification ratio supported by the 16K 3.5 micron lenses?",
+    "expected_sql": "SELECT model_name, magnification_max FROM line_scan_lens_16k3_5u ORDER BY magnification_max DESC LIMIT 1;",
+    "focus": "Tests max mapping and DESC sorting for magnification limits.",
+    "patterns": [
+      "ORDER BY"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q12_heavy_lens_filtering",
+    "question": "List all 8K 7u lenses that weigh more than 400 grams.",
+    "expected_sql": "SELECT model_name, weight_g FROM line_scan_lens_8k7u WHERE weight_g > 400;",
+    "focus": "Tests simple greater-than numerical filtering on physical dimensions.",
+    "patterns": [
+      "FILTERING"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q13_fov_terminology",
+    "question": "Compare the angular field of view and linear field of view for 16K 5u lenses.",
+    "expected_sql": "SELECT model_name, fov_degrees, fov_mm FROM line_scan_lens_16k5u;",
+    "focus": "Tests distinction between angular (degrees) and linear (mm) FOV terminology.",
+    "patterns": [
+      "SIMPLE LOOKUP"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q14_flange_distance_exact",
+    "question": "Which 8K 5 micron lenses have a flange distance of exactly 12mm?",
+    "expected_sql": "SELECT model_name, flange_distance FROM line_scan_lens_8k5u WHERE flange_distance = 12;",
+    "focus": "Tests exact equality operator on conjugate parameters.",
+    "patterns": [
+      "FILTERING"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q15_compact_thread_search",
+    "question": "Find compact new series 4K 7u lenses with an outer diameter under 50mm that have a filter thread.",
+    "expected_sql": "SELECT model_name, size_diameter_mm, filter_thread_raw FROM new_series_line_scan_lens_4k7u WHERE size_diameter_mm < 50 AND filter_thread_raw IS NOT NULL;",
+    "focus": "Tests combining physical constraints with IS NOT NULL logic.",
+    "patterns": [
+      "FILTERING"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q16_minimum_aperture_physics",
+    "question": "Which coaxial illumination lens can be stopped down the most (smallest minimum aperture)?",
+    "expected_sql": "SELECT model_name, f_no_max FROM coaxial_illumination_line_scan_lens ORDER BY f_no_max DESC LIMIT 1;",
+    "focus": "Tests prompt engineering glossary ('minimum aperture' = f_no_max) and inverse numerical relationship (highest number = smallest physical aperture).",
+    "patterns": [
+      "ORDER BY"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q17_exact_focal_length",
+    "question": "Are there any 16K 3.5u lenses with a focal length of 60mm?",
+    "expected_sql": "SELECT model_name, focus_length_mm FROM line_scan_lens_16k3_5u WHERE focus_length_mm = 60;",
+    "focus": "Tests exact mapping to focus_length_mm.",
+    "patterns": [
+      "FILTERING"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q18_price_sorting",
+    "question": "Show 8K 5u lenses sorted from cheapest to most expensive.",
+    "expected_sql": "SELECT model_name, list_price FROM line_scan_lens_8k5u ORDER BY list_price ASC;",
+    "focus": "Tests text-to-SQL logic mapping 'cheapest' to ASC sorting on list_price.",
+    "patterns": [
+      "ORDER BY"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q19_extreme_standoff",
+    "question": "Find 4K 7 micron lenses designed for very long standoff distances, over 300mm.",
+    "expected_sql": "SELECT model_name, wd_mm FROM line_scan_lens_4k7u WHERE wd_mm > 300;",
+    "focus": "Tests alias extraction ('standoff' -> wd_mm) combined with high threshold.",
+    "patterns": [
+      "FILTERING"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "q20_coaxial_fov",
+    "question": "What is the maximum and minimum magnification for coaxial line scan lenses?",
+    "expected_sql": "SELECT model_name, magnification_min, magnification_max FROM coaxial_illumination_line_scan_lens;",
+    "focus": "Tests retrieval of multiple related attributes (min/max pairs) on a non-standard table name.",
+    "patterns": [
+      "SIMPLE LOOKUP"
+    ],
+    "dataset_source": "golden"
+  },
+  {
+    "id": "adv_q4_having_count",
+    "question": "Which thread mounts have more than 5 lenses in the 12K 5u catalog?",
+    "expected_sql": "SELECT mount_raw, COUNT(*) FROM line_scan_lens_12k5u GROUP BY mount_raw HAVING COUNT(*) > 5;",
+    "focus": "",
+    "patterns": [
+      "GROUP BY",
+      "AGGREGATION",
+      "HAVING"
+    ],
+    "dataset_source": "advanced"
+  },
+  {
+    "id": "adv_q5_subquery_cheaper_than_avg",
+    "question": "Find 12K 5u lenses cheaper than the average 12K 5u lens.",
+    "expected_sql": "SELECT model_name, list_price FROM line_scan_lens_12k5u WHERE list_price < (SELECT AVG(list_price) FROM line_scan_lens_12k5u);",
+    "focus": "",
+    "patterns": [
+      "SUBQUERY",
+      "AGGREGATION"
+    ],
+    "dataset_source": "advanced"
+  },
+  {
+    "id": "adv_q6_subquery_heaviest_in_class",
+    "question": "Which 8K 5u lens is heavier than the average 16K 5u lens?",
+    "expected_sql": "SELECT model_name, weight_g FROM line_scan_lens_8k5u WHERE weight_g > (SELECT AVG(weight_g) FROM line_scan_lens_16k5u);",
+    "focus": "",
+    "patterns": [
+      "SUBQUERY",
+      "AGGREGATION",
+      "CROSS-TABLE"
+    ],
+    "dataset_source": "advanced"
+  },
+  {
+    "id": "adv_q8_multi_step_agg_max_distortion",
+    "question": "Which mount type has the highest maximum distortion in 12K 5u lenses?",
+    "expected_sql": "SELECT mount_raw FROM line_scan_lens_12k5u GROUP BY mount_raw ORDER BY MAX(tv_distortion_percent) DESC LIMIT 1;",
+    "focus": "",
+    "patterns": [
+      "GROUP BY",
+      "AGGREGATION",
+      "MULTI-STEP AGGREGATION",
+      "ORDER BY"
+    ],
+    "dataset_source": "advanced"
+  },
+  {
+    "id": "adv_q9_union_stress_test",
+    "question": "Compare all original and new-series 4K 7u lenses sorted by price.",
+    "expected_sql": "SELECT 'original' AS series, model_name, list_price FROM line_scan_lens_4k7u UNION ALL SELECT 'new_series' AS series, model_name, list_price FROM new_series_line_scan_lens_4k7u ORDER BY list_price;",
+    "focus": "",
+    "patterns": [
+      "UNION",
+      "ORDER BY"
+    ],
+    "dataset_source": "advanced"
+  },
+  {
+    "id": "adv_q10_union_distortion",
+    "question": "List all 8K 5u and 8K 7u lenses with distortion under 0.1%.",
+    "expected_sql": "SELECT model_name, tv_distortion_percent FROM line_scan_lens_8k5u WHERE tv_distortion_percent < 0.1 UNION ALL SELECT model_name, tv_distortion_percent FROM line_scan_lens_8k7u WHERE tv_distortion_percent < 0.1;",
+    "focus": "",
+    "patterns": [
+      "UNION",
+      "FILTERING"
+    ],
+    "dataset_source": "advanced"
+  },
+  {
+    "id": "adv_q13_engineering_avg_distortion",
+    "question": "What is the average distortion of all 12K 5u lenses?",
+    "expected_sql": "SELECT AVG(tv_distortion_percent) FROM line_scan_lens_12k5u;",
+    "focus": "",
+    "patterns": [
+      "AGGREGATION",
+      "ENGINEERING ANALYTICS"
+    ],
+    "dataset_source": "advanced"
+  },
+  {
+    "id": "adv_q14_engineering_median_wd",
+    "question": "What is the median working distance of 8K 7u lenses?",
+    "expected_sql": "SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY wd_mm) FROM line_scan_lens_8k7u;",
+    "focus": "",
+    "patterns": [
+      "ENGINEERING ANALYTICS",
+      "ADVANCED AGGREGATION"
+    ],
+    "dataset_source": "advanced"
+  },
+  {
+    "id": "adv_q15_engineering_min_flange",
+    "question": "What is the smallest flange distance among 16K 3.5u lenses?",
+    "expected_sql": "SELECT MIN(flange_distance) FROM line_scan_lens_16k3_5u;",
+    "focus": "",
+    "patterns": [
+      "AGGREGATION",
+      "ENGINEERING ANALYTICS"
+    ],
+    "dataset_source": "advanced"
+  }
+]
