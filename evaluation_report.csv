@@ -1,24 +1,26 @@
 query_id,dataset_source,question,generated_sql,expected_sql,execution_pass,failure_reason,patterns,safety_triggered,self_heal_attempts,validation_status,ast_select_match,ast_filter_match,ast_join_match,ast_groupby_match,ast_having_match,ast_orderby_match,ast_subquery_match,ast_union_match
 q1_ambiguous_warping,golden,Which 12K 5u lens has the least warping at the edges?,"SELECT model_name, tv_distortion_percent
 FROM line_scan_lens_12k5u
+WHERE tv_distortion_percent IS NOT NULL
 ORDER BY ABS(tv_distortion_percent) ASC
 LIMIT 1;","SELECT model_name, tv_distortion_percent FROM line_scan_lens_12k5u ORDER BY ABS(tv_distortion_percent) ASC LIMIT 1;",True,Column-Name Agnostic Superset Match,ORDER BY,False,0,Validation Passed,True,,,,,True,,
-q2_cross_generation,golden,Compare the maximum aperture of the old 4K 7 micron lenses with the new series.,"SELECT 'old_series' AS series, model_name, f_no_min AS max_aperture
+q2_cross_generation,golden,Compare the maximum aperture of the old 4K 7 micron lenses with the new series.,"SELECT 'old_series' AS series, model_name, f_no_min
 FROM line_scan_lens_4k7u
 UNION ALL
-SELECT 'new_series' AS series, model_name, f_no_min AS max_aperture
+SELECT 'new_series' AS series, model_name, f_no_min
 FROM new_series_line_scan_lens_4k7u
-ORDER BY max_aperture DESC;","SELECT 'original' AS series, model_name, f_no_min FROM line_scan_lens_4k7u UNION ALL SELECT 'new_series' AS series, model_name, f_no_min FROM new_series_line_scan_lens_4k7u ORDER BY f_no_min;",False,Mismatch in values or shape,"UNION, ORDER BY",False,0,Validation Passed,True,,,,,True,,True
+ORDER BY f_no_min;","SELECT 'original' AS series, model_name, f_no_min FROM line_scan_lens_4k7u UNION ALL SELECT 'new_series' AS series, model_name, f_no_min FROM new_series_line_scan_lens_4k7u ORDER BY f_no_min;",False,Mismatch in values or shape,"UNION, ORDER BY",False,0,Validation Passed,True,,,,,True,,True
 q4_simple_lookup,golden,List the focal length and price of all 16K 3.5 micron lenses.,"SELECT model_name, focus_length_mm, list_price
 FROM line_scan_lens_16k3_5u;","SELECT model_name, focus_length_mm, list_price FROM line_scan_lens_16k3_5u;",True,Column-Name Agnostic Superset Match,SIMPLE LOOKUP,False,0,Validation Passed,True,,,,,,,
 q5_compatibility_reasoning,golden,Find 8K 7u lenses that fit a C-mount and support an image size over 40mm.,"SELECT model_name, mount_raw, max_image_size_value
 FROM line_scan_lens_8k7u
 WHERE mount_raw = 'C-mount'
   AND max_image_size_value > 40;","SELECT model_name, mount_raw, max_image_size_value FROM line_scan_lens_8k7u WHERE mount_raw ILIKE '%C%' AND max_image_size_value > 40;",True,Both sets empty (Pass),FILTERING,False,0,Validation Passed,True,True,,,,,,
-q6_ambiguous_illuminance,golden,Which 12K 5u lens has the best edge brightness?,"SELECT model_name, relative_illuminance_percent
-FROM line_scan_lens_12k5u
-ORDER BY relative_illuminance_percent DESC
-LIMIT 1;","SELECT model_name, relative_illuminance_percent FROM line_scan_lens_12k5u ORDER BY relative_illuminance_percent DESC LIMIT 1;",True,Column-Name Agnostic Superset Match,ORDER BY,False,0,Validation Passed,True,,,,,True,,
+q6_ambiguous_illuminance,golden,Which 12K 5u lens has the best edge brightness?,"SELECT model_name, relative_illuminance_percent 
+FROM line_scan_lens_12k5u 
+WHERE relative_illuminance_percent IS NOT NULL 
+ORDER BY relative_illuminance_percent DESC 
+LIMIT 1;","SELECT model_name, relative_illuminance_percent FROM line_scan_lens_12k5u ORDER BY relative_illuminance_percent DESC LIMIT 1;",False,"One set empty, other not",ORDER BY,False,0,Validation Passed,True,,,,,True,,
 q7_coaxial_dimensions,golden,Show me coaxial line scan lenses that weigh less than 500g.,"SELECT model_name, weight_g
 FROM coaxial_illumination_line_scan_lens
 WHERE weight_g < 500;","SELECT model_name, weight_g FROM coaxial_illumination_line_scan_lens WHERE weight_g < 500;",True,Both sets empty (Pass),FILTERING,False,0,Validation Passed,True,True,,,,,,
@@ -27,9 +29,8 @@ FROM new_series_line_scan_lens_4k7u
 WHERE wd_mm BETWEEN 80 AND 120;","SELECT model_name, wd_mm, focus_length_mm FROM new_series_line_scan_lens_4k7u WHERE wd_mm BETWEEN 80 AND 120;",True,Both sets empty (Pass),FILTERING,False,0,Validation Passed,True,True,,,,,,
 q9_complex_ambiguous_speed,golden,I need an 8K 5u lens with the fastest speed and a standoff above 150mm.,"SELECT model_name, f_no_min, wd_mm
 FROM line_scan_lens_8k5u
-WHERE wd_mm > 150
-ORDER BY f_no_min ASC
-LIMIT 1;","SELECT model_name, f_no_min, wd_mm FROM line_scan_lens_8k5u WHERE wd_mm > 150 ORDER BY f_no_min ASC LIMIT 1;",True,Column-Name Agnostic Superset Match,"ORDER BY, FILTERING",False,0,Validation Passed,True,True,,,,True,,
+WHERE wd_mm > 150 AND f_no_min IS NOT NULL
+ORDER BY f_no_min ASC LIMIT 1;","SELECT model_name, f_no_min, wd_mm FROM line_scan_lens_8k5u WHERE wd_mm > 150 ORDER BY f_no_min ASC LIMIT 1;",True,Column-Name Agnostic Superset Match,"ORDER BY, FILTERING",False,0,Validation Passed,True,True,,,,True,,
 q10_conjugate_terminology,golden,Compare the total conjugate distance of the 16K 5 micron lenses.,"SELECT model_name, o_i
 FROM line_scan_lens_16k5u;","SELECT model_name, o_i FROM line_scan_lens_16k5u;",True,Column-Name Agnostic Superset Match,SIMPLE LOOKUP,False,0,Validation Passed,True,,,,,,,
 q11_high_magnification,golden,What is the highest optical magnification ratio supported by the 16K 3.5 micron lenses?,"SELECT model_name, magnification_max
@@ -47,25 +48,27 @@ WHERE flange_distance = 12;","SELECT model_name, flange_distance FROM line_scan_
 q15_compact_thread_search,golden,Find compact new series 4K 7u lenses with an outer diameter under 50mm that have a filter thread.,"SELECT model_name, size_diameter_mm, filter_thread_raw
 FROM new_series_line_scan_lens_4k7u
 WHERE size_diameter_mm < 50 AND filter_thread_raw IS NOT NULL;","SELECT model_name, size_diameter_mm, filter_thread_raw FROM new_series_line_scan_lens_4k7u WHERE size_diameter_mm < 50 AND filter_thread_raw IS NOT NULL;",True,Both sets empty (Pass),FILTERING,False,0,Validation Passed,True,True,,,,,,
-q16_minimum_aperture_physics,golden,Which coaxial illumination lens can be stopped down the most (smallest minimum aperture)?,"SELECT model_name, f_no_min, f_no_raw
-FROM coaxial_illumination_line_scan_lens
-ORDER BY f_no_max DESC
-LIMIT 1;","SELECT model_name, f_no_max FROM coaxial_illumination_line_scan_lens ORDER BY f_no_max DESC LIMIT 1;",False,Mismatch in values or shape,ORDER BY,False,0,Validation Passed,False,,,,,True,,
+q16_minimum_aperture_physics,golden,Which coaxial illumination lens can be stopped down the most (smallest minimum aperture)?,"SELECT model_name, f_no_min, f_no_max 
+FROM coaxial_illumination_line_scan_lens 
+WHERE f_no_min IS NOT NULL AND f_no_max IS NOT NULL 
+ORDER BY f_no_max DESC 
+LIMIT 1;","SELECT model_name, f_no_max FROM coaxial_illumination_line_scan_lens ORDER BY f_no_max DESC LIMIT 1;",True,Column-Name Agnostic Superset Match,ORDER BY,False,0,Validation Passed,True,,,,,True,,
 q17_exact_focal_length,golden,Are there any 16K 3.5u lenses with a focal length of 60mm?,"SELECT model_name, focus_length_mm
 FROM line_scan_lens_16k3_5u
 WHERE focus_length_mm = 60;","SELECT model_name, focus_length_mm FROM line_scan_lens_16k3_5u WHERE focus_length_mm = 60;",True,Column-Name Agnostic Superset Match,FILTERING,False,0,Validation Passed,True,True,,,,,,
-q18_price_sorting,golden,Show 8K 5u lenses sorted from cheapest to most expensive.,"SELECT model_name, list_price
-FROM line_scan_lens_8k5u
+q18_price_sorting,golden,Show 8K 5u lenses sorted from cheapest to most expensive.,"SELECT model_name, list_price 
+FROM line_scan_lens_8k5u 
+WHERE list_price IS NOT NULL 
 ORDER BY list_price ASC;","SELECT model_name, list_price FROM line_scan_lens_8k5u ORDER BY list_price ASC;",True,Column-Name Agnostic Superset Match,ORDER BY,False,0,Validation Passed,True,,,,,True,,
 q19_extreme_standoff,golden,"Find 4K 7 micron lenses designed for very long standoff distances, over 300mm.","SELECT model_name, wd_mm, focus_length_mm
 FROM line_scan_lens_4k7u
 WHERE wd_mm > 300;","SELECT model_name, wd_mm FROM line_scan_lens_4k7u WHERE wd_mm > 300;",True,Column-Name Agnostic Superset Match,FILTERING,False,0,Validation Passed,True,True,,,,,,
 q20_coaxial_fov,golden,What is the maximum and minimum magnification for coaxial line scan lenses?,"SELECT MAX(magnification_max) AS max_magnification, MIN(magnification_min) AS min_magnification
 FROM coaxial_illumination_line_scan_lens;","SELECT model_name, magnification_min, magnification_max FROM coaxial_illumination_line_scan_lens;",False,Mismatch in values or shape,SIMPLE LOOKUP,False,0,Validation Passed,False,,,,,,,
-adv_q4_having_count,advanced,Which thread mounts have more than 5 lenses in the 12K 5u catalog?,"SELECT mount_raw, COUNT(*) AS lens_count
+adv_q4_having_count,advanced,Which thread mounts have more than 5 lenses in the 12K 5u catalog?,"SELECT filter_thread_raw, COUNT(*) AS lens_count
 FROM line_scan_lens_12k5u
-GROUP BY mount_raw
-HAVING COUNT(*) > 5;","SELECT mount_raw, COUNT(*) FROM line_scan_lens_12k5u GROUP BY mount_raw HAVING COUNT(*) > 5;",True,Column-Name Agnostic Superset Match,"GROUP BY, AGGREGATION, HAVING",False,0,Validation Passed,True,,,True,True,,,
+GROUP BY filter_thread_raw
+HAVING COUNT(*) > 5;","SELECT mount_raw, COUNT(*) FROM line_scan_lens_12k5u GROUP BY mount_raw HAVING COUNT(*) > 5;",False,Mismatch in values or shape,"GROUP BY, AGGREGATION, HAVING",False,0,Validation Passed,False,,,True,True,,,
 adv_q5_subquery_cheaper_than_avg,advanced,Find 12K 5u lenses cheaper than the average 12K 5u lens.,"SELECT model_name, list_price
 FROM line_scan_lens_12k5u
 WHERE list_price < (SELECT AVG(list_price) FROM line_scan_lens_12k5u);","SELECT model_name, list_price FROM line_scan_lens_12k5u WHERE list_price < (SELECT AVG(list_price) FROM line_scan_lens_12k5u);",True,Both sets empty (Pass),"SUBQUERY, AGGREGATION",False,0,Validation Passed,True,True,,,,,True,
@@ -77,7 +80,8 @@ WHERE weight_g > (
 );","SELECT model_name, weight_g FROM line_scan_lens_8k5u WHERE weight_g > (SELECT AVG(weight_g) FROM line_scan_lens_16k5u);",True,Column-Name Agnostic Superset Match,"SUBQUERY, AGGREGATION, CROSS-TABLE",False,0,Validation Passed,True,True,,,,,True,
 adv_q8_multi_step_agg_max_distortion,advanced,Which mount type has the highest maximum distortion in 12K 5u lenses?,"SELECT model_name, mount_raw, tv_distortion_percent, tv_distortion_operator
 FROM line_scan_lens_12k5u
-ORDER BY ABS(tv_distortion_percent) DESC
+WHERE tv_distortion_percent IS NOT NULL AND tv_distortion_operator = '<'
+ORDER BY tv_distortion_percent DESC
 LIMIT 1;",SELECT mount_raw FROM line_scan_lens_12k5u GROUP BY mount_raw ORDER BY MAX(tv_distortion_percent) DESC LIMIT 1;,True,Scalar vs. Row match,"GROUP BY, AGGREGATION, MULTI-STEP AGGREGATION, ORDER BY",False,0,Validation Passed,True,,,False,,True,,
 adv_q9_union_stress_test,advanced,Compare all original and new-series 4K 7u lenses sorted by price.,"SELECT 'original' AS series, model_name, list_price
 FROM line_scan_lens_4k7u
@@ -85,23 +89,19 @@ UNION ALL
 SELECT 'new_series' AS series, model_name, list_price
 FROM new_series_line_scan_lens_4k7u
 ORDER BY list_price;","SELECT 'original' AS series, model_name, list_price FROM line_scan_lens_4k7u UNION ALL SELECT 'new_series' AS series, model_name, list_price FROM new_series_line_scan_lens_4k7u ORDER BY list_price;",True,Column-Name Agnostic Superset Match,"UNION, ORDER BY",False,0,Validation Passed,True,,,,,True,,True
-adv_q10_union_distortion,advanced,List all 8K 5u and 8K 7u lenses with distortion under 0.1%.,"SELECT model_name, focus_length_mm, tv_distortion_percent, tv_distortion_operator
+adv_q10_union_distortion,advanced,List all 8K 5u and 8K 7u lenses with distortion under 0.1%.,"SELECT model_name, tv_distortion_percent, tv_distortion_operator
 FROM line_scan_lens_8k5u
 WHERE tv_distortion_percent <= 0.1
 
-UNION
+UNION ALL
 
-SELECT model_name, focus_length_mm, tv_distortion_percent, tv_distortion_operator
+SELECT model_name, tv_distortion_percent, tv_distortion_operator
 FROM line_scan_lens_8k7u
 WHERE tv_distortion_percent <= 0.1;","SELECT model_name, tv_distortion_percent FROM line_scan_lens_8k5u WHERE tv_distortion_percent < 0.1 UNION ALL SELECT model_name, tv_distortion_percent FROM line_scan_lens_8k7u WHERE tv_distortion_percent < 0.1;",False,Mismatch in values or shape,"UNION, FILTERING",False,0,Validation Passed,True,True,,,,,,True
 adv_q13_engineering_avg_distortion,advanced,What is the average distortion of all 12K 5u lenses?,"SELECT AVG(tv_distortion_percent) AS avg_tv_distortion_percent
 FROM line_scan_lens_12k5u;",SELECT AVG(tv_distortion_percent) FROM line_scan_lens_12k5u;,True,Scalar vs. Row match,"AGGREGATION, ENGINEERING ANALYTICS",False,0,Validation Passed,True,,,,,,,
-adv_q14_engineering_median_wd,advanced,What is the median working distance of 8K 7u lenses?,"SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY wd_mm) AS median_wd_mm
-FROM line_scan_lens_8k7u;",SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY wd_mm) FROM line_scan_lens_8k7u;,False,"DB Error. Expected: connection to server at ""aws-1-ap-south-1.pooler.supabase.com"" (3.111.225.200), port 5432 failed: timeout expired
-connection to server at ""aws-1-ap-south-1.pooler.supabase.com"" (13.200.110.68), port 5432 failed: timeout expired
-connection to server at ""aws-1-ap-south-1.pooler.supabase.com"" (3.109.171.244), port 5432 failed: timeout expired
- | Generated: could not translate host name ""aws-1-ap-south-1.pooler.supabase.com"" to address: nodename nor servname provided, or not known
-","ENGINEERING ANALYTICS, ADVANCED AGGREGATION",False,0,Validation Passed,True,,,,,True,,
+adv_q14_engineering_median_wd,advanced,What is the median working distance of 8K 7u lenses?,"SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY wd_mm) AS median_wd_mm
+FROM line_scan_lens_8k7u;",SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY wd_mm) FROM line_scan_lens_8k7u;,True,Scalar vs. Row match,"ENGINEERING ANALYTICS, ADVANCED AGGREGATION",False,0,Validation Passed,True,,,,,True,,
 adv_q15_engineering_min_flange,advanced,What is the smallest flange distance among 16K 3.5u lenses?,"SELECT model_name, flange_distance
 FROM line_scan_lens_16k3_5u
 ORDER BY flange_distance ASC

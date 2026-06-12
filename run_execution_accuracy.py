@@ -22,10 +22,6 @@ Outputs:
   - Terminal dashboard with accuracy % and failure breakdown
 ═════════════════════════════════════════════════════════════════════════════════
 """
-
-from instructor.validation import async_validators
-from instructor.validation import async_validators
-from instructor.validation import async_validators
 import json
 import os
 import re
@@ -162,7 +158,7 @@ RULES:
             {"role": "user", "content": user_query},
         ],
         format="json",
-        options={"temperature": 0, "num_ctx": 32768},
+        options={"temperature": 0, "num_ctx": 8192},
     )
 
     try:
@@ -249,16 +245,25 @@ RULES:
 5. SELECT only the columns that are directly relevant to the user's question. Do not add extra columns.
 
 SUPERLATIVE QUERIES:
-When a user asks for a "maximum", "minimum", "fastest", or "cheapest" lens, they want the specific lens model record, not an isolated aggregate number.
-Example: "What is the fastest lens?" -> SELECT model_name, f_no_min FROM [table] ORDER BY f_no_min ASC LIMIT 1;
+When a user asks for a "maximum", "minimum", "fastest", "cheapest", or "costliest" lens, they want the specific lens model record, not an isolated aggregate number.
+CRITICAL: Since columns like list_price, weight_g, etc., can contain NULL values, you MUST filter them out so NULLs are not sorted first.
+Example: "What is the fastest lens?" -> SELECT model_name, f_no_min FROM [table] WHERE f_no_min IS NOT NULL ORDER BY f_no_min ASC LIMIT 1;
+Example: "What is the cheapest lens?" -> SELECT model_name, list_price FROM [table] WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;
+Example: "What is the costliest lens?" -> SELECT model_name, list_price FROM [table] WHERE list_price IS NOT NULL ORDER BY list_price DESC LIMIT 1;
 
 ENGINEERING GLOSSARY (apply these mappings EXACTLY in every query):
 - "Maximum Aperture", "Widest Aperture", or "Fastest Lens" ALWAYS maps to the `f_no_min` column (lower f-number = wider aperture).
 - "Minimum Aperture" or "stopped down the most" ALWAYS maps to the `f_no_max` column (higher f-number = smaller aperture). Use ORDER BY f_no_max DESC LIMIT 1 to find the lens that stops down the most.
 - "Warping" or "distortion" maps to `tv_distortion_percent`.
-- "Edge brightness" maps to `relative_illuminance_percent`.
+- "Edge brightness", "relative illuminance", or "uniformity" maps to `relative_illuminance_percent`. NOTE: Percentages are stored as whole numbers (e.g., 75% is 75). If a user queries > X%, you MUST include the exact value if the companion operator is '>' or '>='. For example, use: `(relative_illuminance_percent > X OR (relative_illuminance_percent = X AND relative_illuminance_operator IN ('>', '>=')))`.
 - "Standoff" or "working distance" maps to `wd_mm`.
 - "Total conjugate distance" maps to `o_i`.
+
+CROSS-TABLE QUERIES:
+If the user asks a general question comparing across all lenses without specifying a specific resolution/pitch target, you MUST query across all relevant tables.
+- Use `UNION ALL` to combine results from all tables in the SCHEMA CONTEXT that contain the requested columns.
+- DO NOT just query a single table. Ensure you include EVERY relevant table from the context.
+- CRITICAL SYNTAX RULE: Do NOT place semicolons (;) at the end of the individual SELECT statements within a UNION ALL. Only place a single semicolon at the very end of the final query.
 
 SCHEMA CONTEXT:
 {chr(10).join(contexts)}"""
@@ -293,7 +298,7 @@ SCHEMA CONTEXT:
         response = ollama.chat(
             model=OLLAMA_MODEL,
             messages=messages,
-            options={"temperature": 0, "num_ctx": 32768},
+            options={"temperature": 0, "num_ctx": 8192},
         )
         raw_response = response["message"]["content"]
         clean_sql = extract_sql_from_text(raw_response)

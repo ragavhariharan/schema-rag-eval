@@ -3,28 +3,26 @@ run_sql_agent.py
 ═══════════════════════════════════════════════════════════════════════════════════
 Interactive Terminal Interface for the SQL Agent.
 
-Supports two input modes:
-  1. Natural Language  → "What 8K 5u lenses weigh under 200g?"
-  2. Structured Filters → {"table": "line_scan_lens_8k5u", "weight_g": {"$lt": 200}}
+Supports Natural Language queries: e.g. "What 8K 5u lenses weigh under 200g?"
 
 Type 'exit' or 'quit' to close.
 ═══════════════════════════════════════════════════════════════════════════════════
 """
 
 import json
-
+import os
 import pandas as pd
 
 from sql_agent import SQLAgent
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 W = 70  # Terminal width
 
 
-def create_empty_state(user_input: str = "", filters: dict = None) -> dict:
+def create_empty_state(user_input: str = "") -> dict:
     """Create a minimal state dict with only the fields the SQL Agent uses."""
     return {
         "user_input": user_input,
-        "filters": filters or {},
         "products": [],
         "errors": [],
     }
@@ -51,12 +49,16 @@ def main():
 
     agent = SQLAgent()
 
-    print(f"  ✅ Schema loaded: {len(agent.valid_tables)} tables")
+    # Load registry to get table count for terminal output
+    registry_path = os.path.join(SCRIPT_DIR, "schema_registry.json")
+    with open(registry_path, "r") as f:
+        schema = json.load(f)
+
+    print(f"  ✅ Schema loaded: {len(schema)} tables")
     print(f"  ✅ Validator ready")
     print()
-    print(f"  Input modes:")
-    print(f"    Natural Language : What 8K 5u lenses weigh under 200g?")
-    print(f"    Structured JSON  : {{\"table\": \"line_scan_lens_8k5u\", \"weight_g\": {{\"$lt\": 200}}}}")
+    print(f"  Usage:")
+    print(f"    Enter a Natural Language query. Example: What 8K 5u lenses weigh under 200g?")
     print(f"    Type 'exit' to quit.")
     print(f"{'═' * W}")
 
@@ -71,20 +73,8 @@ def main():
             print("  Goodbye!")
             break
 
-        # ── Detect input mode ─────────────────────────────────────────────
-        mode = "Natural Language"
-        state = None
-
-        try:
-            parsed = json.loads(user_input)
-            if isinstance(parsed, dict):
-                state = create_empty_state(filters=parsed)
-                mode = "Structured Filters"
-        except (json.JSONDecodeError, ValueError):
-            pass
-
-        if state is None:
-            state = create_empty_state(user_input=user_input)
+        # ── Setup state ───────────────────────────────────────────────────
+        state = create_empty_state(user_input=user_input)
 
         # ── Execute ───────────────────────────────────────────────────────
         state = agent.execute(state)
@@ -92,7 +82,6 @@ def main():
 
         # ── Display results ───────────────────────────────────────────────
         print(f"  {'─' * (W - 4)}")
-        print(f"  Mode:       {mode}")
 
         if result.get("sql"):
             sql_lines = result["sql"].strip().split("\n")

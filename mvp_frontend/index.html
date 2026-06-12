@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EarthTekniks AI Assistant</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Highlight.js for SQL syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <!-- Marked for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo-orb"></div>
+                    <h2>EarthTekniks AI</h2>
+                </div>
+                <span class="badge">MVP V1.0</span>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="info-card">
+                    <h3>Data Access Workflow</h3>
+                    <p>Powered by the robust 6-Layer Architecture. Ask me anything about our lens catalog.</p>
+                </div>
+                <div class="suggestion-chips">
+                    <button class="chip" onclick="setInput('What is the cheapest 4K lens?')">Cheapest 4K Lens</button>
+                    <button class="chip" onclick="setInput('Find lenses with relative illuminance > 80%')">Uniform Illumination</button>
+                    <button class="chip" onclick="setInput('Which 8K lenses have the widest aperture?')">Widest Aperture 8K</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-container">
+            <header class="chat-header">
+                <h1>Lens Catalog Assistant</h1>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>System Online</span>
+                </div>
+            </header>
+
+            <div class="chat-history" id="chatHistory">
+                <!-- Welcome Message -->
+                <div class="message assistant-message">
+                    <div class="avatar assistant-avatar">AI</div>
+                    <div class="message-content">
+                        Hello! I am the EarthTekniks AI Assistant. How can I help you search the lens catalog today?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <form id="chatForm" class="input-form">
+                    <input type="text" id="userInput" placeholder="Ask about our line scan lenses..." autocomplete="off" required>
+                    <button type="submit" id="sendBtn" class="send-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </form>
+                <div class="input-footer">
+                    SQL Generation • AST Validation • RAG Synthesis
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
