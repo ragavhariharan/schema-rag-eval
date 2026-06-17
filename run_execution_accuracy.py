@@ -127,29 +127,67 @@ chroma_client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
 collection = chroma_client.get_collection(name=CHROMA_COLLECTION)
 
 
+# Valid product types that the LLM can extract (must match PRODUCT_TYPE_REGISTRY
+# in generate_chunks.py and the metadata stored in ChromaDB).
+VALID_PRODUCT_TYPES = {
+    "line_scan", "fa_lens", "telecentric", "macro", "large_format",
+    "zoom", "microscope", "spectral", "three_cmos", "m12_mount",
+    "anti_vibration", "autofocus", "laser_coaxial", "inspection",
+    "accessory",
+}
+
+
 def llm_extract_filters(user_query: str) -> dict:
     """Dynamically extract ChromaDB metadata filters from a user query using the LLM.
 
     Uses Ollama's JSON mode for structured output. Returns a dict with keys
     matching ChromaDB metadata fields. Values are None for unidentified filters.
+
+    Extracts:
+        - product_type: which lens family the user is asking about
+        - resolution_target: Line Scan specific (4K, 8K, 12K, 16K)
+        - pixel_pitch_um: Line Scan specific (3.5, 5.0, 7.0)
+        - is_coaxial: Line Scan specific
+        - is_new_series: Line Scan specific
     """
-    system_prompt = """You are a metadata filter extractor for a line scan lens catalog database.
-Given a user's natural language query about lenses, extract the following metadata filters as JSON:
+    system_prompt = """You are a metadata filter extractor for an industrial machine vision lens catalog.
+The catalog contains many product families. Given a user's natural language query, extract metadata filters as JSON.
 
 {
-  "resolution_target": string or null (e.g. "4K", "8K", "12K", "16K" — extracted from mentions like "8K", "12k", "12K"),
-  "pixel_pitch_um": number or null (e.g. 5.0, 7.0, 3.5 — extracted from mentions like "5u", "5µm", "5 micron", "3.5u"),
-  "is_coaxial": true/false or null (true ONLY if the query explicitly mentions "coaxial"),
-  "is_new_series": true/false or null (true ONLY if the query explicitly mentions "new series")
+  "product_type": string or null,
+  "resolution_target": string or null,
+  "pixel_pitch_um": number or null,
+  "is_coaxial": true/false or null,
+  "is_new_series": true/false or null
 }
+
+PRODUCT TYPE MAPPING (use EXACTLY these values):
+- "line_scan"       → line scan lens, line scan, web inspection lens
+- "fa_lens"         → FA lens, factory automation lens, industrial lens
+- "telecentric"     → telecentric lens, bi-telecentric, measurement lens
+- "macro"           → macro lens, close-up lens
+- "large_format"    → large format lens, large sensor lens
+- "zoom"            → zoom lens, variable magnification lens
+- "microscope"      → microscope lens, magnifying lens, microscope objective
+- "spectral"        → spectral lens, SWIR lens, NIR lens, hyperspectral lens
+- "three_cmos"      → 3-CMOS lens, three CMOS lens, prism lens
+- "m12_mount"       → M12 lens, M12 mount lens, board lens, S-mount lens
+- "anti_vibration"  → anti-vibration lens, vibration resistant lens
+- "autofocus"       → autofocus lens, AF lens, motorized focus lens
+- "laser_coaxial"   → laser coaxial lens, laser alignment lens
+- "inspection"      → 360 inspection, cylindrical inspection, bottle inspection
+- "accessory"       → adapter, extension ring, focusing ring, lens holder
 
 RULES:
 - Return ONLY the JSON object, nothing else.
 - Use null for any filter you cannot confidently extract from the query.
-- "resolution_target" must always be uppercase with K suffix (e.g. "8K", not "8k").
-- "pixel_pitch_um" must be a number (e.g. 3.5, not "3.5u").
-- If the query mentions no specific resolution, pixel pitch, coaxial, or new series, return all nulls.
-- Queries about general lens properties (e.g. "all lenses under 200g") should return all nulls."""
+- "product_type" must be one of the exact strings listed above, or null.
+- "resolution_target" must always be uppercase with K suffix (e.g. "8K", not "8k"). Only applies to line scan lenses.
+- "pixel_pitch_um" must be a number (e.g. 3.5, not "3.5u"). Only applies to line scan lenses.
+- "is_coaxial": true ONLY if the query explicitly mentions "coaxial". Only applies to line scan lenses.
+- "is_new_series": true ONLY if the query explicitly mentions "new series". Only applies to line scan lenses.
+- If the query is general (e.g. "all lenses under 200g") without specifying a family, return all nulls.
+- If the query mentions a specific family (e.g. "cheapest FA lens"), set product_type accordingly."""
 
     response = ollama.chat(
         model=OLLAMA_MODEL,
@@ -164,15 +202,26 @@ RULES:
     try:
         parsed = json.loads(response["message"]["content"])
     except (json.JSONDecodeError, KeyError):
-        return {"resolution_target": None, "pixel_pitch_um": None, "is_coaxial": None, "is_new_series": None}
+        return {
+            "product_type": None, "resolution_target": None,
+            "pixel_pitch_um": None, "is_coaxial": None, "is_new_series": None,
+        }
 
     filters = {
+        "product_type": None,
         "resolution_target": None,
         "pixel_pitch_um": None,
         "is_coaxial": None,
         "is_new_series": None,
     }
 
+    # ── Product Type ──────────────────────────────────────────────────────
+    if parsed.get("product_type") and isinstance(parsed["product_type"], str):
+        pt = parsed["product_type"].lower().strip()
+        if pt in VALID_PRODUCT_TYPES:
+            filters["product_type"] = pt
+
+    # ── Line Scan specific fields ─────────────────────────────────────────
     if parsed.get("resolution_target") and isinstance(parsed["resolution_target"], str):
         val = parsed["resolution_target"].upper().replace(" ", "")
         if not val.endswith("K"):
@@ -217,6 +266,10 @@ def run_pipeline(user_query: str) -> tuple:
     search_params = {"query_texts": [user_query], "n_results": 5}
 
     and_conditions = []
+    # ── Product type filter (routes to the correct lens family) ───────
+    if filters.get("product_type"):
+        and_conditions.append({"product_type": filters["product_type"]})
+    # ── Line Scan specific filters (backward compatible) ──────────────
     if filters.get("resolution_target"):
         and_conditions.append({"resolution_target": filters["resolution_target"]})
     if filters.get("pixel_pitch_um") is not None:
@@ -256,11 +309,21 @@ ENGINEERING GLOSSARY (apply these mappings EXACTLY in every query):
 - "Minimum Aperture" or "stopped down the most" ALWAYS maps to the `f_no_max` column (higher f-number = smaller aperture). Use ORDER BY f_no_max DESC LIMIT 1 to find the lens that stops down the most.
 - "Warping" or "distortion" maps to `tv_distortion_percent`.
 - "Edge brightness", "relative illuminance", or "uniformity" maps to `relative_illuminance_percent`. NOTE: Percentages are stored as whole numbers (e.g., 75% is 75). If a user queries > X%, you MUST include the exact value if the companion operator is '>' or '>='. For example, use: `(relative_illuminance_percent > X OR (relative_illuminance_percent = X AND relative_illuminance_operator IN ('>', '>=')))`.
-- "Standoff" or "working distance" maps to `wd_mm`.
+- "Standoff" or "working distance" maps to `wd_mm`. NOTE: Some tables use `wd_min_mm` and `wd_max_mm` for a working distance range instead of a single `wd_mm`. Check the SCHEMA CONTEXT to determine which columns are available.
 - "Total conjugate distance" maps to `o_i`.
+- "Telecentricity" maps to `telecentricity_degrees`.
+- "Depth of field" or "DOF" maps to `dof_mm`.
+- "Numerical aperture" or "NA" maps to `numerical_aperture` (or `numerical_aperture_min`/`numerical_aperture_max` for ranges).
+- "Sensor format" or "sensor size" maps to `sensor_size_raw`.
+- "Megapixel" or "MP" maps to `megapixel_rating`.
+- "MOD" or "minimum object distance" maps to `mod_distance_m` (in meters).
+- "Zoom type" maps to `zoom_type` (manual / motorized).
+- "Wavelength" maps to `wavelength_min_nm` / `wavelength_max_nm` or `wavelength_raw`.
+- "Response time" maps to `response_time_ms`.
+- "Adapter" or "mount conversion" — check `mount_primary_raw` and `mount_secondary_raw` in adapter/ring tables.
 
 CROSS-TABLE QUERIES:
-If the user asks a general question comparing across all lenses without specifying a specific resolution/pitch target, you MUST query across all relevant tables.
+If the user asks a general question comparing across all lenses without specifying a specific product family, you MUST query across all relevant tables.
 - Use `UNION ALL` to combine results from all tables in the SCHEMA CONTEXT that contain the requested columns.
 - DO NOT just query a single table. Ensure you include EVERY relevant table from the context.
 - CRITICAL SYNTAX RULE: Do NOT place semicolons (;) at the end of the individual SELECT statements within a UNION ALL. Only place a single semicolon at the very end of the final query.

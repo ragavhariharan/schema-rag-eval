@@ -47,7 +47,7 @@ No explicit foreign key relationships.
 
 ### Inferred Logical Relationships
 
-* `coaxial_illumination_line_scan_lens` ↔ `line_scan_lens_4k7u`, `line_scan_lens_8k5u`, `line_scan_lens_8k7u`, `line_scan_lens_12k5u`, `line_scan_lens_16k3_5u`, `line_scan_lens_16k5u`, `new_series_line_scan_lens_4k7u`
+* `coaxial_illumination_line_scan_lens` ↔ `line_scan_lens_4k7u`, `line_scan_lens_8k5u`, `line_scan_lens_8k7u`, `line_scan_lens_12k5u`, `line_scan_lens_16k3_5u`, `line_scan_lens_16k5u`, `new_series_line_scan_lens_4k7u`, `ultra_high_resolution_line_scan_lenses`
 * All tables share common optical specification columns (`focus_length_mm`, `wd_mm`, `f_no_min`, `f_no_max`, `magnification_min`, `magnification_max`, `mount_raw`, `weight_g`).
 * Lenses across these tables serve related line scan camera systems and can be cross-referenced by focal length, mount type, and sensor size compatibility.
 
@@ -1226,26 +1226,181 @@ ORDER BY f_no_min;
 - RAG hint: relevant to "new series 4K 7µm", "updated 4K line scan lens", "4000 pixel 7 micron new generation" queries.
 
 ---
-# Table: all_lenses
 
-## Overview
-A unified global view containing all lenses across all resolutions and families. This view is used to perform aggregate dimension queries across the entire catalog.
+---
+
+# Table: ultra_high_resolution_line_scan_lenses
+
+## Purpose
+
+Stores specifications for **ultra high resolution line scan lenses** — the top tier of the line scan lens family, intended for the most demanding inspection tasks where extremely fine spatial detail must be resolved, such as advanced semiconductor wafer/die inspection, AMOLED and microLED display inspection, precision optical component metrology, and other applications pushing beyond the resolution limits of standard 8K/12K/16K line scan offerings.
+
+This table supports engineering selection by focal length, aperture, field of view (angular), magnification range, working distance, object-to-image distance, flange distance, mount type, filter thread, and physical dimensions.
+
+---
 
 ## Attributes
-| Column Name | Data Type | Description |
-| :--- | :--- | :--- |
-| `model_name` | `text` | The full manufacturer model number identifier (e.g., "LS-8K7U-050") |
-| `size_diameter_mm` | `numeric` | Outer physical diameter of the lens body in millimeters |
-| `size_length_min_mm` | `numeric` | Minimum physical length of the lens in millimeters |
-| `weight_g` | `numeric` | Physical weight of the lens body in grams |
+
+| Column | Meaning | Datatype | Notes |
+|---|---|---|---|
+| model_name | Unique product identifier for the lens model | text | Primary key. Main lookup identifier. |
+| focus_length_mm | Focal length of the lens measured in millimeters | numeric | Core optical parameter. Longer focal lengths yield narrower FOV and greater working distance. Units: mm. |
+| max_image_size_raw | Raw text representation of the maximum supported image (sensor) size | text | Original source string, may include units or format labels (e.g., "1.4 inch", "55 mm"). |
+| max_image_size_value | Numeric extracted value of the maximum supported image size | numeric | Parsed numeric dimension for filtering. Units inferred from raw column context (typically mm or inches). |
+| f_no_raw | Raw text representation of the F-number (aperture) range | text | Original source string (e.g., "F2.8 – F16"). Preserved for display. |
+| f_no_min | Minimum (most open) F-number supported by the lens | numeric | Lower F-number = larger aperture = more light. Used in low-light or high-speed applications. |
+| f_no_max | Maximum (most closed) F-number supported by the lens | numeric | Higher F-number = smaller aperture = greater depth of field. |
+| tv_distortion_operator | Comparison operator for the TV distortion specification (e.g., `<`, `≤`) | text | Used alongside `tv_distortion_percent` to express an inequality specification. |
+| tv_distortion_percent | TV distortion value expressed as a percentage | numeric | Measures geometric distortion of the lens. Lower absolute value = less distortion. Negative values indicate barrel distortion; positive values indicate pincushion distortion. |
+| fov_raw | Raw text representation of the field of view | text | Original source string. May describe angular or linear FOV. |
+| fov_degrees | Field of view expressed in degrees | numeric | Angular FOV measurement. Useful for optical system layout calculations at ultra-high resolution. Units: degrees. |
+| magnification_raw | Raw text representation of the magnification range | text | Original source string (e.g., "0.5× – 2.0×"). |
+| magnification_min | Minimum optical magnification ratio supported | numeric | Dimensionless ratio. Smaller values = wider coverage. |
+| magnification_max | Maximum optical magnification ratio supported | numeric | Dimensionless ratio. Larger values = more zoomed-in coverage, often higher than standard line scan lenses given the ultra-high resolution target use case. |
+| standard_magnification | Standard or nominal magnification value for this lens | numeric | Single reference magnification value. Numeric type, enabling direct arithmetic comparisons. |
+| wd_mm | Working distance between the lens front element and the object/target surface, measured in millimeters | numeric | Critical for mounting and integration planning, especially relevant given the tight tolerances typical of ultra-high resolution inspection setups. Units: mm. |
+| o_i | Object-to-image distance ratio or total conjugate distance | numeric | Represents the optical path length from object to image plane. Used in lens-to-camera alignment. |
+| flange_distance | Distance from the camera mounting flange to the image sensor plane, measured in millimeters | numeric | Used to confirm physical compatibility with camera body. Units: mm. |
+| mount_raw | Raw text describing the camera mount type (e.g., C-mount, F-mount, M42) | text | Determines mechanical and optical compatibility with camera. |
+| filter_thread_raw | Raw text representation of the front filter thread size | text | Original source string (e.g., "M67 × 0.75"). Used for attaching optical filters or hoods. |
+| size_raw | Raw text representation of the physical lens dimensions | text | Original source string, may include diameter and length combined (e.g., "Ø90 × 150 mm"). |
+| size_diameter_mm | Outer diameter of the lens body in millimeters | numeric | Important for mounting clearance, especially relevant given that ultra-high resolution lenses tend to be larger and heavier than standard line scan lenses. Units: mm. |
+| size_length_mm | Overall length of the lens body in millimeters | numeric | Fixed single value representing the lens body length. Units: mm. |
+
+---
+
+## Relationships
+
+### Explicit Relationships
+
+No explicit foreign key relationships.
+
+### Inferred Logical Relationships
+
+* `ultra_high_resolution_line_scan_lenses` ↔ `line_scan_lens_16k3_5u`, `line_scan_lens_16k5u`
+* Represents the next tier above the 16K resolution lens family; can be cross-referenced when a 16K lens does not meet resolution requirements and an upgrade path is needed.
+* `ultra_high_resolution_line_scan_lenses` ↔ `coaxial_illumination_line_scan_lens`, `line_scan_lens_4k7u`, `line_scan_lens_8k5u`, `line_scan_lens_8k7u`, `line_scan_lens_12k5u`, `new_series_line_scan_lens_4k7u`
+* Shares common optical specification columns (`focus_length_mm`, `wd_mm`, `f_no_min`, `f_no_max`, `magnification_min`, `magnification_max`, `mount_raw`, `o_i`, `flange_distance`) with the broader line scan lens family and can be cross-referenced by focal length, mount type, and sensor size compatibility.
+* **Notable absence:** unlike most other line scan lens tables, this table has no `list_price`, `relative_illuminance_percent`/`relative_illuminance_operator`, or `weight_g` columns.
+
+---
 
 ## Example Queries
 
-**1. Query Type: Missing Filters**
-Natural Language: Show me all lenses that weigh under 200g.
-Reasoning: We query the global view `all_lenses` when there are no resolution or pitch constraints, and filter on `weight_g`.
+**1. Specification Lookup**
+
+Natural Language:
+What are the focal length, working distance, and angular field of view of all ultra high resolution line scan lenses?
+
+Reasoning:
+- Select the identifying column and the three requested specification columns.
+- No filtering needed — return all rows.
+
 ```sql
-SELECT model_name, size_diameter_mm, size_length_min_mm, weight_g
-FROM all_lenses
-WHERE weight_g < 200;
+SELECT model_name, focus_length_mm, wd_mm, fov_degrees
+FROM ultra_high_resolution_line_scan_lenses;
 ```
+
+---
+
+**2. Attribute Filtering**
+
+Natural Language:
+Find all ultra high resolution line scan lenses with a minimum F-number of 4 or lower.
+
+Reasoning:
+- Filter on `f_no_min` to find lenses that support relatively wide aperture settings.
+- Lower F-number = faster lens = better in low-light or high-speed scenarios.
+
+```sql
+SELECT model_name, f_no_min, f_no_raw
+FROM ultra_high_resolution_line_scan_lenses
+WHERE f_no_min <= 4;
+```
+
+---
+
+**3. Compatibility Reasoning**
+
+Natural Language:
+Which ultra high resolution line scan lenses support a maximum image size of at least 50 mm and use a C-mount?
+
+Reasoning:
+- Filter `max_image_size_value` for large sensor coverage.
+- Filter `mount_raw` for C-mount compatibility.
+
+```sql
+SELECT model_name, max_image_size_value, mount_raw
+FROM ultra_high_resolution_line_scan_lenses
+WHERE max_image_size_value >= 50
+  AND mount_raw ILIKE '%C%';
+```
+
+---
+
+**4. Working Distance Search**
+
+Natural Language:
+List all ultra high resolution line scan lenses with a working distance greater than 150 mm.
+
+Reasoning:
+- Filter on `wd_mm` to find lenses suitable for applications requiring clearance between lens and target.
+
+```sql
+SELECT model_name, wd_mm, focus_length_mm
+FROM ultra_high_resolution_line_scan_lenses
+WHERE wd_mm > 150;
+```
+
+---
+
+**5. Ambiguous Engineering Terminology**
+
+Natural Language:
+What does TV distortion look like across ultra high resolution line scan lenses — are there any lenses with distortion below 0.05%, suitable for precision metrology?
+
+Reasoning:
+- `tv_distortion_percent` stores TV distortion. Values close to 0 indicate minimal distortion.
+- Use `ABS()` to handle both barrel (negative) and pincushion (positive) distortion.
+- Precision metrology applications typically demand tighter distortion tolerances than general inspection.
+
+```sql
+SELECT model_name, tv_distortion_percent, tv_distortion_operator
+FROM ultra_high_resolution_line_scan_lenses
+WHERE ABS(tv_distortion_percent) < 0.05;
+```
+
+---
+
+**6. Magnification Range Search**
+
+Natural Language:
+Which ultra high resolution lenses offer a maximum magnification of 1x or greater, and what is their standard magnification?
+
+Reasoning:
+- Filter `magnification_max` to find lenses capable of life-size or greater reproduction ratios.
+- Retrieve `standard_magnification` for the nominal reference value.
+
+```sql
+SELECT model_name, magnification_max, standard_magnification
+FROM ultra_high_resolution_line_scan_lenses
+WHERE magnification_max >= 1;
+```
+
+---
+
+## Notes
+
+- **Primary Key:** `model_name`
+- `tv_distortion_percent` may be positive (pincushion) or negative (barrel). Use `ABS()` for magnitude-only comparisons; check `tv_distortion_operator` for bound semantics.
+- `fov_raw`, `magnification_raw`, `max_image_size_raw`, `f_no_raw`, `filter_thread_raw`, and `size_raw` are text fields — use `ILIKE` for pattern matching in SQL.
+- `mount_raw` should be queried with `ILIKE` since format may vary (e.g., "C-Mount", "C mount", "C").
+- `standard_magnification` is numeric in this table, enabling direct arithmetic and sort operations (unlike the text type used in some other line scan lens tables).
+- `o_i` refers to the object-to-image distance ratio, a key value in optical conjugate distance calculations.
+- `flange_distance` is distinct from working distance (`wd_mm`); it describes the camera-side optical distance.
+- **No `list_price` column** — pricing information is not available for this table and should not be assumed or fabricated.
+- **No `weight_g` or relative illuminance columns** — unlike most other line scan lens tables, mechanical weight and edge illumination uniformity are not tracked for this lens family.
+- `size_length_mm` is a fixed single value (not a min/max range).
+- This table is optimized for RAG chunk retrieval when queries mention "ultra high resolution", "ultra-high-res line scan", "beyond 16K", "extreme resolution inspection lens", or "semiconductor/display ultra-fine inspection lens".
+
+---
