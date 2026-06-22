@@ -1,108 +1,65 @@
-query_id,dataset_source,question,generated_sql,expected_sql,execution_pass,failure_reason,patterns,safety_triggered,self_heal_attempts,validation_status,ast_select_match,ast_filter_match,ast_join_match,ast_groupby_match,ast_having_match,ast_orderby_match,ast_subquery_match,ast_union_match
-q1_ambiguous_warping,golden,Which 12K 5u lens has the least warping at the edges?,"SELECT model_name, tv_distortion_percent
-FROM line_scan_lens_12k5u
-WHERE tv_distortion_percent IS NOT NULL
+id,question,product_family,expected_sql,generated_sql,filters,retrieved_tables,match,gen_error,exp_rows,gen_rows,elapsed_s
+ls_01_warping,Which 12K 5u lens has the least warping at the edges?,line_scan,"SELECT model_name, tv_distortion_percent FROM line_scan_lens_12k5u ORDER BY ABS(tv_distortion_percent) ASC LIMIT 1;","SELECT model_name, tv_distortion_percent
+FROM motorized_bi_telecentric_lenses
+WHERE magnification_raw ILIKE '%12K%'
 ORDER BY ABS(tv_distortion_percent) ASC
-LIMIT 1;","SELECT model_name, tv_distortion_percent FROM line_scan_lens_12k5u ORDER BY ABS(tv_distortion_percent) ASC LIMIT 1;",True,Column-Name Agnostic Superset Match,ORDER BY,False,0,Validation Passed,True,,,,,True,,
-q2_cross_generation,golden,Compare the maximum aperture of the old 4K 7 micron lenses with the new series.,"SELECT 'old_series' AS series, model_name, f_no_min
-FROM line_scan_lens_4k7u
+LIMIT 1;","{""product_type"": ""telecentric""}","['standard_telecentric_lenses_1_1_inch', 'standard_telecentric_lenses_2_3_inch', 'motorized_bi_telecentric_lenses']",False,,1,0,32.72
+ls_02_price_weight,Show all 16K 5u lenses with their price and weight,line_scan,"SELECT model_name, list_price, weight_g FROM line_scan_lens_16k5u;","SELECT model_name, list_price, weight_g
+FROM line_scan_lens_16k5u;","{""resolution_target"": ""16K"", ""pixel_pitch_um"": 5.0}",['line_scan_lens_16k5u'],True,,16,16,17.15
+ls_03_heaviest,What is the heaviest 8K 7u line scan lens?,line_scan,"SELECT model_name, weight_g FROM line_scan_lens_8k7u WHERE weight_g IS NOT NULL ORDER BY weight_g DESC LIMIT 1;","SELECT model_name, weight_g FROM line_scan_lens_8k7u WHERE weight_g IS NOT NULL ORDER BY weight_g DESC LIMIT 1;","{""product_type"": ""line_scan"", ""resolution_target"": ""8K"", ""pixel_pitch_um"": 7.0}",['line_scan_lens_8k7u'],True,,1,1,5.99
+ls_04_cross_gen,Compare the maximum aperture of the old 4K 7 micron lenses with the new series.,line_scan,"SELECT 'original' AS series, model_name, f_no_min FROM line_scan_lens_4k7u UNION ALL SELECT 'new_series' AS series, model_name, f_no_min FROM new_series_line_scan_lens_4k7u ORDER BY f_no_min;","SELECT model_name, f_no_min AS max_aperture
+FROM fa_lenses
+WHERE model_name ILIKE '%4K 7 micron%'
 UNION ALL
-SELECT 'new_series' AS series, model_name, f_no_min
-FROM new_series_line_scan_lens_4k7u
-ORDER BY f_no_min;","SELECT 'original' AS series, model_name, f_no_min FROM line_scan_lens_4k7u UNION ALL SELECT 'new_series' AS series, model_name, f_no_min FROM new_series_line_scan_lens_4k7u ORDER BY f_no_min;",False,Mismatch in values or shape,"UNION, ORDER BY",False,0,Validation Passed,True,,,,,True,,True
-q4_simple_lookup,golden,List the focal length and price of all 16K 3.5 micron lenses.,"SELECT model_name, focus_length_mm, list_price
-FROM line_scan_lens_16k3_5u;","SELECT model_name, focus_length_mm, list_price FROM line_scan_lens_16k3_5u;",True,Column-Name Agnostic Superset Match,SIMPLE LOOKUP,False,0,Validation Passed,True,,,,,,,
-q5_compatibility_reasoning,golden,Find 8K 7u lenses that fit a C-mount and support an image size over 40mm.,"SELECT model_name, mount_raw, max_image_size_value
-FROM line_scan_lens_8k7u
-WHERE mount_raw = 'C-mount'
-  AND max_image_size_value > 40;","SELECT model_name, mount_raw, max_image_size_value FROM line_scan_lens_8k7u WHERE mount_raw ILIKE '%C%' AND max_image_size_value > 40;",True,Both sets empty (Pass),FILTERING,False,0,Validation Passed,True,True,,,,,,
-q6_ambiguous_illuminance,golden,Which 12K 5u lens has the best edge brightness?,"SELECT model_name, relative_illuminance_percent 
-FROM line_scan_lens_12k5u 
-WHERE relative_illuminance_percent IS NOT NULL 
-ORDER BY relative_illuminance_percent DESC 
-LIMIT 1;","SELECT model_name, relative_illuminance_percent FROM line_scan_lens_12k5u ORDER BY relative_illuminance_percent DESC LIMIT 1;",False,"One set empty, other not",ORDER BY,False,0,Validation Passed,True,,,,,True,,
-q7_coaxial_dimensions,golden,Show me coaxial line scan lenses that weigh less than 500g.,"SELECT model_name, weight_g
-FROM coaxial_illumination_line_scan_lens
-WHERE weight_g < 500;","SELECT model_name, weight_g FROM coaxial_illumination_line_scan_lens WHERE weight_g < 500;",True,Both sets empty (Pass),FILTERING,False,0,Validation Passed,True,True,,,,,,
-q8_working_distance_range,golden,Find new series 4K 7 micron lenses with a working distance between 80mm and 120mm.,"SELECT model_name, wd_mm, focus_length_mm
-FROM new_series_line_scan_lens_4k7u
-WHERE wd_mm BETWEEN 80 AND 120;","SELECT model_name, wd_mm, focus_length_mm FROM new_series_line_scan_lens_4k7u WHERE wd_mm BETWEEN 80 AND 120;",True,Both sets empty (Pass),FILTERING,False,0,Validation Passed,True,True,,,,,,
-q9_complex_ambiguous_speed,golden,I need an 8K 5u lens with the fastest speed and a standoff above 150mm.,"SELECT model_name, f_no_min, wd_mm
-FROM line_scan_lens_8k5u
-WHERE wd_mm > 150 AND f_no_min IS NOT NULL
-ORDER BY f_no_min ASC LIMIT 1;","SELECT model_name, f_no_min, wd_mm FROM line_scan_lens_8k5u WHERE wd_mm > 150 ORDER BY f_no_min ASC LIMIT 1;",True,Column-Name Agnostic Superset Match,"ORDER BY, FILTERING",False,0,Validation Passed,True,True,,,,True,,
-q10_conjugate_terminology,golden,Compare the total conjugate distance of the 16K 5 micron lenses.,"SELECT model_name, o_i
-FROM line_scan_lens_16k5u;","SELECT model_name, o_i FROM line_scan_lens_16k5u;",True,Column-Name Agnostic Superset Match,SIMPLE LOOKUP,False,0,Validation Passed,True,,,,,,,
-q11_high_magnification,golden,What is the highest optical magnification ratio supported by the 16K 3.5 micron lenses?,"SELECT model_name, magnification_max
-FROM line_scan_lens_16k3_5u
-ORDER BY magnification_max DESC
-LIMIT 1;","SELECT model_name, magnification_max FROM line_scan_lens_16k3_5u ORDER BY magnification_max DESC LIMIT 1;",True,Column-Name Agnostic Superset Match,ORDER BY,False,0,Validation Passed,True,,,,,True,,
-q12_heavy_lens_filtering,golden,List all 8K 7u lenses that weigh more than 400 grams.,"SELECT model_name, weight_g
-FROM line_scan_lens_8k7u
-WHERE weight_g > 400;","SELECT model_name, weight_g FROM line_scan_lens_8k7u WHERE weight_g > 400;",True,Column-Name Agnostic Superset Match,FILTERING,False,0,Validation Passed,True,True,,,,,,
-q13_fov_terminology,golden,Compare the angular field of view and linear field of view for 16K 5u lenses.,"SELECT model_name, fov_degrees, fov_mm
-FROM line_scan_lens_16k5u;","SELECT model_name, fov_degrees, fov_mm FROM line_scan_lens_16k5u;",True,Column-Name Agnostic Superset Match,SIMPLE LOOKUP,False,0,Validation Passed,True,,,,,,,
-q14_flange_distance_exact,golden,Which 8K 5 micron lenses have a flange distance of exactly 12mm?,"SELECT model_name, flange_distance
-FROM line_scan_lens_8k5u
-WHERE flange_distance = 12;","SELECT model_name, flange_distance FROM line_scan_lens_8k5u WHERE flange_distance = 12;",True,Column-Name Agnostic Superset Match,FILTERING,False,0,Validation Passed,True,True,,,,,,
-q15_compact_thread_search,golden,Find compact new series 4K 7u lenses with an outer diameter under 50mm that have a filter thread.,"SELECT model_name, size_diameter_mm, filter_thread_raw
-FROM new_series_line_scan_lens_4k7u
-WHERE size_diameter_mm < 50 AND filter_thread_raw IS NOT NULL;","SELECT model_name, size_diameter_mm, filter_thread_raw FROM new_series_line_scan_lens_4k7u WHERE size_diameter_mm < 50 AND filter_thread_raw IS NOT NULL;",True,Both sets empty (Pass),FILTERING,False,0,Validation Passed,True,True,,,,,,
-q16_minimum_aperture_physics,golden,Which coaxial illumination lens can be stopped down the most (smallest minimum aperture)?,"SELECT model_name, f_no_min, f_no_max 
-FROM coaxial_illumination_line_scan_lens 
-WHERE f_no_min IS NOT NULL AND f_no_max IS NOT NULL 
-ORDER BY f_no_max DESC 
-LIMIT 1;","SELECT model_name, f_no_max FROM coaxial_illumination_line_scan_lens ORDER BY f_no_max DESC LIMIT 1;",True,Column-Name Agnostic Superset Match,ORDER BY,False,0,Validation Passed,True,,,,,True,,
-q17_exact_focal_length,golden,Are there any 16K 3.5u lenses with a focal length of 60mm?,"SELECT model_name, focus_length_mm
-FROM line_scan_lens_16k3_5u
-WHERE focus_length_mm = 60;","SELECT model_name, focus_length_mm FROM line_scan_lens_16k3_5u WHERE focus_length_mm = 60;",True,Column-Name Agnostic Superset Match,FILTERING,False,0,Validation Passed,True,True,,,,,,
-q18_price_sorting,golden,Show 8K 5u lenses sorted from cheapest to most expensive.,"SELECT model_name, list_price 
-FROM line_scan_lens_8k5u 
+SELECT model_name, f_no_min AS max_aperture
+FROM fa_lenses
+WHERE model_name ILIKE '%new series%'","{""product_type"": ""fa_lens""}",['fa_lenses'],False,,12,0,5.56
+fa_01_cheapest,What is the cheapest FA lens?,fa_lens,"SELECT model_name, list_price FROM fa_lenses WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;","SELECT model_name, list_price FROM fa_lenses WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;","{""product_type"": ""fa_lens""}",['fa_lenses'],True,,1,1,5.27
+fa_02_focal_filter,Show FA lenses with focal length over 50mm,fa_lens,"SELECT model_name, focus_length_mm FROM fa_lenses WHERE focus_length_mm > 50;","SELECT model_name, focus_length_mm, megapixel_rating, mount_raw
+FROM fa_lenses
+WHERE focus_length_mm > 50;","{""product_type"": ""fa_lens""}",['fa_lenses'],True,,4,4,5.71
+fa_03_widest_aperture,Which FA lens has the widest aperture?,fa_lens,"SELECT model_name, f_no_min FROM fa_lenses WHERE f_no_min IS NOT NULL ORDER BY f_no_min ASC LIMIT 1;","SELECT model_name, f_no_min FROM fa_lenses WHERE f_no_min IS NOT NULL ORDER BY f_no_min ASC LIMIT 1;","{""product_type"": ""fa_lens""}",['fa_lenses'],True,,1,1,4.25
+tc_01_wd_filter,Show all non-standard telecentric lenses with working distance over 100mm,telecentric,"SELECT model_name, wd_mm FROM non_standard_telecentric_lenses WHERE wd_mm > 100;","SELECT model_name, wd_mm, magnification_value
+FROM non_standard_telecentric_lenses
+WHERE wd_mm > 100;","{""product_type"": ""telecentric""}","['non_standard_telecentric_lenses', 'standard_telecentric_lenses_2_3_inch', 'standard_telecentric_lenses_1_1_inch']",True,,29,29,5.52
+tc_02_most_expensive,What is the most expensive telecentric lens for 65 megapixel sensors?,telecentric,"SELECT model_name, list_price FROM telecentric_lenses_65mp WHERE list_price IS NOT NULL ORDER BY list_price DESC LIMIT 1;","SELECT model_name, list_price 
+FROM telecentric_lenses_65mp 
 WHERE list_price IS NOT NULL 
-ORDER BY list_price ASC;","SELECT model_name, list_price FROM line_scan_lens_8k5u ORDER BY list_price ASC;",True,Column-Name Agnostic Superset Match,ORDER BY,False,0,Validation Passed,True,,,,,True,,
-q19_extreme_standoff,golden,"Find 4K 7 micron lenses designed for very long standoff distances, over 300mm.","SELECT model_name, wd_mm, focus_length_mm
-FROM line_scan_lens_4k7u
-WHERE wd_mm > 300;","SELECT model_name, wd_mm FROM line_scan_lens_4k7u WHERE wd_mm > 300;",True,Column-Name Agnostic Superset Match,FILTERING,False,0,Validation Passed,True,True,,,,,,
-q20_coaxial_fov,golden,What is the maximum and minimum magnification for coaxial line scan lenses?,"SELECT MAX(magnification_max) AS max_magnification, MIN(magnification_min) AS min_magnification
-FROM coaxial_illumination_line_scan_lens;","SELECT model_name, magnification_min, magnification_max FROM coaxial_illumination_line_scan_lens;",False,Mismatch in values or shape,SIMPLE LOOKUP,False,0,Validation Passed,False,,,,,,,
-adv_q4_having_count,advanced,Which thread mounts have more than 5 lenses in the 12K 5u catalog?,"SELECT filter_thread_raw, COUNT(*) AS lens_count
-FROM line_scan_lens_12k5u
-GROUP BY filter_thread_raw
-HAVING COUNT(*) > 5;","SELECT mount_raw, COUNT(*) FROM line_scan_lens_12k5u GROUP BY mount_raw HAVING COUNT(*) > 5;",False,Mismatch in values or shape,"GROUP BY, AGGREGATION, HAVING",False,0,Validation Passed,False,,,True,True,,,
-adv_q5_subquery_cheaper_than_avg,advanced,Find 12K 5u lenses cheaper than the average 12K 5u lens.,"SELECT model_name, list_price
-FROM line_scan_lens_12k5u
-WHERE list_price < (SELECT AVG(list_price) FROM line_scan_lens_12k5u);","SELECT model_name, list_price FROM line_scan_lens_12k5u WHERE list_price < (SELECT AVG(list_price) FROM line_scan_lens_12k5u);",True,Both sets empty (Pass),"SUBQUERY, AGGREGATION",False,0,Validation Passed,True,True,,,,,True,
-adv_q6_subquery_heaviest_in_class,advanced,Which 8K 5u lens is heavier than the average 16K 5u lens?,"SELECT model_name, weight_g
-FROM line_scan_lens_8k5u
-WHERE weight_g > (
-    SELECT AVG(weight_g)
-    FROM line_scan_lens_16k5u
-);","SELECT model_name, weight_g FROM line_scan_lens_8k5u WHERE weight_g > (SELECT AVG(weight_g) FROM line_scan_lens_16k5u);",True,Column-Name Agnostic Superset Match,"SUBQUERY, AGGREGATION, CROSS-TABLE",False,0,Validation Passed,True,True,,,,,True,
-adv_q8_multi_step_agg_max_distortion,advanced,Which mount type has the highest maximum distortion in 12K 5u lenses?,"SELECT model_name, mount_raw, tv_distortion_percent, tv_distortion_operator
-FROM line_scan_lens_12k5u
-WHERE tv_distortion_percent IS NOT NULL AND tv_distortion_operator = '<'
-ORDER BY tv_distortion_percent DESC
-LIMIT 1;",SELECT mount_raw FROM line_scan_lens_12k5u GROUP BY mount_raw ORDER BY MAX(tv_distortion_percent) DESC LIMIT 1;,True,Scalar vs. Row match,"GROUP BY, AGGREGATION, MULTI-STEP AGGREGATION, ORDER BY",False,0,Validation Passed,True,,,False,,True,,
-adv_q9_union_stress_test,advanced,Compare all original and new-series 4K 7u lenses sorted by price.,"SELECT 'original' AS series, model_name, list_price
-FROM line_scan_lens_4k7u
-UNION ALL
-SELECT 'new_series' AS series, model_name, list_price
-FROM new_series_line_scan_lens_4k7u
-ORDER BY list_price;","SELECT 'original' AS series, model_name, list_price FROM line_scan_lens_4k7u UNION ALL SELECT 'new_series' AS series, model_name, list_price FROM new_series_line_scan_lens_4k7u ORDER BY list_price;",True,Column-Name Agnostic Superset Match,"UNION, ORDER BY",False,0,Validation Passed,True,,,,,True,,True
-adv_q10_union_distortion,advanced,List all 8K 5u and 8K 7u lenses with distortion under 0.1%.,"SELECT model_name, tv_distortion_percent, tv_distortion_operator
-FROM line_scan_lens_8k5u
-WHERE tv_distortion_percent <= 0.1
-
-UNION ALL
-
-SELECT model_name, tv_distortion_percent, tv_distortion_operator
-FROM line_scan_lens_8k7u
-WHERE tv_distortion_percent <= 0.1;","SELECT model_name, tv_distortion_percent FROM line_scan_lens_8k5u WHERE tv_distortion_percent < 0.1 UNION ALL SELECT model_name, tv_distortion_percent FROM line_scan_lens_8k7u WHERE tv_distortion_percent < 0.1;",False,Mismatch in values or shape,"UNION, FILTERING",False,0,Validation Passed,True,True,,,,,,True
-adv_q13_engineering_avg_distortion,advanced,What is the average distortion of all 12K 5u lenses?,"SELECT AVG(tv_distortion_percent) AS avg_tv_distortion_percent
-FROM line_scan_lens_12k5u;",SELECT AVG(tv_distortion_percent) FROM line_scan_lens_12k5u;,True,Scalar vs. Row match,"AGGREGATION, ENGINEERING ANALYTICS",False,0,Validation Passed,True,,,,,,,
-adv_q14_engineering_median_wd,advanced,What is the median working distance of 8K 7u lenses?,"SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY wd_mm) AS median_wd_mm
-FROM line_scan_lens_8k7u;",SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY wd_mm) FROM line_scan_lens_8k7u;,True,Scalar vs. Row match,"ENGINEERING ANALYTICS, ADVANCED AGGREGATION",False,0,Validation Passed,True,,,,,True,,
-adv_q15_engineering_min_flange,advanced,What is the smallest flange distance among 16K 3.5u lenses?,"SELECT model_name, flange_distance
-FROM line_scan_lens_16k3_5u
-ORDER BY flange_distance ASC
-LIMIT 1;",SELECT MIN(flange_distance) FROM line_scan_lens_16k3_5u;,True,Scalar vs. Row match,"AGGREGATION, ENGINEERING ANALYTICS",False,0,Validation Passed,True,,,,,,,
+ORDER BY list_price DESC 
+LIMIT 1;","{""product_type"": ""telecentric""}","['telecentric_lenses_65mp', 'non_standard_telecentric_lenses', 'standard_telecentric_lenses_1_1_inch']",True,,1,1,4.61
+tc_03_low_distortion,Which standard 2/3 inch telecentric lenses have distortion below 0.05%?,telecentric,"SELECT model_name, tv_distortion_percent FROM standard_telecentric_lenses_2_3_inch WHERE ABS(tv_distortion_percent) < 0.05;","SELECT model_name, tv_distortion_percent
+FROM standard_telecentric_lenses_2_3_inch
+WHERE tv_distortion_percent < 0.05
+  AND tv_distortion_percent IS NOT NULL;","{""product_type"": ""telecentric""}","['standard_telecentric_lenses_2_3_inch', 'standard_telecentric_lenses_1_1_inch', 'non_standard_telecentric_lenses']",True,,6,6,6.18
+macro_01_high_mag,List all macro lenses with maximum magnification above 2x,macro,"SELECT model_name, magnification_max FROM macro_lenses WHERE magnification_max > 2;","SELECT model_name, magnification_max
+FROM macro_lenses
+WHERE magnification_max > 2.0","{""product_type"": ""macro""}",['macro_lenses'],True,,0,0,11.17
+macro_02_lightest,What is the lightest macro lens?,macro,"SELECT model_name, weight_g FROM macro_lenses WHERE weight_g IS NOT NULL ORDER BY weight_g ASC LIMIT 1;","SELECT model_name, weight_g FROM macro_lenses WHERE weight_g IS NOT NULL ORDER BY weight_g ASC LIMIT 1;","{""product_type"": ""macro""}",['macro_lenses'],True,,1,1,4.53
+zoom_01_all,Show all zoom lenses with their magnification range,zoom,"SELECT model_name, magnification_min, magnification_max FROM zoom_lenses;","SELECT model_name, magnification_raw, magnification_min, magnification_max
+FROM zoom_lenses;","{""product_type"": ""zoom""}",['zoom_lenses'],True,,5,5,3.66
+zoom_02_motorized,Which zoom lenses are motorized?,zoom,"SELECT model_name, zoom_type FROM zoom_lenses WHERE zoom_type ILIKE '%motorized%';","SELECT model_name, zoom_method
+FROM zoom_lenses
+WHERE zoom_method ILIKE '%motor%';","{""product_type"": ""zoom""}",['zoom_lenses'],False,,0,0,5.15
+spec_01_swir,Show all spectral lenses that work above 1000nm wavelength,spectral,"SELECT model_name, wavelength_min_nm, wavelength_max_nm FROM spectral_lenses WHERE wavelength_max_nm > 1000;","SELECT model_name, spectral_type, wavelength_min_nm, wavelength_max_nm, focus_length_mm
+FROM spectral_lenses
+WHERE wavelength_max_nm > 1000;","{""product_type"": ""spectral""}",['spectral_lenses'],True,,10,10,5.6
+spec_02_cheapest,What is the cheapest spectral lens?,spectral,"SELECT model_name, list_price FROM spectral_lenses WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;","SELECT model_name, list_price FROM spectral_lenses WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;","{""product_type"": ""spectral""}",['spectral_lenses'],True,,1,1,3.72
+m12_01_lightest,What is the lightest M12 mount lens?,m12_mount,"SELECT model_name, weight_g FROM m12_mount_lenses WHERE weight_g IS NOT NULL ORDER BY weight_g ASC LIMIT 1;","SELECT model_name, weight_g FROM m12_mount_lenses WHERE weight_g IS NOT NULL ORDER BY weight_g ASC LIMIT 1;","{""product_type"": ""m12_mount""}",['m12_mount_lenses'],True,,1,1,3.96
+m12_02_megapixel,Show M12 lenses with megapixel rating above 5,m12_mount,"SELECT model_name, megapixel_rating FROM m12_mount_lenses WHERE megapixel_rating > 5;","SELECT model_name, megapixel_rating, focus_length_mm, f_no_min, f_no_max
+FROM m12_mount_lenses
+WHERE megapixel_rating > 5;","{""product_type"": ""m12_mount""}",['m12_mount_lenses'],True,,0,0,6.69
+micro_01_highest_mag,Which microscope lens has the highest magnification?,microscope,"SELECT model_name, magnification_max FROM microscope_lenses WHERE magnification_max IS NOT NULL ORDER BY magnification_max DESC LIMIT 1;","SELECT model_name, magnification_max
+FROM microscope_lenses
+WHERE magnification_max IS NOT NULL
+ORDER BY magnification_max DESC
+LIMIT 1;","{""product_type"": ""microscope""}","['microscope_lenses', 'magnifying_lenses']",True,,1,1,3.82
+micro_02_na,Show microscope lenses with numerical aperture above 0.3,microscope,"SELECT model_name, numerical_aperture FROM microscope_lenses WHERE numerical_aperture > 0.3;","SELECT model_name, numerical_aperture
+FROM microscope_lenses
+WHERE numerical_aperture > 0.3;","{""product_type"": ""microscope""}","['microscope_lenses', 'magnifying_lenses']",True,,3,3,6.4
+lf_01_cheapest,What is the cheapest large format lens?,large_format,"SELECT model_name, list_price FROM large_format_lenses WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;","SELECT model_name, list_price FROM large_format_lenses WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;","{""product_type"": ""large_format""}","['large_format_lenses', 'large_format_autofocus_lenses']",True,,1,1,4.9
+adapt_01_all,Show all available adapters with their mount types,accessory,"SELECT model_name, mount_primary_raw, mount_secondary_raw FROM adapters;","SELECT model_name, mount_primary_raw, mount_secondary_raw
+FROM adapters;","{""product_type"": ""accessory""}","['adapters', 'lens_holders', 'extension_rings']",True,,29,29,4.15
+insp_01_cheapest,What is the cheapest 360 inspection system?,inspection,"SELECT model_name, list_price FROM inspection_360_systems WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;","SELECT model_name, list_price FROM inspection_360_systems WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;","{""product_type"": ""inspection""}",['inspection_360_systems'],True,,1,1,4.79
+av_01_all_prices,Show all anti-vibration lenses with their price and focal length,anti_vibration,"SELECT model_name, list_price, focus_length_mm FROM anti_vibration_lenses;","SELECT model_name, list_price, focus_length_mm
+FROM anti_vibration_lenses;","{""product_type"": ""anti_vibration""}",['anti_vibration_lenses'],True,,15,15,7.0
+af_01_fastest_response,Which autofocus lens has the fastest response time?,autofocus,"SELECT model_name, response_time_ms FROM autofocus_lenses WHERE response_time_ms IS NOT NULL ORDER BY response_time_ms ASC LIMIT 1;","SELECT model_name, response_time_ms FROM autofocus_lenses WHERE response_time_ms IS NOT NULL ORDER BY response_time_ms ASC LIMIT 1;","{""product_type"": ""autofocus""}",['autofocus_lenses'],True,,1,1,3.63

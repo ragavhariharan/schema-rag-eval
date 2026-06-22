@@ -240,6 +240,16 @@ RULES:
     if isinstance(parsed.get("is_new_series"), bool):
         filters["is_new_series"] = parsed["is_new_series"]
 
+    # ── Post-extraction cleanup ───────────────────────────────────────────
+    # resolution_target, pixel_pitch_um, is_coaxial, and is_new_series ONLY
+    # exist as metadata on line_scan chunks. If the query targets a different
+    # product family, these fields would cause zero ChromaDB results.
+    if filters["product_type"] is not None and filters["product_type"] != "line_scan":
+        filters["resolution_target"] = None
+        filters["pixel_pitch_um"] = None
+        filters["is_coaxial"] = None
+        filters["is_new_series"] = None
+
     return filters
 
 
@@ -263,7 +273,7 @@ def run_pipeline(user_query: str) -> tuple:
     """
     filters = llm_extract_filters(user_query)
 
-    search_params = {"query_texts": [user_query], "n_results": 5}
+    search_params = {"query_texts": [user_query], "n_results": 3}
 
     and_conditions = []
     # ── Product type filter (routes to the correct lens family) ───────

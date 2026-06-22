@@ -1,0 +1,177 @@
+[
+  {
+    "id": "ls_01_warping",
+    "question": "Which 12K 5u lens has the least warping at the edges?",
+    "expected_sql": "SELECT model_name, tv_distortion_percent FROM line_scan_lens_12k5u ORDER BY ABS(tv_distortion_percent) ASC LIMIT 1;",
+    "product_family": "line_scan",
+    "focus": "Alias 'warping' → tv_distortion_percent. ABS() for barrel/pincushion."
+  },
+  {
+    "id": "ls_02_price_weight",
+    "question": "Show all 16K 5u lenses with their price and weight",
+    "expected_sql": "SELECT model_name, list_price, weight_g FROM line_scan_lens_16k5u;",
+    "product_family": "line_scan",
+    "focus": "Simple retrieval. Correct table selection from resolution+pitch."
+  },
+  {
+    "id": "ls_03_heaviest",
+    "question": "What is the heaviest 8K 7u line scan lens?",
+    "expected_sql": "SELECT model_name, weight_g FROM line_scan_lens_8k7u WHERE weight_g IS NOT NULL ORDER BY weight_g DESC LIMIT 1;",
+    "product_family": "line_scan",
+    "focus": "Superlative query with NULL filtering."
+  },
+  {
+    "id": "ls_04_cross_gen",
+    "question": "Compare the maximum aperture of the old 4K 7 micron lenses with the new series.",
+    "expected_sql": "SELECT 'original' AS series, model_name, f_no_min FROM line_scan_lens_4k7u UNION ALL SELECT 'new_series' AS series, model_name, f_no_min FROM new_series_line_scan_lens_4k7u ORDER BY f_no_min;",
+    "product_family": "line_scan",
+    "focus": "UNION ALL cross-generation. 'maximum aperture' → f_no_min."
+  },
+  {
+    "id": "fa_01_cheapest",
+    "question": "What is the cheapest FA lens?",
+    "expected_sql": "SELECT model_name, list_price FROM fa_lenses WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;",
+    "product_family": "fa_lens",
+    "focus": "Product type routing to fa_lenses. Superlative pattern."
+  },
+  {
+    "id": "fa_02_focal_filter",
+    "question": "Show FA lenses with focal length over 50mm",
+    "expected_sql": "SELECT model_name, focus_length_mm FROM fa_lenses WHERE focus_length_mm > 50;",
+    "product_family": "fa_lens",
+    "focus": "Numeric filter on focus_length_mm."
+  },
+  {
+    "id": "fa_03_widest_aperture",
+    "question": "Which FA lens has the widest aperture?",
+    "expected_sql": "SELECT model_name, f_no_min FROM fa_lenses WHERE f_no_min IS NOT NULL ORDER BY f_no_min ASC LIMIT 1;",
+    "product_family": "fa_lens",
+    "focus": "'widest aperture' → f_no_min ASC. Superlative."
+  },
+  {
+    "id": "tc_01_wd_filter",
+    "question": "Show all non-standard telecentric lenses with working distance over 100mm",
+    "expected_sql": "SELECT model_name, wd_mm FROM non_standard_telecentric_lenses WHERE wd_mm > 100;",
+    "product_family": "telecentric",
+    "focus": "Telecentric routing. Numeric filter on wd_mm."
+  },
+  {
+    "id": "tc_02_most_expensive",
+    "question": "What is the most expensive telecentric lens for 65 megapixel sensors?",
+    "expected_sql": "SELECT model_name, list_price FROM telecentric_lenses_65mp WHERE list_price IS NOT NULL ORDER BY list_price DESC LIMIT 1;",
+    "product_family": "telecentric",
+    "focus": "Superlative + correct sub-table selection (65mp)."
+  },
+  {
+    "id": "tc_03_low_distortion",
+    "question": "Which standard 2/3 inch telecentric lenses have distortion below 0.05%?",
+    "expected_sql": "SELECT model_name, tv_distortion_percent FROM standard_telecentric_lenses_2_3_inch WHERE ABS(tv_distortion_percent) < 0.05;",
+    "product_family": "telecentric",
+    "focus": "'distortion' → tv_distortion_percent. ABS() handling."
+  },
+  {
+    "id": "macro_01_high_mag",
+    "question": "List all macro lenses with maximum magnification above 2x",
+    "expected_sql": "SELECT model_name, magnification_max FROM macro_lenses WHERE magnification_max > 2;",
+    "product_family": "macro",
+    "focus": "Macro routing. Magnification filter."
+  },
+  {
+    "id": "macro_02_lightest",
+    "question": "What is the lightest macro lens?",
+    "expected_sql": "SELECT model_name, weight_g FROM macro_lenses WHERE weight_g IS NOT NULL ORDER BY weight_g ASC LIMIT 1;",
+    "product_family": "macro",
+    "focus": "Superlative on weight_g."
+  },
+  {
+    "id": "zoom_01_all",
+    "question": "Show all zoom lenses with their magnification range",
+    "expected_sql": "SELECT model_name, magnification_min, magnification_max FROM zoom_lenses;",
+    "product_family": "zoom",
+    "focus": "Zoom routing. Retrieval of min/max magnification."
+  },
+  {
+    "id": "zoom_02_motorized",
+    "question": "Which zoom lenses are motorized?",
+    "expected_sql": "SELECT model_name, zoom_type FROM zoom_lenses WHERE zoom_type ILIKE '%motorized%';",
+    "product_family": "zoom",
+    "focus": "Text filter on zoom_type using ILIKE."
+  },
+  {
+    "id": "spec_01_swir",
+    "question": "Show all spectral lenses that work above 1000nm wavelength",
+    "expected_sql": "SELECT model_name, wavelength_min_nm, wavelength_max_nm FROM spectral_lenses WHERE wavelength_max_nm > 1000;",
+    "product_family": "spectral",
+    "focus": "Spectral routing. Wavelength range filter."
+  },
+  {
+    "id": "spec_02_cheapest",
+    "question": "What is the cheapest spectral lens?",
+    "expected_sql": "SELECT model_name, list_price FROM spectral_lenses WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;",
+    "product_family": "spectral",
+    "focus": "Superlative on spectral family."
+  },
+  {
+    "id": "m12_01_lightest",
+    "question": "What is the lightest M12 mount lens?",
+    "expected_sql": "SELECT model_name, weight_g FROM m12_mount_lenses WHERE weight_g IS NOT NULL ORDER BY weight_g ASC LIMIT 1;",
+    "product_family": "m12_mount",
+    "focus": "M12 routing. Superlative."
+  },
+  {
+    "id": "m12_02_megapixel",
+    "question": "Show M12 lenses with megapixel rating above 5",
+    "expected_sql": "SELECT model_name, megapixel_rating FROM m12_mount_lenses WHERE megapixel_rating > 5;",
+    "product_family": "m12_mount",
+    "focus": "'megapixel' → megapixel_rating. Numeric filter."
+  },
+  {
+    "id": "micro_01_highest_mag",
+    "question": "Which microscope lens has the highest magnification?",
+    "expected_sql": "SELECT model_name, magnification_max FROM microscope_lenses WHERE magnification_max IS NOT NULL ORDER BY magnification_max DESC LIMIT 1;",
+    "product_family": "microscope",
+    "focus": "Microscope routing. Superlative on magnification."
+  },
+  {
+    "id": "micro_02_na",
+    "question": "Show microscope lenses with numerical aperture above 0.3",
+    "expected_sql": "SELECT model_name, numerical_aperture FROM microscope_lenses WHERE numerical_aperture > 0.3;",
+    "product_family": "microscope",
+    "focus": "'numerical aperture' → numerical_aperture column."
+  },
+  {
+    "id": "lf_01_cheapest",
+    "question": "What is the cheapest large format lens?",
+    "expected_sql": "SELECT model_name, list_price FROM large_format_lenses WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;",
+    "product_family": "large_format",
+    "focus": "Large format routing. Superlative."
+  },
+  {
+    "id": "adapt_01_all",
+    "question": "Show all available adapters with their mount types",
+    "expected_sql": "SELECT model_name, mount_primary_raw, mount_secondary_raw FROM adapters;",
+    "product_family": "accessory",
+    "focus": "Accessory routing to adapters table."
+  },
+  {
+    "id": "insp_01_cheapest",
+    "question": "What is the cheapest 360 inspection system?",
+    "expected_sql": "SELECT model_name, list_price FROM inspection_360_systems WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;",
+    "product_family": "inspection",
+    "focus": "Inspection routing. Superlative."
+  },
+  {
+    "id": "av_01_all_prices",
+    "question": "Show all anti-vibration lenses with their price and focal length",
+    "expected_sql": "SELECT model_name, list_price, focus_length_mm FROM anti_vibration_lenses;",
+    "product_family": "anti_vibration",
+    "focus": "Anti-vibration routing. Simple retrieval."
+  },
+  {
+    "id": "af_01_fastest_response",
+    "question": "Which autofocus lens has the fastest response time?",
+    "expected_sql": "SELECT model_name, response_time_ms FROM autofocus_lenses WHERE response_time_ms IS NOT NULL ORDER BY response_time_ms ASC LIMIT 1;",
+    "product_family": "autofocus",
+    "focus": "'response time' → response_time_ms. Superlative."
+  }
+]
