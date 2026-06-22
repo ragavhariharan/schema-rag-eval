@@ -71,7 +71,7 @@ Follow these rules:
 
     try:
         response = ollama.chat(
-            model="qwen2.5-coder",
+            model="llama3.1:8b",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message}

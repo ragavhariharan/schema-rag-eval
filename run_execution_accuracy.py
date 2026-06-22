@@ -51,7 +51,7 @@ load_dotenv(os.path.join(SCRIPT_DIR, ".env"), override=True)
 GOLDEN_DATASET_PATH = os.path.join(SCRIPT_DIR, "golden_dataset.json")
 REPORT_CSV_PATH = os.path.join(SCRIPT_DIR, "execution_accuracy_report.csv")
 FAILURES_CSV_PATH = os.path.join(SCRIPT_DIR, "execution_failures_only.csv")
-OLLAMA_MODEL = "qwen2.5-coder"
+OLLAMA_MODEL = "llama3.1:8b"
 CHROMA_DB_PATH = os.path.join(SCRIPT_DIR, "chroma_db")
 CHROMA_COLLECTION = "lens_schema_rag"
 
