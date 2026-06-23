@@ -1,7 +1,7 @@
 import json
 import colorama
 from colorama import Fore, Style
-from run_execution_accuracy import run_pipeline
+from pipeline import run_pipeline
 from sql_validator import SQLValidator
 
 colorama.init(autoreset=True)

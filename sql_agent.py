@@ -31,7 +31,7 @@ import os
 import pandas as pd
 
 from sql_validator import SQLValidator
-from run_execution_accuracy import run_pipeline, execute_sql_safely
+from pipeline import run_pipeline, execute_sql_safely
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 

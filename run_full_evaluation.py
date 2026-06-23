@@ -28,7 +28,7 @@ import sqlglot
 from sqlglot import exp
 
 # Import proven pipeline components — generation logic, DB execution, and validator
-from run_execution_accuracy import run_pipeline, execute_sql_safely
+from pipeline import run_pipeline, execute_sql_safely
 from sql_validator import SQLValidator
 
 # ═══════════════════════════════════════════════════════════════════════════════
