@@ -14,7 +14,7 @@ Microscope lenses are characterized not only by magnification but also by numeri
 |---|---|---|---|
 | model_name | Unique product identifier for the microscope lens or system model | text | Primary key. Used as the main lookup key across all queries. |
 | microscope_type | Describes the microscope optical configuration | text | E.g., "infinity corrected", "finite conjugate", "stereo". Use `ILIKE` for filtering. |
-| list_price | Catalogue sales price of the lens or system | numeric | Monetary value. Currency assumed to be USD unless otherwise specified. |
+| list_price | Catalogue sales price of the lens or system | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | illumination_type | Type of illumination the lens is designed to work with | text | E.g., "brightfield", "darkfield", "coaxial", "transmitted", "reflected". Use `ILIKE` for filtering. |
 | focus_length_mm | Focal length of the lens or tube lens component in millimeters | numeric | For infinity-corrected systems, this is typically the tube lens focal length. Units: mm. |
 | sensor_size_raw | Raw text describing the compatible image sensor size | text | E.g., "1/1.8 inch", "2/3 inch". Use `ILIKE` for filtering. |

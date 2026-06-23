@@ -14,7 +14,7 @@ This table supports engineering lookups for selecting lenses by focal length, ap
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
 | focus_length_mm | Focal length of the lens in millimeters | numeric | Longer focal length = narrower FOV and greater working distance. Units: mm. |
-| list_price | Catalogue sales price of the lens | numeric | Monetary value. Currency assumed to be USD unless otherwise specified. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | sensor_size_raw | Raw text describing the compatible image sensor size | text | Original source string (e.g., "1/1.8 inch", "2/3 inch"). Use `ILIKE` for filtering. |
 | f_no_raw | Raw text representation of the F-number (aperture) range | text | Original source string (e.g., "F2.8 – F16"). Preserved for display. |
 | f_no_min | Minimum (most open) F-number supported | numeric | Lower value = larger aperture = more light. |

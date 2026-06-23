@@ -15,7 +15,7 @@ This table captures both the optical metrological specifications (magnification,
 | Column | Meaning | Datatype | Notes |
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
-| list_price | Catalogue sales price of the lens | numeric | Monetary value. Currency assumed to be USD unless otherwise specified. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | illumination_type | Type of illumination the lens is designed to work with | text | E.g., "coaxial", "darkfield", "brightfield". Bi-telecentric lenses require telecentric illumination to preserve measurement accuracy. Use `ILIKE` for filtering. |
 | sensor_size_raw | Raw text describing the compatible image sensor size | text | E.g., "1/1.8 inch", "2/3 inch". Use `ILIKE` for filtering. |
 | magnification_raw | Raw text representation of the magnification value or range | text | Original source string (e.g., "0.5×", "1× – 2×"). Preserved for display. |

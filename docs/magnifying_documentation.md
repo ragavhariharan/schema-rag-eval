@@ -13,7 +13,7 @@ This table supports engineering lookups by magnification range, sensor size comp
 | Column | Meaning | Datatype | Notes |
 |---|---|---|---|
 | model_name | Unique product identifier for the magnifying lens model | text | Primary key. Used as the main lookup key across all queries. |
-| list_price | Catalogue sales price of the lens | numeric | Monetary value. Currency assumed to be USD unless otherwise specified. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | magnification_raw | Raw text representation of the magnification value or range | text | Original source string (e.g., "2×", "0.5× – 4×"). Preserved for display. |
 | magnification_min | Minimum optical magnification ratio supported | numeric | Dimensionless. Smaller = lower magnification / wider coverage. |
 | magnification_max | Maximum optical magnification ratio supported | numeric | Dimensionless. Larger = higher magnification / finer detail. |

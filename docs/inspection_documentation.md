@@ -14,7 +14,7 @@ This table supports engineering lookups for selecting 360° systems by inspectio
 |---|---|---|---|
 | model_name | Unique product identifier for the inspection system model | text | Primary key. Used as the main lookup key across all queries. |
 | inspection_type | Describes whether the system inspects the outer or inner surface of the object | text | E.g., "outer surface", "inner surface", "side surface". Use `ILIKE` for filtering. |
-| list_price | Catalogue sales price of the system | numeric | Monetary value. Currency assumed to be USD unless otherwise specified. |
+| list_price | Catalogue sales price of the system | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | sensor_size_raw | Raw text describing the compatible image sensor size | text | E.g., "1/1.8 inch". Use `ILIKE` for filtering. |
 | max_image_size_raw | Raw text representation of the maximum supported image size | text | Original source string. Preserved for display. |
 | max_image_size_value | Numeric extracted value of the maximum supported image size | numeric | Parsed dimension for filtering. Units typically mm or inches depending on source. |

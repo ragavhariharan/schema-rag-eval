@@ -8,8 +8,10 @@ def ingest_to_chroma():
     # 2. Delete existing collection to ensure a clean slate, then create new
     try:
         client.delete_collection(name="lens_schema_rag")
-    except ValueError:
-        pass # Collection might not exist yet
+    except Exception:
+        # Collection might not exist yet. Older ChromaDB raised ValueError here;
+        # newer versions raise chromadb.errors.NotFoundError — catch both.
+        pass
     collection = client.create_collection(name="lens_schema_rag")
     
     # 3. Load our enriched semantic chunks
