@@ -32,7 +32,7 @@ import warnings
 import chromadb
 import pandas as pd
 
-from run_execution_accuracy import (
+from pipeline import (
     llm_extract_filters,
     extract_sql_from_text,
     execute_sql_safely,
