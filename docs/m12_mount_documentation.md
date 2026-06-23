@@ -14,7 +14,7 @@ This table supports engineering lookups for selecting lenses by megapixel rating
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
 | megapixel_rating | Maximum sensor resolution (in megapixels) the lens is designed to support | integer | Higher megapixel rating implies the lens can resolve finer detail without becoming the resolution bottleneck. |
-| list_price | Catalogue sales price of the lens | numeric | Monetary value. Currency assumed to be USD unless otherwise specified. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | focus_length_mm | Focal length of the lens measured in millimeters | numeric | A longer focal length typically yields narrower field of view and greater working distance. Units: mm. |
 | sensor_size_raw | Raw text representation of the compatible sensor size | text | Original source string, may include formats like "1/2.3 inch" or "1/1.8\"". |
 | f_no_raw | Raw text representation of the F-number (aperture) range | text | Original source string (e.g., "F1.8 – F16"). Preserved for display. |

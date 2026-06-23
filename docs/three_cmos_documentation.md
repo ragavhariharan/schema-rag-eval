@@ -13,7 +13,7 @@ This table supports engineering lookups for selecting lenses by focal length, ap
 | Column | Meaning | Datatype | Notes |
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
-| list_price | Catalogue sales price of the lens | numeric | Monetary value. Currency assumed to be USD unless otherwise specified. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | focus_length_mm | Focal length of the lens measured in millimeters | numeric | A longer focal length typically yields narrower field of view and greater working distance. Units: mm. |
 | max_image_size_raw | Raw text representation of the maximum supported image (sensor) size | text | Original source string, may include units or format labels (e.g., "1.1 inch", "43.3 mm"). |
 | max_image_size_value | Numeric extracted value of the maximum supported image size | numeric | Parsed numeric dimension for filtering. Units inferred from raw column context (typically mm or inches). |

@@ -14,7 +14,7 @@ This table supports engineering lookups for selecting laser coaxial lenses by fo
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
 | focus_length_mm | Focal length of the lens in millimeters | numeric | Units: mm. Longer focal length = narrower FOV and greater working distance. |
-| list_price | Catalogue sales price of the lens | numeric | Monetary value. Currency assumed to be USD unless otherwise specified. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | sensor_size_raw | Raw text describing the compatible image sensor size | text | E.g., "1/1.8 inch", "2/3 inch". Use `ILIKE` for filtering. |
 | tv_distortion_operator | Comparison operator for TV distortion value | text | E.g., "<", "≤". Provides inequality context for `tv_distortion_percent`. |
 | tv_distortion_percent | TV distortion magnitude as a percentage | numeric | Negative = barrel distortion; positive = pincushion. Use `ABS()` for magnitude comparisons. |

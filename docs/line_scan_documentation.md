@@ -20,7 +20,7 @@ This table supports engineering lookups for selecting lenses by focal length, ap
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
 | focus_length_mm | Focal length of the lens measured in millimeters | numeric | A longer focal length typically yields narrower field of view and greater working distance. Units: mm. |
-| list_price | Catalogue sales price of the lens | numeric | Monetary value. Currency assumed to be USD unless otherwise specified. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | max_image_size_raw | Raw text representation of the maximum supported image (sensor) size | text | Original source string, may include units or format labels (e.g., "1.1 inch", "43.3 mm"). |
 | max_image_size_value | Numeric extracted value of the maximum supported image size | numeric | Parsed numeric dimension for filtering. Units inferred from raw column context (typically mm or inches). |
 | f_no_raw | Raw text representation of the F-number (aperture) range | text | Original source string (e.g., "F2.8 – F16"). Preserved for display. |
@@ -169,7 +169,7 @@ This table supports engineering lookups for selecting lenses by focal length, wo
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | No explicit primary key constraint in this table per schema (is_nullable: YES); acts as a de facto identifier. |
 | focus_length_mm | Focal length of the lens measured in millimeters | numeric | Core optical parameter. Longer focal lengths yield narrower FOV and longer working distances. Units: mm. |
-| list_price | Catalogue sales price of the lens | numeric | Monetary value. Assumed USD. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | max_image_size_raw | Raw text representation of the maximum sensor coverage supported | text | Original string format. May include inch or mm notation. |
 | max_image_size_value | Numeric extracted value of the maximum image size | numeric | Numeric dimension for filtering and compatibility matching. |
 | f_no_raw | Raw text of the F-number range (aperture specification) | text | Original source string retained for display purposes. |
@@ -325,7 +325,7 @@ This table supports engineering selection by focal length, field of view (in bot
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Main lookup identifier. |
 | focus_length_mm | Focal length of the lens in millimeters | numeric | Core optical design parameter. Units: mm. |
-| list_price | Catalogue sales price | numeric | Monetary value. Assumed USD. |
+| list_price | Catalogue sales price | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | max_image_size_raw | Raw text of maximum supported sensor/image size | text | Original string format with units. |
 | max_image_size_value | Numeric extracted maximum image size value | numeric | Numeric dimension used for filtering. |
 | f_no_raw | Raw text of the F-number range | text | Original aperture specification string. |
@@ -478,7 +478,7 @@ This table supports selection by focal length, working distance, field of view (
 |---|---|---|---|
 | model_name | Unique product identifier | text | Primary key. Main lookup identifier. |
 | focus_length_mm | Focal length of the lens in millimeters | numeric | Core optical parameter. Units: mm. |
-| list_price | Catalogue price of the lens | numeric | Monetary value. Assumed USD. |
+| list_price | Catalogue price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | max_image_size_raw | Raw text of the maximum supported image/sensor size | text | Original source string with formatting. |
 | max_image_size_value | Numeric extracted value of the maximum image size | numeric | Used for filtering by sensor coverage. |
 | f_no_raw | Raw text of the F-number (aperture) range | text | Original aperture string. |
@@ -629,7 +629,7 @@ This table supports engineering selection by focal length, aperture, working dis
 |---|---|---|---|
 | model_name | Unique product identifier | text | Primary key. Main lookup identifier. |
 | focus_length_mm | Focal length in millimeters | numeric | Core optical parameter. Units: mm. |
-| list_price | Catalogue price | numeric | Monetary value. Assumed USD. |
+| list_price | Catalogue price | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | max_image_size_raw | Raw text of maximum supported image/sensor size | text | Original string format. |
 | max_image_size_value | Numeric extracted maximum image size | numeric | Dimension for sensor compatibility filtering. |
 | f_no_raw | Raw text of the F-number range | text | Original aperture specification string. |
@@ -782,7 +782,7 @@ This table supports engineering selection by focal length, working distance, fie
 |---|---|---|---|
 | model_name | Unique product identifier | text | Primary key. Main lookup identifier. |
 | focus_length_mm | Focal length in millimeters | numeric | Core optical parameter. Units: mm. |
-| list_price | Catalogue price | numeric | Monetary value. Assumed USD. |
+| list_price | Catalogue price | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | max_image_size_raw | Raw text of maximum supported image/sensor size | text | Original string. |
 | max_image_size_value | Numeric extracted maximum image size | numeric | Filtering dimension for sensor coverage. |
 | f_no_raw | Raw text F-number range | text | Original aperture string. |
@@ -937,7 +937,7 @@ This table also uniquely includes a `fov_degrees` column, indicating angular fie
 |---|---|---|---|
 | model_name | Unique product identifier | text | Primary key. Main lookup identifier. |
 | focus_length_mm | Focal length in millimeters | numeric | Core optical parameter. Units: mm. |
-| list_price | Catalogue price | numeric | Monetary value. Assumed USD. |
+| list_price | Catalogue price | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | max_image_size_raw | Raw text of maximum supported sensor/image size | text | Original string. |
 | max_image_size_value | Numeric extracted maximum image size | numeric | Sensor coverage filtering dimension. |
 | f_no_raw | Raw text F-number range | text | Original aperture specification string. |
@@ -1092,7 +1092,7 @@ This table supports engineering selection by focal length, working distance, fie
 |---|---|---|---|
 | model_name | Unique product identifier | text | Primary key. Main lookup identifier. |
 | focus_length_mm | Focal length in millimeters | numeric | Core optical parameter. Units: mm. |
-| list_price | Catalogue price | numeric | Monetary value. Assumed USD. |
+| list_price | Catalogue price | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | max_image_size_raw | Raw text of maximum supported image/sensor size | text | Original string. |
 | max_image_size_value | Numeric extracted maximum image size | numeric | Sensor coverage filtering dimension. |
 | f_no_raw | Raw text F-number range | text | Original aperture specification string. |

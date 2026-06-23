@@ -14,7 +14,7 @@ This table supports engineering lookups for selecting lenses by zoom type, magni
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
 | zoom_type | Classification of the zoom lens design | text | E.g., "motorized zoom", "manual zoom", "fixed zoom step", "continuous zoom". Describes the general category of zoom mechanism. **Use this column when a user asks whether a zoom lens is motorized or manual.** Do NOT confuse with `zoom_method`, which describes the internal mechanical zoom implementation (e.g., "rotating cam", "linear actuator"). |
-| list_price | Catalogue sales price of the lens | numeric | Monetary value. Currency assumed to be USD unless otherwise specified. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. In the source price list this is the base USD price × markup × the live USD→INR dollar rate (~95.5). |
 | illumination_type | Type of integrated illumination, if any | text | E.g., "coaxial", "ring light", "none". Null or "none" indicates no integrated illumination. |
 | sensor_size_raw | Raw text representation of the compatible sensor size | text | Original source string, may include formats like "1 inch" or "2/3\"". |
 | max_image_size_raw | Raw text representation of the maximum supported image (sensor) size | text | Original source string, may include units or format labels (e.g., "1.1 inch", "43.3 mm"). |

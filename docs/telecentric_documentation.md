@@ -19,8 +19,8 @@ This table is distinctive in that it reports field of view (FOV) across three di
 | Column | Meaning | Datatype | Notes |
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
-| price_usd | Raw text representation of the price in USD | text | Original source string; may include currency symbols or formatting. Preserved for display. |
-| list_price | Catalogue sales price of the lens | numeric | Parsed numeric value of `price_usd`. Currency assumed to be USD. |
+| price_usd | Base price in **USD** (the `list_price` column is the INR retail price) | text | Original source string; may include currency symbols or formatting. Preserved for display. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. Derived from `price_usd` (the base USD price) × markup × the USD→INR dollar rate (~95.5), so `list_price` ≠ `price_usd`. |
 | illumination_type | Type of integrated illumination, if any | text | E.g., "coaxial", "none". Null or "none" indicates no integrated illumination. |
 | sensor_raw | Raw text representation of the compatible sensor size | text | Original source string, may include formats like "1.1 inch" or "2/3\"". |
 | magnification_raw | Raw text representation of the lens magnification | text | Original source string (e.g., "0.5×"). |
@@ -202,8 +202,8 @@ This table reports field of view across three sensor formats (2/3", 1/1.8", 1/2"
 | Column | Meaning | Datatype | Notes |
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
-| price_usd | Raw text representation of the price in USD | text | Original source string; may include currency symbols or formatting. |
-| list_price | Catalogue sales price of the lens | numeric | Parsed numeric value of `price_usd`. Currency assumed to be USD. |
+| price_usd | Base price in **USD** (the `list_price` column is the INR retail price) | text | Original source string; may include currency symbols or formatting. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. Derived from `price_usd` (the base USD price) × markup × the USD→INR dollar rate (~95.5), so `list_price` ≠ `price_usd`. |
 | illumination_type | Type of integrated illumination, if any | text | E.g., "coaxial", "none". Null or "none" indicates no integrated illumination. |
 | sensor_raw | Raw text representation of the compatible sensor size | text | Original source string, may include formats like "2/3 inch". |
 | magnification_raw | Raw text representation of the lens magnification | text | Original source string (e.g., "1.0×"). |
@@ -381,8 +381,8 @@ Stores specifications for **telecentric lenses designed for 65-megapixel-class h
 | Column | Meaning | Datatype | Notes |
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
-| price_usd | Raw text representation of the price in USD | text | Original source string; may include currency symbols or formatting. |
-| list_price | Catalogue sales price of the lens | numeric | Parsed numeric value of `price_usd`. Currency assumed to be USD. |
+| price_usd | Base price in **USD** (the `list_price` column is the INR retail price) | text | Original source string; may include currency symbols or formatting. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. Derived from `price_usd` (the base USD price) × markup × the USD→INR dollar rate (~95.5), so `list_price` ≠ `price_usd`. |
 | illumination_type | Type of integrated illumination, if any | text | E.g., "coaxial", "none". Null or "none" indicates no integrated illumination. |
 | sensor_raw | Raw text representation of the compatible sensor size | text | Original source string, may include formats like "1.4 inch" or megapixel labels. |
 | sensor_value | Numeric extracted value of the compatible sensor size or rating | numeric | Parsed numeric dimension or megapixel value for filtering. |
@@ -556,8 +556,8 @@ Stores specifications for **non-standard (custom or specialty) telecentric lense
 | Column | Meaning | Datatype | Notes |
 |---|---|---|---|
 | model_name | Unique product identifier for the lens model | text | Primary key. Used as the main lookup key across all queries. |
-| price_usd | Raw text representation of the price in USD | text | Original source string; may include currency symbols or formatting. |
-| list_price | Catalogue sales price of the lens | numeric | Parsed numeric value of `price_usd`. Currency assumed to be USD. |
+| price_usd | Base price in **USD** (the `list_price` column is the INR retail price) | text | Original source string; may include currency symbols or formatting. |
+| list_price | Catalogue sales price of the lens | numeric | Retail catalogue price in **INR (₹)**, NOT USD. Derived from `price_usd` (the base USD price) × markup × the USD→INR dollar rate (~95.5), so `list_price` ≠ `price_usd`. |
 | illumination_type | Type of integrated illumination, if any | text | E.g., "coaxial", "none". Null or "none" indicates no integrated illumination. |
 | sensor_raw | Raw text representation of the compatible sensor size | text | Original source string. |
 | magnification_raw | Raw text representation of the lens magnification | text | Original source string (e.g., "0.75×"). |
