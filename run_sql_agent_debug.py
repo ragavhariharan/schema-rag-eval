@@ -90,12 +90,19 @@ def run_debug_pipeline(user_query: str, collection, validator):
 
     # Routing mode
     resolved_models = filters.get("resolved_models")
+    routed_tables = filters.get("routed_tables")
     if resolved_models:
         kv("Routing mode", "🎯 MODEL-NAME (Phase 1)")
         kv("Models matched", ", ".join(resolved_models))
+    elif routed_tables:
+        mode = "🧭 TABLE ROUTER (Phase 2)"
+        if filters.get("cross_table"):
+            mode += " — CROSS-TABLE"
+        kv("Routing mode", mode)
+        kv("Tables routed", ", ".join(routed_tables))
     else:
         active = {k: v for k, v in filters.items() if v}
-        kv("Routing mode", "FAMILY / SEMANTIC")
+        kv("Routing mode", "FAMILY / SEMANTIC (fallback)")
         kv("Filters", json.dumps(active) if active else "(none — pure semantic search)")
 
     # Which tables surfaced (parsed from chunk headers "[Table: <name>]")
@@ -192,7 +199,8 @@ def main():
     else:
         print(f"  ⚠️  Model index: NOT built — run build_model_index.py (model routing OFF)")
 
-    print(f"  ✅ LLM: {OLLAMA_MODEL}")
+    print(f"  ✅ LLM (router/filter): {OLLAMA_MODEL}")
+    print(f"  ✅ LLM (SQL generation): {pipeline.SQL_GEN_MODEL}")
     print()
     print(f"  Enter a natural language query to see the full pipeline trace.")
     print(f"  Type 'exit' to quit.")

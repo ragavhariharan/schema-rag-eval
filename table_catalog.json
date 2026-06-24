@@ -1,0 +1,402 @@
+{
+  "coaxial_illumination_line_scan_lens": {
+    "family": "line_scan",
+    "purpose": "Stores specifications for coaxial illumination line scan lenses — a specialized class of industrial machine vision lenses that integrate coaxial (on-axis) illumination directly into the lens body.",
+    "signature_columns": []
+  },
+  "standard_telecentric_lenses_2_3_inch": {
+    "family": "telecentric",
+    "purpose": "Stores specifications for standard telecentric lenses designed around a 2/3-inch primary sensor format.",
+    "signature_columns": [
+      "illumination_type",
+      "sensor_raw",
+      "magnification_value",
+      "f_no_value",
+      "nd",
+      "telecentricity_degrees",
+      "dof_mm",
+      "object_side_resolution_um",
+      "ttl",
+      "fov_2_3_inch_raw",
+      "fov_2_3_inch_d",
+      "fov_2_3_inch_h"
+    ]
+  },
+  "line_scan_lens_4k7u": {
+    "family": "line_scan",
+    "purpose": "Stores specifications for line scan lenses designed for 4K resolution sensors with 7 µm pixel pitch.",
+    "signature_columns": [
+      "fov_mm"
+    ]
+  },
+  "standard_telecentric_lenses_1_1_inch": {
+    "family": "telecentric",
+    "purpose": "Stores specifications for standard telecentric lenses designed around a 1.1-inch primary sensor format.",
+    "signature_columns": [
+      "illumination_type",
+      "sensor_raw",
+      "magnification_value",
+      "nd",
+      "telecentricity_degrees",
+      "dof_mm",
+      "object_side_resolution_um",
+      "ttl",
+      "fov_1_1_inch_raw",
+      "fov_1_1_inch_d",
+      "fov_1_1_inch_h",
+      "fov_1_1_inch_v"
+    ]
+  },
+  "new_series_line_scan_lens_4k7u": {
+    "family": "line_scan",
+    "purpose": "Stores specifications for a new product series of line scan lenses targeting 4K resolution sensors with 7 µm pixel pitch.",
+    "signature_columns": [
+      "fov_degrees"
+    ]
+  },
+  "line_scan_lens_8k5u": {
+    "family": "line_scan",
+    "purpose": "Stores specifications for line scan lenses designed for 8K resolution sensors with 5 µm pixel pitch.",
+    "signature_columns": [
+      "fov_mm"
+    ]
+  },
+  "telecentric_lenses_65mp": {
+    "family": "telecentric",
+    "purpose": "Stores specifications for telecentric lenses designed for 65-megapixel-class high-resolution sensors.",
+    "signature_columns": [
+      "illumination_type",
+      "sensor_raw",
+      "sensor_value",
+      "magnification_value",
+      "nd",
+      "telecentricity_degrees",
+      "dof_mm",
+      "object_side_resolution_um",
+      "ttl",
+      "fov_d",
+      "fov_h",
+      "fov_v"
+    ]
+  },
+  "line_scan_lens_8k7u": {
+    "family": "line_scan",
+    "purpose": "Stores specifications for line scan lenses designed for 8K resolution sensors with 7 µm pixel pitch.",
+    "signature_columns": [
+      "fov_mm",
+      "fov_degrees"
+    ]
+  },
+  "non_standard_telecentric_lenses": {
+    "family": "telecentric",
+    "purpose": "Stores specifications for non-standard (custom or specialty) telecentric lenses that do not fit into the standard 1.1-inch, 2/3-inch, or 65MP product families.",
+    "signature_columns": [
+      "illumination_type",
+      "sensor_raw",
+      "magnification_value",
+      "nd",
+      "telecentricity_degrees",
+      "dof_mm",
+      "object_side_resolution_um",
+      "ttl",
+      "fov_d",
+      "fov_h",
+      "fov_v"
+    ]
+  },
+  "line_scan_lens_16k3_5u": {
+    "family": "line_scan",
+    "purpose": "Stores specifications for line scan lenses designed for 16K resolution sensors with 3.5 µm pixel pitch.",
+    "signature_columns": [
+      "fov_degrees",
+      "fov_mm"
+    ]
+  },
+  "line_scan_lens_16k5u": {
+    "family": "line_scan",
+    "purpose": "Stores specifications for line scan lenses designed for 16K resolution sensors with 5 µm pixel pitch.",
+    "signature_columns": [
+      "fov_degrees",
+      "fov_mm"
+    ]
+  },
+  "line_scan_lens_12k5u": {
+    "family": "line_scan",
+    "purpose": "Stores specifications for line scan lenses optimized for 12K resolution sensors with 5 µm pixel pitch.",
+    "signature_columns": [
+      "fov_mm"
+    ]
+  },
+  "adapters": {
+    "family": "accessory",
+    "purpose": "Stores specifications for lens mount adapters — mechanical accessories used in machine vision and industrial imaging systems to bridge incompatible mount standards between lenses and cameras.",
+    "signature_columns": [
+      "mount_primary_raw",
+      "mount_secondary_raw",
+      "length_mm"
+    ]
+  },
+  "anti_vibration_lenses": {
+    "family": "anti_vibration",
+    "purpose": "Stores specifications for anti-vibration lenses — a specialized class of machine vision lenses equipped with optical image stabilization mechanisms designed to compensate for camera shake, mechanical vibration, or platform motion during image acquisition.",
+    "signature_columns": [
+      "mod_raw",
+      "mod_distance_m",
+      "mod_magnification",
+      "wd_raw",
+      "wd_min_mm",
+      "wd_max_mm",
+      "infinity_focus",
+      "angle_primary_raw",
+      "angle_primary_h",
+      "angle_primary_v",
+      "angle_secondary_raw",
+      "angle_secondary_h"
+    ]
+  },
+  "autofocus_lenses": {
+    "family": "autofocus",
+    "purpose": "Stores specifications for autofocus lenses — motorized machine vision lenses with integrated autofocus mechanisms driven by stepper motors or other actuators.",
+    "signature_columns": [
+      "mod_raw",
+      "mod_distance_m",
+      "mod_magnification",
+      "object_image_distance_raw",
+      "object_image_distance_min_mm",
+      "object_image_distance_max_mm",
+      "wd_raw",
+      "wd_min_mm",
+      "wd_max_mm",
+      "voltage_raw",
+      "communication_method",
+      "speed_range_raw"
+    ]
+  },
+  "extension_rings": {
+    "family": "accessory",
+    "purpose": "Stores specifications for extension rings (also called extension tubes) — passive optical accessories inserted between a lens and a camera body to increase the lens-to-sensor distance, enabling closer focus and higher magnification.",
+    "signature_columns": [
+      "mount_primary_raw",
+      "mount_secondary_raw",
+      "length_mm"
+    ]
+  },
+  "fa_lenses": {
+    "family": "fa_lens",
+    "purpose": "Stores specifications for FA (Factory Automation) lenses — the standard workhorse lens category in industrial machine vision.",
+    "signature_columns": [
+      "megapixel_rating",
+      "mod_raw",
+      "mod_distance_m",
+      "mod_magnification",
+      "infinity_focus",
+      "angle_primary_raw",
+      "angle_primary_h",
+      "angle_primary_v",
+      "angle_secondary_raw",
+      "angle_secondary_h",
+      "angle_secondary_v",
+      "angle_tertiary_raw"
+    ]
+  },
+  "focusing_rings": {
+    "family": "accessory",
+    "purpose": "Stores specifications for focusing rings — adjustable mechanical accessories inserted between a lens and a camera body to allow fine-tuning of focus position and working distance.",
+    "signature_columns": [
+      "mount_primary_raw",
+      "mount_secondary_raw",
+      "length_min_mm",
+      "length_max_mm",
+      "combination_length_mm"
+    ]
+  },
+  "inspection_360_systems": {
+    "family": "inspection",
+    "purpose": "Stores specifications for 360° inspection systems — specialized optical assemblies designed to capture the complete circumferential surface of cylindrical or rotational objects in a single imaging pass, without rotating the object or camera.",
+    "signature_columns": [
+      "inspection_type",
+      "lens_diameter_raw",
+      "lens_diameter_mm",
+      "fov_degrees",
+      "wavelength_raw",
+      "wd_raw",
+      "wd_min_mm",
+      "wd_max_mm",
+      "measurement_object_diameter_raw",
+      "measurement_object_diameter_min_mm",
+      "measurement_object_diameter_max_mm",
+      "measurement_height_raw"
+    ]
+  },
+  "large_format_autofocus_lenses": {
+    "family": "large_format",
+    "purpose": "Stores specifications for large format autofocus lenses — motorized lenses designed for large image circle sensors (typically greater than 1 inch diagonal) combined with integrated autofocus drive mechanisms.",
+    "signature_columns": [
+      "voltage_raw",
+      "communication_method",
+      "speed_range_raw",
+      "speed_min_rpm",
+      "speed_max_rpm",
+      "motion_precision_raw",
+      "motion_precision_degree",
+      "response_time_raw",
+      "response_time_ms",
+      "controller_raw"
+    ]
+  },
+  "large_format_lenses": {
+    "family": "large_format",
+    "purpose": "Stores specifications for large format lenses — fixed-focus, high-resolution machine vision lenses engineered for image sensors with large diagonal dimensions (typically greater than 1 inch), including APS-C, full-frame, and specialized industrial large-format sensors.",
+    "signature_columns": [
+      "megapixel_rating",
+      "fov_degrees",
+      "fov_mm"
+    ]
+  },
+  "laser_coaxial_lenses": {
+    "family": "laser_coaxial",
+    "purpose": "Stores specifications for laser coaxial lenses — specialized optical lenses designed for use with laser light sources in coaxial (on-axis) illumination configurations.",
+    "signature_columns": [
+      "angle_raw",
+      "angle_degrees"
+    ]
+  },
+  "lens_holders": {
+    "family": "accessory",
+    "purpose": "Stores specifications for lens holders — mechanical mounting accessories used to physically secure and position lenses within an optical assembly or machine vision system.",
+    "signature_columns": [
+      "mount_primary_raw",
+      "mount_secondary_raw",
+      "length_mm"
+    ]
+  },
+  "m12_mount_lenses": {
+    "family": "m12_mount",
+    "purpose": "Stores specifications for M12 mount lenses — compact, lightweight lenses using the M12 (12mm diameter threaded) mount standard, commonly found in small-form-factor machine vision cameras, embedded vision systems, robotics, drones, and IoT/edge imaging devices.",
+    "signature_columns": [
+      "megapixel_rating",
+      "mod_raw",
+      "mod_distance_m",
+      "mod_magnification",
+      "ttl_raw",
+      "ttl_min_mm",
+      "ttl_max_mm",
+      "angle_primary_raw",
+      "angle_primary_h",
+      "angle_primary_v",
+      "angle_secondary_raw",
+      "angle_secondary_h"
+    ]
+  },
+  "macro_lenses": {
+    "family": "macro",
+    "purpose": "Stores specifications for macro lenses — close-focus, high-magnification machine vision lenses designed to image small objects or fine details at reproduction ratios at or near 1:1 (life-size) and beyond.",
+    "signature_columns": [
+      "object_image_distance_raw",
+      "object_image_distance_min_mm",
+      "object_image_distance_max_mm",
+      "wd_raw",
+      "wd_min_mm",
+      "wd_max_mm"
+    ]
+  },
+  "magnifying_lenses": {
+    "family": "microscope",
+    "purpose": "Stores specifications for magnifying lenses — optical components designed to produce magnified images of small objects or features for direct visual inspection or camera-based imaging.",
+    "signature_columns": [
+      "wavelength_raw",
+      "wavelength_min_nm",
+      "wavelength_max_nm"
+    ]
+  },
+  "motorized_bi_telecentric_lenses": {
+    "family": "telecentric",
+    "purpose": "Stores specifications for motorized bi-telecentric lenses — precision optical systems combining the geometric measurement advantages of bilateral telecentricity with an integrated motorized focus drive.",
+    "signature_columns": [
+      "illumination_type",
+      "wd_raw",
+      "numerical_aperture",
+      "telecentricity_raw",
+      "telecentricity_degrees",
+      "ttl_mm",
+      "voltage_raw",
+      "communication_method",
+      "speed_range_raw",
+      "speed_min_rpm",
+      "speed_max_rpm",
+      "motion_precision_raw"
+    ]
+  },
+  "spectral_lenses": {
+    "family": "spectral",
+    "purpose": "Stores specifications for spectral lenses — specialized optical lenses engineered for imaging across non-standard or extended wavelength ranges beyond the visible spectrum (400–700 nm).",
+    "signature_columns": [
+      "spectral_type",
+      "wavelength_raw",
+      "wavelength_min_nm",
+      "wavelength_max_nm",
+      "mod_raw",
+      "mod_distance_m",
+      "mod_magnification",
+      "angle_primary_raw",
+      "angle_primary_h",
+      "angle_primary_v",
+      "angle_secondary_raw",
+      "angle_secondary_h"
+    ]
+  },
+  "three_cmos_lenses": {
+    "family": "three_cmos",
+    "purpose": "Stores specifications for 3CMOS (three-CMOS-sensor) lenses — lenses engineered for prism-based three-sensor camera systems (commonly used in high-end broadcast, medical imaging, and high-fidelity color-separation industrial imaging) where a single lens forms an image that is split by a trichroic prism onto three separate CMOS sensors (typically for R/G/B channel separation).",
+    "signature_columns": [
+      "image_side_resolution_raw",
+      "image_side_resolution_um",
+      "wd_raw",
+      "wd_min_m",
+      "wd_max_m"
+    ]
+  },
+  "ultra_high_resolution_line_scan_lenses": {
+    "family": "line_scan",
+    "purpose": "Stores specifications for ultra high resolution line scan lenses — the top tier of the line scan lens family, intended for the most demanding inspection tasks where extremely fine spatial detail must be resolved, such as advanced semiconductor wafer/die inspection, AMOLED and microLED display inspection, precision optical component metrology, and other applications pushing beyond the resolution limits of standard 8K/12K/16K line scan offerings.",
+    "signature_columns": [
+      "fov_degrees"
+    ]
+  },
+  "zoom_lenses": {
+    "family": "zoom",
+    "purpose": "Stores specifications for zoom lenses — machine vision lenses offering variable focal length and/or variable magnification, used in applications requiring flexible field of view adjustment without changing the lens or working distance, such as multi-product inspection lines, semiconductor/electronics inspection, microscopy-adjacent imaging, and telecentric measurement systems.",
+    "signature_columns": [
+      "zoom_type",
+      "illumination_type",
+      "wd_raw",
+      "wd_min_mm",
+      "wd_max_mm",
+      "resolution_raw",
+      "resolution_min_um",
+      "resolution_max_um",
+      "numerical_aperture_raw",
+      "numerical_aperture_min",
+      "numerical_aperture_max",
+      "zoom_method"
+    ]
+  },
+  "microscope_lenses": {
+    "family": "microscope",
+    "purpose": "Stores specifications for microscope lenses — high-magnification optical systems used in digital microscopy, video microscopy, and machine vision microscopy for imaging fine structures, biological specimens, semiconductor features, MEMS devices, surface defects at the micron scale, and other targets requiring resolution beyond the capability of standard macro or FA lenses.",
+    "signature_columns": [
+      "microscope_type",
+      "illumination_type",
+      "numerical_aperture",
+      "object_resolution_raw",
+      "object_resolution_um",
+      "dof_raw",
+      "dof_um",
+      "wavelength_raw",
+      "wavelength_min_nm",
+      "wavelength_max_nm",
+      "objective_mount_raw",
+      "tube_lens_mount_raw"
+    ]
+  }
+}
