@@ -28,6 +28,7 @@ import psycopg2
 from dotenv import load_dotenv
 
 from column_aliases import build_context_notes
+from router import route_tables, get_all_tables
 
 # Suppress pandas warning about psycopg2 not being a SQLAlchemy connection.
 # We intentionally use psycopg2 directly for lightweight read-only queries.
@@ -41,6 +42,10 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(SCRIPT_DIR, ".env"), override=True)
 
 OLLAMA_MODEL = "llama3.1:8b"
+# SQL generation can use a stronger local model (e.g. qwen2.5-coder:7b) without
+# changing the lightweight router/filter steps. Override via the SQL_GEN_MODEL
+# env var to A/B models — e.g. `SQL_GEN_MODEL=qwen2.5-coder:7b python ...`.
+SQL_GEN_MODEL = os.getenv("SQL_GEN_MODEL", OLLAMA_MODEL)
 CHROMA_DB_PATH = os.path.join(SCRIPT_DIR, "chroma_db")
 CHROMA_COLLECTION = "lens_schema_rag"
 MODEL_INDEX_PATH = os.path.join(SCRIPT_DIR, "model_index.json")
@@ -185,6 +190,44 @@ def resolve_models(user_query: str) -> list:
                 seen.add(sig)
                 matches.append(entry)
     return matches
+
+
+def _build_cross_table_hint(tables: list) -> str:
+    """Hint for cross-table comparison queries: combine the relevant tables with
+    UNION ALL so the answer spans every relevant lens family."""
+    if len(tables) > 6:
+        return (
+            "CROSS-TABLE QUERY: the user is comparing across many lens families. "
+            "Write one SELECT per table in the SCHEMA CONTEXT that ACTUALLY contains "
+            "the requested column(s), and combine them with UNION ALL (identical "
+            "column aliases, NO semicolons between the SELECTs, a single semicolon at "
+            "the very end). SKIP any table that lacks the requested column.\n\n"
+        )
+    return (
+        "CROSS-TABLE QUERY: combine these tables with UNION ALL (one SELECT each, "
+        "same columns, single trailing semicolon):\n- " + "\n- ".join(tables) + "\n\n"
+    )
+
+
+_schema_registry = None
+
+
+def _load_schema_registry() -> dict:
+    global _schema_registry
+    if _schema_registry is None:
+        with open(os.path.join(SCRIPT_DIR, "schema_registry.json"), "r") as f:
+            _schema_registry = json.load(f)
+    return _schema_registry
+
+
+def _compact_schema_context(tables: list) -> list:
+    """For many-table (cross-family) queries, full schema docs blow the local
+    model's context window. Provide a compact per-table column listing instead."""
+    reg = _load_schema_registry()
+    return [
+        f"[Table: {t}]\ncolumns: {', '.join(reg.get(t, []))}"
+        for t in tables
+    ]
 
 
 def _build_routing_hint(resolved: list) -> str:
@@ -370,8 +413,45 @@ def run_pipeline(user_query: str) -> tuple:
         routing_hint = _build_routing_hint(resolved)
         tables_in_context = tables
 
+    elif (routed := route_tables(user_query))["tables"]:
+        # ── Phase 2: deterministic table-catalog router ───────────────────
+        # No model named, but the router picked the relevant table(s) from the
+        # full catalog — handles implicit-family and cross-table queries that the
+        # old 3-chunk semantic search could not.
+        cross = routed["cross_table"]
+        # Cross-family queries ("cheapest lens overall") need every table; the
+        # local model under-lists them, so expand deterministically.
+        tables = get_all_tables() if cross else routed["tables"]
+
+        filters = {
+            "product_type": None,
+            "resolution_target": None,
+            "pixel_pitch_um": None,
+            "is_coaxial": None,
+            "is_new_series": None,
+            "routed_tables": tables,
+            "cross_table": cross,
+        }
+
+        if len(tables) > 6:
+            # Too many tables for full schema docs — use compact column context.
+            contexts = _compact_schema_context(tables)
+        else:
+            where = (
+                {"table_name": {"$in": tables}} if len(tables) > 1
+                else {"table_name": tables[0]}
+            )
+            results = collection.query(
+                query_texts=[user_query], n_results=len(tables), where=where
+            )
+            contexts = results["documents"][0] if results["documents"] else []
+
+        # UNION hint whenever more than one table is in play (same-family or cross).
+        routing_hint = _build_cross_table_hint(tables) if (cross or len(tables) > 1) else ""
+        tables_in_context = tables
+
     else:
-        # ── Legacy family-routing path (no specific model named) ──────────
+        # ── Legacy family-routing fallback (router undecided) ─────────────
         filters = llm_extract_filters(user_query)
 
         search_params = {"query_texts": [user_query], "n_results": 3}
@@ -480,7 +560,7 @@ If the user asks a general question comparing across all lenses without specifyi
 
     while attempts <= max_retries:
         response = ollama.chat(
-            model=OLLAMA_MODEL,
+            model=SQL_GEN_MODEL,
             messages=messages,
             options={"temperature": 0, "num_ctx": 8192},
         )

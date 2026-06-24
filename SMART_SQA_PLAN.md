@@ -92,13 +92,9 @@ Highest leverage. Pure scaffolding — no model smartness needed.
 
 ### Phase 2 — Deterministic router + stronger local SQL model
 Replaces the brittle `product_type`-only filter.
-- [ ] **Table-catalog router.** Maintain a compact one-line catalog of all 38 tables (purpose + key columns) — small enough to put fully in the prompt. Router step (rules first, LLM fallback) selects **candidate table(s)**; ChromaDB then pulls the **full schema doc** only for those tables. Handles implicit-family + cross-family queries that the current 3-chunk window can't.
-- [ ] **Raise `n_results` / retrieve-by-chosen-tables** so UNION/comparison queries see every relevant table.
-- [ ] **Upgrade the local generation model** (the real smartness bottleneck). Evaluate, hardware permitting:
-  - `qwen2.5-coder:14b` / `:32b` — strong at SQL, likely the best local pick.
-  - `llama3.1:70b` if the box can run it.
-  - Keep `llama3.1:8b` as the cheap router/intent model.
-  Benchmark each against the Phase 4 eval suite before committing.
+- [x] **Table-catalog router.** `build_table_catalog.py` → `table_catalog.json` (one line per table: purpose + distinctive cols). `router.py` `route_tables()` selects candidate table(s) via the local LLM, validated against real names. Wired into `pipeline.py` as: model-name → table-router → legacy fallback. ✅ Routing verified (implicit-family + cross-family selection works).
+- [x] **Retrieve-by-chosen-tables.** Pulls full schema docs for the routed tables; cross-table queries expand to all tables with a compact column-only context (so 32 docs don't blow the context window) + UNION hint.
+- [ ] **Upgrade the local generation model** ← NEXT. **Finding:** routing is now correct, but `llama3.1:8b` will NOT reliably emit multi-table UNION SQL (queries 1 of N routed tables). This is the generation bottleneck. Hardware = MacBook Air M2, 16 GB → target **`qwen2.5-coder:7b`** (14b/32b throttle the fanless Air). `SQL_GEN_MODEL` env var makes the swap a one-liner; keep `llama3.1:8b` for router/filter. Benchmark on the multi-table cases; only build a deterministic UNION-expander if the upgraded model still struggles.
 
 ### Phase 3 — Semantic spec mapping (the "however worded" part)
 > ⏳ STARTED EARLY: `column_aliases.py` already handles the DB's column-name
