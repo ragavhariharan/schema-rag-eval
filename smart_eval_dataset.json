@@ -1,0 +1,68 @@
+[
+  {
+    "id": "mn_01_focal",
+    "category": "model_name",
+    "question": "What is the focal length of FA0401C?",
+    "expected_sql": "SELECT model_name, focus_length_mm FROM fa_lenses WHERE model_name = 'FA0401C';"
+  },
+  {
+    "id": "mn_02_price",
+    "category": "model_name",
+    "question": "How much does the macro lens ML2510C cost?",
+    "expected_sql": "SELECT model_name, list_price FROM macro_lenses WHERE model_name = 'ML2510C';"
+  },
+  {
+    "id": "mn_03_weight",
+    "category": "model_name",
+    "question": "What is the weight of FS0805A?",
+    "expected_sql": "SELECT model_name, weight_g FROM m12_mount_lenses WHERE model_name = 'FS0805A';"
+  },
+  {
+    "id": "imp_01_cheap_spectral",
+    "category": "implicit",
+    "question": "What is the cheapest spectral lens?",
+    "expected_sql": "SELECT model_name, list_price FROM spectral_lenses WHERE list_price IS NOT NULL ORDER BY list_price ASC LIMIT 1;"
+  },
+  {
+    "id": "imp_02_micro_mag",
+    "category": "implicit",
+    "question": "Which microscope lens has the highest magnification?",
+    "expected_sql": "SELECT model_name, magnification_max FROM microscope_lenses WHERE magnification_max IS NOT NULL ORDER BY magnification_max DESC LIMIT 1;"
+  },
+  {
+    "id": "imp_03_micro_na",
+    "category": "implicit",
+    "question": "Which microscope lenses have a numerical aperture above 0.3?",
+    "expected_sql": "SELECT model_name, numerical_aperture FROM microscope_lenses WHERE numerical_aperture > 0.3;"
+  },
+  {
+    "id": "mt_01_tele_dof",
+    "category": "multi_table",
+    "question": "telecentric lenses with depth of field over 5mm",
+    "expected_sql": "SELECT model_name, dof_mm FROM standard_telecentric_lenses_2_3_inch WHERE dof_mm > 5 UNION ALL SELECT model_name, dof_mm FROM standard_telecentric_lenses_1_1_inch WHERE dof_mm > 5 UNION ALL SELECT model_name, dof_mm FROM non_standard_telecentric_lenses WHERE dof_mm > 5 UNION ALL SELECT model_name, dof_mm FROM telecentric_lenses_65mp WHERE dof_mm > 5;"
+  },
+  {
+    "id": "ct_01_cheapest",
+    "category": "cross_table",
+    "question": "what is the cheapest lens overall?",
+    "expected_sql": "SELECT model_name, list_price FROM (SELECT model_name, list_price FROM coaxial_illumination_line_scan_lens WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM standard_telecentric_lenses_2_3_inch WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM line_scan_lens_4k7u WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM standard_telecentric_lenses_1_1_inch WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM new_series_line_scan_lens_4k7u WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM line_scan_lens_8k5u WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM telecentric_lenses_65mp WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM line_scan_lens_8k7u WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM non_standard_telecentric_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM line_scan_lens_16k3_5u WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM line_scan_lens_16k5u WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM line_scan_lens_12k5u WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM anti_vibration_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM autofocus_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM fa_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM inspection_360_systems WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM large_format_autofocus_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM large_format_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM laser_coaxial_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM m12_mount_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM macro_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM magnifying_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM motorized_bi_telecentric_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM spectral_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM three_cmos_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM zoom_lenses WHERE list_price IS NOT NULL UNION ALL SELECT model_name, list_price FROM microscope_lenses WHERE list_price IS NOT NULL) AS combined ORDER BY list_price ASC LIMIT 1;"
+  },
+  {
+    "id": "ct_02_heaviest",
+    "category": "cross_table",
+    "question": "which is the heaviest lens overall?",
+    "expected_sql": "SELECT model_name, weight_g FROM (SELECT model_name, weight_g FROM coaxial_illumination_line_scan_lens WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM standard_telecentric_lenses_2_3_inch WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM line_scan_lens_4k7u WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM new_series_line_scan_lens_4k7u WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM line_scan_lens_8k5u WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM line_scan_lens_8k7u WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM non_standard_telecentric_lenses WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM line_scan_lens_16k3_5u WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM line_scan_lens_16k5u WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM line_scan_lens_12k5u WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM anti_vibration_lenses WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM autofocus_lenses WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM fa_lenses WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM inspection_360_systems WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM large_format_lenses WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM m12_mount_lenses WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM macro_lenses WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM spectral_lenses WHERE weight_g IS NOT NULL UNION ALL SELECT model_name, weight_g FROM zoom_lenses WHERE weight_g IS NOT NULL) AS combined ORDER BY weight_g DESC LIMIT 1;"
+  },
+  {
+    "id": "agg_01_count_fa",
+    "category": "aggregate",
+    "question": "how many FA lenses are there?",
+    "expected_sql": "SELECT COUNT(*) AS n FROM fa_lenses;"
+  },
+  {
+    "id": "cmp_01_two_fa",
+    "category": "comparison",
+    "question": "compare the focal length of FA0401C and FA0601C",
+    "expected_sql": "SELECT model_name, focus_length_mm FROM fa_lenses WHERE model_name IN ('FA0401C','FA0601C');"
+  }
+]
