@@ -33,6 +33,7 @@ import pandas as pd
 from sql_validator import SQLValidator
 from pipeline import run_pipeline, execute_sql_safely, resolve_models
 from scope import classify_scope, ROUTE_TO
+from conversation import assess_query
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -80,6 +81,7 @@ class SQLAgent:
         Returns the updated state dict.
         """
         user_input = state.get("user_input", "").strip()
+        history = state.get("history", []) or []
 
         # Route to the appropriate execution path
         if not user_input:
@@ -87,18 +89,32 @@ class SQLAgent:
                 "no_input", "No user input provided to SQL Agent"
             )
         elif resolve_models(user_input):
-            # Fast path: a catalog model name is named → definitely in scope,
-            # skip the scope classifier entirely.
+            # Fast path: a catalog model name is named → definitely in scope and
+            # self-contained; skip the scope/understanding steps.
             result = self._execute_from_natural_language(user_input)
         else:
             # ── Phase 3: scope gate ───────────────────────────────────────
             # Decline cleanly (and signal the right agent) for queries that are
             # engineering calculations, company/website questions, or chitchat.
             scope = classify_scope(user_input)
-            if scope["scope"] == "sql":
-                result = self._execute_from_natural_language(user_input)
-            else:
+            if scope["scope"] != "sql":
                 result = self._out_of_scope_response(scope)
+            else:
+                # ── Phase 5: conversational understanding ─────────────────
+                # Resolve follow-ups against history; ask one question if the
+                # request is too vague; capture any interpretation as an
+                # assumption to surface in the answer.
+                assessment = assess_query(user_input, history)
+                if not assessment["answerable"]:
+                    result = self._clarification_response(
+                        assessment["clarifying_question"]
+                    )
+                else:
+                    result = self._execute_from_natural_language(
+                        assessment["standalone_query"]
+                    )
+                    if assessment.get("assumption"):
+                        result["assumption"] = assessment["assumption"]
 
         # ── 9.9: Write products to state ──────────────────────────────────
         state["products"] = result.get("products", [])
@@ -218,4 +234,18 @@ class SQLAgent:
             "scope": label,
             "route_to": ROUTE_TO.get(label),
             "message": scope.get("reason", ""),
+        }
+
+    # ═══════════════════════════════════════════════════════════════════════
+    # PHASE 5: CLARIFICATION
+    # ═══════════════════════════════════════════════════════════════════════
+
+    def _clarification_response(self, question: str) -> dict:
+        """Build a response that asks the user one clarifying question instead
+        of guessing at an under-specified query."""
+        return {
+            "products": [],
+            "count": 0,
+            "status": "needs_clarification",
+            "message": question or "Could you give a bit more detail about what you're looking for?",
         }

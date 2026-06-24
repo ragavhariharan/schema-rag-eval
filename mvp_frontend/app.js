@@ -14,6 +14,12 @@ marked.setOptions({
     }
 });
 
+// Conversation history (prior turns) sent with each request so the agent can
+// resolve follow-ups ("its weight") and clarification answers. Capped to keep
+// the payload small.
+const conversation = [];
+const MAX_TURNS = 12;
+
 function setInput(text) {
     userInput.value = text;
     userInput.focus();
@@ -75,7 +81,7 @@ async function handleSubmit(e) {
         const response = await fetch('http://127.0.0.1:8000/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query })
+            body: JSON.stringify({ query, history: conversation.slice(-MAX_TURNS) })
         });
 
         const data = await response.json();
@@ -116,7 +122,11 @@ async function handleSubmit(e) {
         `;
         
         chatHistory.appendChild(aiMsg);
-        
+
+        // Record this turn so follow-ups and clarification answers have context.
+        conversation.push({ role: 'user', content: query });
+        conversation.push({ role: 'assistant', content: data.response });
+
     } catch (error) {
         chatHistory.removeChild(typingIndicator);
         const errorMsg = document.createElement('div');
