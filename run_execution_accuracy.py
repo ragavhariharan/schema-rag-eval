@@ -103,6 +103,13 @@ def compare_result_sets(df_expected: pd.DataFrame, df_generated: pd.DataFrame) -
     expected_cols = set(df_expected.columns)
     generated_cols = set(df_generated.columns)
 
+    # Single-column result sets (e.g. an aggregate like COUNT(*)): the column
+    # name is an arbitrary alias, so compare by VALUE — align the one generated
+    # column onto the expected name before the value check below.
+    if len(df_expected.columns) == 1 and len(df_generated.columns) == 1:
+        df_generated.columns = list(df_expected.columns)
+        expected_cols = generated_cols = set(df_expected.columns)
+
     if expected_cols == generated_cols:
         # Exact column match — compare everything
         pass
@@ -302,16 +309,20 @@ def print_dashboard(results: list[dict]):
 # SECTION 7: MAIN EVALUATION LOOP
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def run_execution_accuracy():
-    """Main entry point: run the full execution accuracy evaluation."""
+def run_execution_accuracy(dataset_path=GOLDEN_DATASET_PATH):
+    """Main entry point: run the full execution accuracy evaluation.
 
-    # ── Load golden dataset ───────────────────────────────────────────────
+    dataset_path defaults to golden_dataset.json; pass another path (e.g.
+    smart_eval_dataset.json) on the command line to evaluate a different suite.
+    """
+
+    # ── Load dataset ──────────────────────────────────────────────────────
     print(f"\n{'═' * TRACE_WIDTH}")
     print(f"  🚀  EXECUTION ACCURACY EVALUATION")
-    print(f"  Loading golden dataset from: {GOLDEN_DATASET_PATH}")
+    print(f"  Loading dataset from: {dataset_path}")
     print(f"{'═' * TRACE_WIDTH}")
 
-    with open(GOLDEN_DATASET_PATH, "r") as f:
+    with open(dataset_path, "r") as f:
         dataset = json.load(f)
 
     total = len(dataset)
@@ -419,4 +430,6 @@ def run_execution_accuracy():
 # ═══════════════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    run_execution_accuracy()
+    import sys
+    path = sys.argv[1] if len(sys.argv) > 1 else GOLDEN_DATASET_PATH
+    run_execution_accuracy(path)

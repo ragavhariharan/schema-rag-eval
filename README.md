@@ -118,7 +118,8 @@ python mvp_api.py                  # http://localhost:8000  (POST /api/chat)
 python run_sql_agent_debug.py
 
 # Evaluations
-python run_execution_accuracy.py   # result-set accuracy vs golden_dataset.json
+python run_execution_accuracy.py                          # vs golden_dataset.json (explicit-family)
+python run_execution_accuracy.py smart_eval_dataset.json  # model-name / implicit / multi-table / cross-table
 python run_full_evaluation.py      # full metrics suite
 python run_safety_benchmark.py     # safety / injection traps
 ```

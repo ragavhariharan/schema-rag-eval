@@ -109,9 +109,11 @@ Replaces the brittle `product_type`-only filter.
 - [ ] **Graceful ambiguity + scope handoff.** Under-specified → pick sensible default and **state the assumption** (or ask one clarifying question). Calculation/website questions → signal the orchestrator to hand off to the calc/domain agents (out of SQA scope, but SQA must recognize and decline cleanly).
 
 ### Phase 4 — Evaluation that proves smartness
-- [ ] `golden_dataset.json` is 100% explicit-family queries → can't measure the improvement. **Add suites for:** bare model-name lookups (*"MV11051B fov?"*), implicit-family, multi-spec, model-vs-model comparison, count/aggregate, ambiguous, and out-of-scope. This is the regression net for the model swap.
-- [ ] **Consolidate** the two eval harnesses into one; keep `run_sql_agent_debug.py`.
-- [ ] Track accuracy per query-type so we can see exactly which categories the new scaffolding unlocks.
+- [x] **`smart_eval_dataset.json`** — 11 queries the old dataset couldn't measure: model-name lookups, implicit-family, multi-table (expander), cross-table superlatives, aggregate, multi-model comparison. Each `expected_sql` verified against the live DB. Tagged with `category` for per-type scoring.
+- [x] **Harness takes a dataset path** — `python run_execution_accuracy.py smart_eval_dataset.json` (defaults to `golden_dataset.json`). Result-set comparison, no code duplication.
+- [ ] Per-category score breakdown in the dashboard (currently per failure-type); add once we see the first run.
+- [ ] Ambiguous / out-of-scope handling (Phase 3) — not yet covered.
+- [ ] **Consolidate** the two eval harnesses (`run_full_evaluation.py` overlaps) — deferred.
 
 ---
 
