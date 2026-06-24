@@ -82,7 +82,8 @@ source venv/bin/activate
 pip install chromadb ollama pandas psycopg2-binary python-dotenv sqlglot pydantic \
             fastapi uvicorn colorama
 
-ollama pull llama3.1:8b
+ollama pull llama3.1:8b        # router / filter / synthesis
+ollama pull qwen2.5-coder:7b   # SQL generation (default; override via SQL_GEN_MODEL)
 ```
 
 Create a `.env` (gitignored) with the database credentials:
