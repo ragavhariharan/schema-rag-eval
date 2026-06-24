@@ -33,9 +33,10 @@ import chromadb
 import pandas as pd
 
 import pipeline
-from pipeline import execute_sql_safely, CHROMA_DB_PATH, CHROMA_COLLECTION, OLLAMA_MODEL
+from pipeline import execute_sql_safely, resolve_models, CHROMA_DB_PATH, CHROMA_COLLECTION, OLLAMA_MODEL
 from column_aliases import build_context_notes
 from sql_validator import SQLValidator
+from scope import classify_scope
 
 warnings.filterwarnings("ignore", message=".*pandas only supports SQLAlchemy.*")
 
@@ -80,6 +81,18 @@ def run_debug_pipeline(user_query: str, collection, validator):
     execution. Uses the production code path so the trace cannot drift."""
 
     t_total_start = time.time()
+
+    # ── STAGE 0: SCOPE GATE ───────────────────────────────────────────────
+    # Mirrors SQLAgent: a named model is always in scope; otherwise classify.
+    if not resolve_models(user_query):
+        sc = classify_scope(user_query)
+        if sc["scope"] != "sql":
+            stage_header(0, "SCOPE GATE", "🧭")
+            kv("Scope", f"OUT OF SCOPE → {sc['scope']}")
+            kv("Reason", sc.get("reason", ""))
+            print("\n  ⛔ Not a catalog query — handed off to another agent; "
+                  "SQL pipeline skipped.")
+            return
 
     # ── STAGE 1: ROUTING → RETRIEVAL → SQL GENERATION ─────────────────────
     # (run_pipeline may print "[Self-Healing]" lines here if it retries.)

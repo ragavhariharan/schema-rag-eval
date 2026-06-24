@@ -1,0 +1,16 @@
+[
+  {"query": "cheapest telecentric lens", "expected": "sql"},
+  {"query": "MV11051B fov?", "expected": "sql"},
+  {"query": "which lenses are under 200 grams", "expected": "sql"},
+  {"query": "compare the focal length of FA0401C and FA0601C", "expected": "sql"},
+  {"query": "how many macro lenses do you have", "expected": "sql"},
+  {"query": "what is the working distance of the cheapest spectral lens", "expected": "sql"},
+  {"query": "calculate the field of view for a 25mm lens at 500mm working distance", "expected": "calculation"},
+  {"query": "what magnification do I need to image a 10mm object on a 1 inch sensor", "expected": "calculation"},
+  {"query": "compute the depth of field at f/8 for a 50mm lens", "expected": "calculation"},
+  {"query": "does EarthTekniks ship to India?", "expected": "domain"},
+  {"query": "what is your return policy", "expected": "domain"},
+  {"query": "how do I contact your sales team", "expected": "domain"},
+  {"query": "hello there", "expected": "chitchat"},
+  {"query": "thanks, that was helpful", "expected": "chitchat"}
+]

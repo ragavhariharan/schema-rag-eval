@@ -46,11 +46,21 @@ All models run **locally via [Ollama](https://ollama.com/)** (default
 ### Runtime (production path)
 | File | Role |
 |------|------|
-| `pipeline.py` | **Core RAG pipeline** — DB connection, ChromaDB retrieval, filter extraction, SQL generation + self-healing. Single source of truth, imported everywhere. |
-| `sql_agent.py` | `SQLAgent` — state-in/state-out wrapper around the pipeline (the agent's public interface). |
+| `pipeline.py` | **Core RAG pipeline** — model-name routing, table routing, retrieval, SQL generation + self-healing, multi-table expansion. Single source of truth, imported everywhere. |
+| `sql_agent.py` | `SQLAgent` — state-in/state-out wrapper: scope gate → pipeline → result. The agent's public interface. |
+| `scope.py` | Scope gate — classifies a query `sql` / `calculation` / `domain` / `chitchat` so non-catalog queries are declined and routed to the right agent. |
+| `router.py` | Table-catalog router — picks the relevant table(s) for a query (`table_catalog.json`). |
+| `multi_table.py` | Deterministic UNION-expander — replicates a single-table query across tables that share its columns (registry-driven). |
+| `column_aliases.py` | Per-table column synonym + unit-caveat notes injected into the generation prompt. |
 | `sql_validator.py` | `SQLValidator` — sqlglot AST checks: read-only enforcement + table/column grounding against `schema_registry.json`. |
 | `mvp_api.py` | FastAPI server exposing `POST /api/chat`; runs the agent and synthesizes a reply. |
 | `mvp_frontend/` | Minimal HTML/CSS/JS chat UI. |
+
+### Index builders (offline, need DB)
+| File | Role |
+|------|------|
+| `build_model_index.py` | Scans every table → `model_index.json` (`model_name → table`). Re-run after any data refresh. |
+| `build_table_catalog.py` | Builds `table_catalog.json` (per-table purpose + distinctive columns) from docs + registry. |
 
 ### Knowledge base (offline build)
 | File | Role |
@@ -67,7 +77,8 @@ All models run **locally via [Ollama](https://ollama.com/)** (default
 | `run_execution_accuracy.py` | Execution-accuracy eval: compares generated vs. golden SQL by **result set** (`golden_dataset.json`). |
 | `run_full_evaluation.py` | Broader harness: generation/safety metrics + AST diagnostics + pattern accuracy (`evaluation_dataset.json`). |
 | `run_safety_benchmark.py` | Prompt-injection / hallucination traps (`safety_benchmark.json`). Needs `colorama`. |
-| `run_sql_agent_debug.py` | Interactive 5-stage trace terminal for one query at a time. |
+| `run_scope_eval.py` | Scope-gate accuracy (`scope_eval_dataset.json`). Fast — no SQL/DB. |
+| `run_sql_agent_debug.py` | Interactive trace terminal for one query at a time (scope gate → routing → generation → validation → execution). |
 
 ---
 
@@ -120,6 +131,7 @@ python run_sql_agent_debug.py
 # Evaluations
 python run_execution_accuracy.py                          # vs golden_dataset.json (explicit-family)
 python run_execution_accuracy.py smart_eval_dataset.json  # model-name / implicit / multi-table / cross-table
+python run_scope_eval.py                                  # scope gate accuracy (fast)
 python run_full_evaluation.py      # full metrics suite
 python run_safety_benchmark.py     # safety / injection traps
 ```
