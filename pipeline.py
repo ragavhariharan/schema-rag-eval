@@ -27,6 +27,8 @@ import pandas as pd
 import psycopg2
 from dotenv import load_dotenv
 
+from column_aliases import build_context_notes
+
 # Suppress pandas warning about psycopg2 not being a SQLAlchemy connection.
 # We intentionally use psycopg2 directly for lightweight read-only queries.
 warnings.filterwarnings("ignore", message=".*pandas only supports SQLAlchemy.*")
@@ -41,6 +43,7 @@ load_dotenv(os.path.join(SCRIPT_DIR, ".env"), override=True)
 OLLAMA_MODEL = "llama3.1:8b"
 CHROMA_DB_PATH = os.path.join(SCRIPT_DIR, "chroma_db")
 CHROMA_COLLECTION = "lens_schema_rag"
+MODEL_INDEX_PATH = os.path.join(SCRIPT_DIR, "model_index.json")
 
 # Database connection parameters — pulled from individual .env variables
 # to avoid URL-parsing issues with special characters in the password.
@@ -121,6 +124,84 @@ VALID_PRODUCT_TYPES = {
     "anti_vibration", "autofocus", "laser_coaxial", "inspection",
     "accessory",
 }
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MODEL-NAME RESOLUTION  (Phase 1)
+# ═══════════════════════════════════════════════════════════════════════════════
+# Maps a model number named in a query (e.g. "MV11051B") to the table that holds
+# it, so bare model-name queries can be routed directly instead of guessed via
+# semantic search. Backed by model_index.json (built by build_model_index.py).
+# Exact, whitespace/case-insensitive matching only — fuzzy matching is a later step.
+
+_model_index = None
+
+
+def normalize_model_key(model_name: str) -> str:
+    """Normalize a model name into a lookup key: uppercase, no whitespace.
+    Makes 'mv11051b', 'MV11051B', and 'MV 11051B' collide to the same key."""
+    return "".join(str(model_name).split()).upper()
+
+
+def _load_model_index() -> dict:
+    """Lazily load model_index.json. Returns {} if it hasn't been built yet, so
+    the pipeline degrades gracefully to the legacy family-routing path."""
+    global _model_index
+    if _model_index is None:
+        try:
+            with open(MODEL_INDEX_PATH, "r", encoding="utf-8") as f:
+                _model_index = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            _model_index = {}
+    return _model_index
+
+
+# Candidate model tokens contain a letter AND a digit (e.g. MV11051B, FA0401C).
+# Spec tokens like "12K"/"65MP" may also match the regex, but they are harmless:
+# a token only routes if it is an actual key in the model index.
+_MODEL_TOKEN_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9\-/.]{2,}")
+
+
+def resolve_models(user_query: str) -> list:
+    """Find model numbers in the query that exist in the model index.
+
+    Returns a list of {model_name, table, product_type} entries (deduplicated),
+    in the order the models appear in the query. Empty list if none match.
+    """
+    index = _load_model_index()
+    if not index:
+        return []
+
+    matches = []
+    seen = set()
+    for tok in _MODEL_TOKEN_RE.findall(user_query):
+        # Must look like a model number: contain both a letter and a digit.
+        if not (any(c.isalpha() for c in tok) and any(c.isdigit() for c in tok)):
+            continue
+        key = normalize_model_key(tok)
+        for entry in index.get(key, []):
+            sig = (entry["model_name"], entry["table"])
+            if sig not in seen:
+                seen.add(sig)
+                matches.append(entry)
+    return matches
+
+
+def _build_routing_hint(resolved: list) -> str:
+    """Build an explicit routing instruction for the SQL generator when the user
+    named specific model(s)."""
+    lines = [
+        "ROUTING (the user named specific model(s) — query ONLY these tables and "
+        "filter by model_name):",
+    ]
+    for e in resolved:
+        lines.append(f"- model_name = '{e['model_name']}'  →  table {e['table']}")
+    lines.append(
+        "Use `WHERE model_name = '<model>'` (or `model_name IN (...)` for several "
+        "models in one table). If the requested models live in different tables, "
+        "write one SELECT per table and combine them with UNION ALL."
+    )
+    return "\n".join(lines) + "\n\n"
 
 
 def llm_extract_filters(user_query: str) -> dict:
@@ -257,31 +338,75 @@ def run_pipeline(user_query: str) -> tuple:
     Returns:
         (generated_sql, retrieved_contexts, extracted_filters)
     """
-    filters = llm_extract_filters(user_query)
+    # ── Phase 1: model-name routing ───────────────────────────────────────
+    # If the query names specific model(s), route straight to their table(s)
+    # instead of guessing the lens family via semantic search.
+    resolved = resolve_models(user_query)
 
-    search_params = {"query_texts": [user_query], "n_results": 3}
+    if resolved:
+        # Unique tables, preserving query order
+        tables = []
+        for e in resolved:
+            if e["table"] not in tables:
+                tables.append(e["table"])
 
-    and_conditions = []
-    # ── Product type filter (routes to the correct lens family) ───────
-    if filters.get("product_type"):
-        and_conditions.append({"product_type": filters["product_type"]})
-    # ── Line Scan specific filters (backward compatible) ──────────────
-    if filters.get("resolution_target"):
-        and_conditions.append({"resolution_target": filters["resolution_target"]})
-    if filters.get("pixel_pitch_um") is not None:
-        and_conditions.append({"pixel_pitch_um": filters["pixel_pitch_um"]})
-    if filters.get("is_coaxial") is True:
-        and_conditions.append({"is_coaxial": True})
-    if filters.get("is_new_series") is True:
-        and_conditions.append({"is_new_series": True})
+        filters = {
+            "product_type": None,
+            "resolution_target": None,
+            "pixel_pitch_um": None,
+            "is_coaxial": None,
+            "is_new_series": None,
+            "resolved_models": [e["model_name"] for e in resolved],
+        }
 
-    if and_conditions:
-        search_params["where"] = (
-            {"$and": and_conditions} if len(and_conditions) > 1 else and_conditions[0]
+        where = (
+            {"table_name": {"$in": tables}} if len(tables) > 1
+            else {"table_name": tables[0]}
         )
+        results = collection.query(
+            query_texts=[user_query], n_results=len(tables), where=where
+        )
+        contexts = results["documents"][0] if results["documents"] else []
+        routing_hint = _build_routing_hint(resolved)
+        tables_in_context = tables
 
-    results = collection.query(**search_params)
-    contexts = results["documents"][0] if results["documents"] else []
+    else:
+        # ── Legacy family-routing path (no specific model named) ──────────
+        filters = llm_extract_filters(user_query)
+
+        search_params = {"query_texts": [user_query], "n_results": 3}
+
+        and_conditions = []
+        # ── Product type filter (routes to the correct lens family) ───────
+        if filters.get("product_type"):
+            and_conditions.append({"product_type": filters["product_type"]})
+        # ── Line Scan specific filters (backward compatible) ──────────────
+        if filters.get("resolution_target"):
+            and_conditions.append({"resolution_target": filters["resolution_target"]})
+        if filters.get("pixel_pitch_um") is not None:
+            and_conditions.append({"pixel_pitch_um": filters["pixel_pitch_um"]})
+        if filters.get("is_coaxial") is True:
+            and_conditions.append({"is_coaxial": True})
+        if filters.get("is_new_series") is True:
+            and_conditions.append({"is_new_series": True})
+
+        if and_conditions:
+            search_params["where"] = (
+                {"$and": and_conditions} if len(and_conditions) > 1 else and_conditions[0]
+            )
+
+        results = collection.query(**search_params)
+        contexts = results["documents"][0] if results["documents"] else []
+        routing_hint = ""
+        # Tables that actually surfaced, read from chunk metadata, so we can attach
+        # the right alias / unit caveats below.
+        metas = results.get("metadatas") or []
+        tables_in_context = [
+            m.get("table_name") for m in (metas[0] if metas else []) if m
+        ]
+
+    # ── Alias / unit caveats for the tables in play (Phase 3 groundwork) ───
+    context_notes = build_context_notes(tables_in_context)
 
     system_prompt = f"""You are an expert PostgreSQL engineer for an industrial machine vision company.
 Your job is to convert the user's request into a flawless SQL query.
@@ -324,7 +449,7 @@ If the user asks a general question comparing across all lenses without specifyi
 - DO NOT just query a single table. Ensure you include EVERY relevant table from the context.
 - CRITICAL SYNTAX RULE: Do NOT place semicolons (;) at the end of the individual SELECT statements within a UNION ALL. Only place a single semicolon at the very end of the final query.
 
-SCHEMA CONTEXT:
+{routing_hint}{context_notes}SCHEMA CONTEXT:
 {chr(10).join(contexts)}"""
 
     # Lazy instantiate the validator to prevent disk I/O overhead on every loop iteration
