@@ -29,6 +29,7 @@ from dotenv import load_dotenv
 
 from column_aliases import build_context_notes
 from router import route_tables, get_all_tables
+from multi_table import expand_to_tables
 
 # Suppress pandas warning about psycopg2 not being a SQLAlchemy connection.
 # We intentionally use psycopg2 directly for lightweight read-only queries.
@@ -45,7 +46,7 @@ OLLAMA_MODEL = "llama3.1:8b"
 # SQL generation can use a stronger local model (e.g. qwen2.5-coder:7b) without
 # changing the lightweight router/filter steps. Override via the SQL_GEN_MODEL
 # env var to A/B models — e.g. `SQL_GEN_MODEL=qwen2.5-coder:7b python ...`.
-SQL_GEN_MODEL = os.getenv("SQL_GEN_MODEL", OLLAMA_MODEL)
+SQL_GEN_MODEL = os.getenv("SQL_GEN_MODEL", "qwen2.5-coder:7b")
 CHROMA_DB_PATH = os.path.join(SCRIPT_DIR, "chroma_db")
 CHROMA_COLLECTION = "lens_schema_rag"
 MODEL_INDEX_PATH = os.path.join(SCRIPT_DIR, "model_index.json")
@@ -192,21 +193,15 @@ def resolve_models(user_query: str) -> list:
     return matches
 
 
-def _build_cross_table_hint(tables: list) -> str:
-    """Hint for cross-table comparison queries: combine the relevant tables with
-    UNION ALL so the answer spans every relevant lens family."""
-    if len(tables) > 6:
-        return (
-            "CROSS-TABLE QUERY: the user is comparing across many lens families. "
-            "Write one SELECT per table in the SCHEMA CONTEXT that ACTUALLY contains "
-            "the requested column(s), and combine them with UNION ALL (identical "
-            "column aliases, NO semicolons between the SELECTs, a single semicolon at "
-            "the very end). SKIP any table that lacks the requested column.\n\n"
-        )
-    return (
-        "CROSS-TABLE QUERY: combine these tables with UNION ALL (one SELECT each, "
-        "same columns, single trailing semicolon):\n- " + "\n- ".join(tables) + "\n\n"
-    )
+# Multi-table queries: the model writes ONE single-table query; the deterministic
+# UNION-expander (multi_table.py) replicates it across the routed tables. This is
+# far more reliable on a local model than asking it to assemble a big UNION itself.
+_SINGLE_TABLE_HINT = (
+    "MULTI-TABLE QUERY: Several tables can answer this. Write your query against "
+    "the SINGLE most appropriate table only — the one whose columns match what the "
+    "question needs. Do NOT write UNION yourself. The system will automatically "
+    "apply your single-table query to every other table that has the same columns.\n\n"
+)
 
 
 _schema_registry = None
@@ -386,6 +381,10 @@ def run_pipeline(user_query: str) -> tuple:
     # instead of guessing the lens family via semantic search.
     resolved = resolve_models(user_query)
 
+    # When set (router multi-table path), the generated single-table SQL is
+    # expanded across these tables by the deterministic UNION-expander.
+    expand_tables = None
+
     if resolved:
         # Unique tables, preserving query order
         tables = []
@@ -446,8 +445,11 @@ def run_pipeline(user_query: str) -> tuple:
             )
             contexts = results["documents"][0] if results["documents"] else []
 
-        # UNION hint whenever more than one table is in play (same-family or cross).
-        routing_hint = _build_cross_table_hint(tables) if (cross or len(tables) > 1) else ""
+        # For multi-table queries, have the model write a SINGLE-table query;
+        # the UNION-expander replicates it across the routed tables afterward.
+        multi = cross or len(tables) > 1
+        routing_hint = _SINGLE_TABLE_HINT if multi else ""
+        expand_tables = tables if multi else None
         tables_in_context = tables
 
     else:
@@ -523,11 +525,10 @@ ENGINEERING GLOSSARY (apply these mappings EXACTLY in every query):
 - "Response time" maps to `response_time_ms`.
 - "Adapter" or "mount conversion" — check `mount_primary_raw` and `mount_secondary_raw` in adapter/ring tables.
 
-CROSS-TABLE QUERIES:
-If the user asks a general question comparing across all lenses without specifying a specific product family, you MUST query across all relevant tables.
-- Use `UNION ALL` to combine results from all tables in the SCHEMA CONTEXT that contain the requested columns.
-- DO NOT just query a single table. Ensure you include EVERY relevant table from the context.
-- CRITICAL SYNTAX RULE: Do NOT place semicolons (;) at the end of the individual SELECT statements within a UNION ALL. Only place a single semicolon at the very end of the final query.
+MULTI-TABLE QUERIES:
+Follow the ROUTING / MULTI-TABLE instruction (if any) shown below these rules.
+- If it tells you to write a SINGLE-table query, pick the one most appropriate table and do NOT use UNION — the system replicates your query across the other relevant tables automatically.
+- If it asks you to combine specific named tables (e.g. different models in different tables), use `UNION ALL` with NO semicolons between the SELECTs and a single semicolon at the very end.
 
 {routing_hint}{context_notes}SCHEMA CONTEXT:
 {chr(10).join(contexts)}"""
@@ -586,5 +587,14 @@ If the user asks a general question comparing across all lenses without specifyi
             messages.append({"role": "assistant", "content": raw_response})
             messages.append({"role": "user", "content": correction_prompt})
             print(f"  [Self-Healing] Attempt {attempts}/{max_retries}. Reason: {val_result.reason}")
+
+    # ── Phase 2: deterministic multi-table expansion ──────────────────────
+    # For multi-table routed queries, replicate the validated single-table SQL
+    # across the routed tables that share its columns. Only adopt the expanded
+    # SQL if it still passes validation.
+    if expand_tables:
+        expanded = expand_to_tables(clean_sql, expand_tables, _load_schema_registry())
+        if expanded != clean_sql and _validator.validate(expanded).is_valid:
+            clean_sql = expanded
 
     return clean_sql, contexts, filters
