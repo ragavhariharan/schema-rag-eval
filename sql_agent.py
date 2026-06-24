@@ -31,7 +31,8 @@ import os
 import pandas as pd
 
 from sql_validator import SQLValidator
-from pipeline import run_pipeline, execute_sql_safely
+from pipeline import run_pipeline, execute_sql_safely, resolve_models
+from scope import classify_scope, ROUTE_TO
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -81,12 +82,23 @@ class SQLAgent:
         user_input = state.get("user_input", "").strip()
 
         # Route to the appropriate execution path
-        if user_input:
-            result = self._execute_from_natural_language(user_input)
-        else:
+        if not user_input:
             result = self._error_response(
                 "no_input", "No user input provided to SQL Agent"
             )
+        elif resolve_models(user_input):
+            # Fast path: a catalog model name is named → definitely in scope,
+            # skip the scope classifier entirely.
+            result = self._execute_from_natural_language(user_input)
+        else:
+            # ── Phase 3: scope gate ───────────────────────────────────────
+            # Decline cleanly (and signal the right agent) for queries that are
+            # engineering calculations, company/website questions, or chitchat.
+            scope = classify_scope(user_input)
+            if scope["scope"] == "sql":
+                result = self._execute_from_natural_language(user_input)
+            else:
+                result = self._out_of_scope_response(scope)
 
         # ── 9.9: Write products to state ──────────────────────────────────
         state["products"] = result.get("products", [])
@@ -190,3 +202,20 @@ class SQLAgent:
         }
         response.update(kwargs)
         return response
+
+    # ═══════════════════════════════════════════════════════════════════════
+    # PHASE 3: OUT-OF-SCOPE HANDOFF
+    # ═══════════════════════════════════════════════════════════════════════
+
+    def _out_of_scope_response(self, scope: dict) -> dict:
+        """Build a response for a query that isn't the SQA's job, signalling
+        which agent should handle it (or that it's chitchat)."""
+        label = scope["scope"]
+        return {
+            "products": [],
+            "count": 0,
+            "status": "out_of_scope",
+            "scope": label,
+            "route_to": ROUTE_TO.get(label),
+            "message": scope.get("reason", ""),
+        }

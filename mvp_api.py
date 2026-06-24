@@ -27,6 +27,33 @@ app.add_middleware(
 # Initialize the SQL Agent once
 agent = SQLAgent()
 
+# Deterministic handoff replies when the query isn't the catalog agent's job.
+# (In the full assistant the orchestrator would route to the named agent;
+# standalone, the SQA explains and defers.)
+OUT_OF_SCOPE_MESSAGES = {
+    "calculation": (
+        "That looks like an engineering calculation. I'm the EarthTekniks product-"
+        "catalog assistant — our calculation assistant can compute that (FOV, "
+        "magnification, depth of field, sensor maths, etc.). I can, however, look up "
+        "the specs of any lens in our catalog."
+    ),
+    "domain": (
+        "That's a question about EarthTekniks itself. Our website/company assistant "
+        "can help with that. I'm here for lens-catalog lookups — models, specs, and "
+        "prices."
+    ),
+    "chitchat": (
+        "Hi! I'm the EarthTekniks lens-catalog assistant. Ask me about a lens model, "
+        "a specification (FOV, focal length, aperture, working distance…), or to find "
+        "lenses by price or family."
+    ),
+    "default": (
+        "I'm the EarthTekniks lens-catalog assistant — I can look up lens models, "
+        "specifications, and prices. Could you rephrase your question around the lens "
+        "catalog?"
+    ),
+}
+
 # Request Models
 class ChatRequest(BaseModel):
     query: str
@@ -102,10 +129,23 @@ async def chat_endpoint(request: ChatRequest):
         count = result.get("count", 0)
         products = result.get("products", [])
         
+        # ── Phase 3: out-of-scope handoff ─────────────────────────────────
+        # Query belongs to the calculation or domain agent (or is chitchat).
+        # Reply with a clean, deterministic handoff — no SQL, no LLM synthesis.
+        if status == "out_of_scope":
+            return ChatResponse(
+                response=OUT_OF_SCOPE_MESSAGES.get(
+                    result.get("scope"), OUT_OF_SCOPE_MESSAGES["default"]
+                ),
+                sql=None,
+                products=None,
+                status=status,
+            )
+
         error_msg = ""
         if status == "error":
             error_msg = result.get("message", "Unknown error")
-        
+
         # 2. Synthesize AI Response
         ai_response_text = synthesize_response(
             user_query=query, 

@@ -105,8 +105,9 @@ Replaces the brittle `product_type`-only filter.
 
 - [ ] **Data-driven synonym → column map, keyed per table** (since `fov`/`f_no`/`wd` differ per table). Replaces the hand-written inline glossary in the prompt. Encodes: units, `*_operator` companion columns, `ABS()` for distortion, NULL-filtering for superlatives, "aperture" = f-number, etc.
 - [ ] **FOV/ambiguity disambiguation.** "fov?" on a multi-sensor telecentric table → return all sensor-format FOVs **or** state the assumed sensor. Generalize to any spec that has per-sensor/min-max variants.
-- [ ] **Intent classifier** (lookup / filter / superlative / count / compare / spec-dump / out-of-scope) — cheap 8B call or rules. Adapts prompt + output shape; improves consistency.
-- [ ] **Graceful ambiguity + scope handoff.** Under-specified → pick sensible default and **state the assumption** (or ask one clarifying question). Calculation/website questions → signal the orchestrator to hand off to the calc/domain agents (out of SQA scope, but SQA must recognize and decline cleanly).
+- [ ] **Intent classifier** (lookup / filter / superlative / count / compare / spec-dump) — adapts prompt + output shape. Deferred (the pipeline already handles these shapes well via the prompt + expander).
+- [x] **Scope gate / handoff** (`scope.py`). `classify_scope()` labels each query `sql` / `calculation` / `domain` / `chitchat`; `SQLAgent` runs it before the pipeline (model-name queries fast-path straight to `sql`) and returns `status="out_of_scope"` with `route_to` for non-catalog queries; `mvp_api.py` replies with a clean handoff message. Eval: `run_scope_eval.py` → **14/14**. Fast (~1.3s, short-circuits before SQL generation).
+- [ ] **Under-specified disambiguation** (state-an-assumption / ask one clarifying question) — still open; the no-results path handles empties for now.
 
 ### Phase 4 — Evaluation that proves smartness
 - [x] **`smart_eval_dataset.json`** — 11 queries the old dataset couldn't measure: model-name lookups, implicit-family, multi-table (expander), cross-table superlatives, aggregate, multi-model comparison. Each `expected_sql` verified against the live DB. Tagged with `category` for per-type scoring.
