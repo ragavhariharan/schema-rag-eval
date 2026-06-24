@@ -79,16 +79,16 @@ Ordered by impact. **Phases 1–2 alone fix the model-name case and most
 "however-worded" queries.** Because we're staying local, each phase leans on
 deterministic logic so the 8B model has to reason as little as possible.
 
-### Phase 0 — Restructure (no behavior change)
-- [ ] Extract the pipeline into **`pipeline.py`** (`extract_filters`, `route`, `retrieve_context`, `generate_sql`, `run_pipeline`). `sql_agent.py` + all eval scripts import from it. Eval scripts stop being load-bearing.
-- [ ] Delete `generate_sql.py`, `query_chroma.py`; gitignore generated artifacts; rewrite `README.md`.
-- [ ] **Fix the currency bug** — pick one source of truth (docs say USD), make `mvp_api.py` synthesis prompt agree, add a single `CURRENCY` constant.
+### Phase 0 — Restructure (no behavior change) ✅ DONE
+- [x] Extract the pipeline into **`pipeline.py`** (DB connection, retrieval, `llm_extract_filters`, `run_pipeline`). `sql_agent.py` + all eval scripts import from it. Eval scripts stop being load-bearing.
+- [x] Delete `generate_sql.py`, `query_chroma.py`; rewrite `README.md`. (generated artifacts gitignore — still TODO)
+- [x] **Fix the currency bug** — corrected the docs (the actual source of the error): `list_price` is INR (base USD × markup × dollar-sheet rate), not USD; `price_usd` is the base USD. `mvp_api.py` was already correct.
 
-### Phase 1 — Model-name resolution layer  *(fixes "MV11051B fov?")*
+### Phase 1 — Model-name resolution layer  *(fixes "MV11051B fov?")* ✅ DONE
 Highest leverage. Pure scaffolding — no model smartness needed.
-- [ ] **Build a model index.** One scan of every table → `model_index.json` (or a `ragav.model_catalog` view): `model_name → {table, family}` plus a few headline specs. ~thousands of tiny rows. Add a `build_model_index.py` that regenerates it (run after any data refresh).
-- [ ] **Model-token detection + lookup at query time.** Regex for catalog-style alphanumerics (e.g. `MV11051B`), plus **fuzzy match** (rapidfuzz) for typos/partials (`MV1105`, `mv 11051 b`). On hit → route **directly** to the model's table, skipping semantic guessing.
-- [ ] **Multi-model queries.** If 2+ models named → route to each table; if different tables → generate a UNION. Enables *"compare MV11051B and MV12080 weight"*.
+- [x] **Build a model index.** `build_model_index.py` scans every model-bearing table → `model_index.json` (`model_name → [{table, product_type}]`). Re-run after any data refresh. *(User must run it once — needs DB access.)*
+- [x] **Model-token detection + lookup at query time.** `resolve_models()` in `pipeline.py`: regex for letter+digit tokens → exact, whitespace/case-insensitive lookup → route directly to the model's table. **Fuzzy match (rapidfuzz) deferred** to a later step per decision (exact-first).
+- [x] **Multi-model queries.** 2+ models → route to each table; different tables → routing hint instructs `UNION ALL`. Enables *"compare MV11051B and MV12080 weight"*.
 
 ### Phase 2 — Deterministic router + stronger local SQL model
 Replaces the brittle `product_type`-only filter.
@@ -101,6 +101,11 @@ Replaces the brittle `product_type`-only filter.
   Benchmark each against the Phase 4 eval suite before committing.
 
 ### Phase 3 — Semantic spec mapping (the "however worded" part)
+> ⏳ STARTED EARLY: `column_aliases.py` already handles the DB's column-name
+> synonyms (`sensor_raw`/`sensor_size_raw`, `flange_distance`/`flange_distance_mm`,
+> `ttl`/`ttl_mm`) and the unit traps (`three_cmos` working distance in metres,
+> microscope `dof_um` in microns), injected into the generation prompt per-table.
+
 - [ ] **Data-driven synonym → column map, keyed per table** (since `fov`/`f_no`/`wd` differ per table). Replaces the hand-written inline glossary in the prompt. Encodes: units, `*_operator` companion columns, `ABS()` for distortion, NULL-filtering for superlatives, "aperture" = f-number, etc.
 - [ ] **FOV/ambiguity disambiguation.** "fov?" on a multi-sensor telecentric table → return all sensor-format FOVs **or** state the assumed sensor. Generalize to any spec that has per-sensor/min-max variants.
 - [ ] **Intent classifier** (lookup / filter / superlative / count / compare / spec-dump / out-of-scope) — cheap 8B call or rules. Adapts prompt + output shape; improves consistency.

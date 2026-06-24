@@ -1,0 +1,2974 @@
+{
+  "LS1610L-P02": [
+    {
+      "model_name": "LS1610L-P02",
+      "table": "coaxial_illumination_line_scan_lens",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1613L-P01": [
+    {
+      "model_name": "LS1613L-P01",
+      "table": "coaxial_illumination_line_scan_lens",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1615L-P01": [
+    {
+      "model_name": "LS1615L-P01",
+      "table": "coaxial_illumination_line_scan_lens",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1617L-P01": [
+    {
+      "model_name": "LS1617L-P01",
+      "table": "coaxial_illumination_line_scan_lens",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1620L-P01": [
+    {
+      "model_name": "LS1620L-P01",
+      "table": "coaxial_illumination_line_scan_lens",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1630L-P01": [
+    {
+      "model_name": "LS1630L-P01",
+      "table": "coaxial_illumination_line_scan_lens",
+      "product_type": "line_scan"
+    }
+  ],
+  "MV65021A": [
+    {
+      "model_name": "MV65021A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65021B": [
+    {
+      "model_name": "MV65021B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65031A": [
+    {
+      "model_name": "MV65031A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65031B": [
+    {
+      "model_name": "MV65031B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65051A": [
+    {
+      "model_name": "MV65051A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65051B": [
+    {
+      "model_name": "MV65051B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65075A": [
+    {
+      "model_name": "MV65075A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65075B": [
+    {
+      "model_name": "MV65075B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65081A": [
+    {
+      "model_name": "MV65081A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65081B": [
+    {
+      "model_name": "MV65081B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65101A": [
+    {
+      "model_name": "MV65101A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65101B": [
+    {
+      "model_name": "MV65101B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65151A": [
+    {
+      "model_name": "MV65151A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65151B": [
+    {
+      "model_name": "MV65151B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65201A": [
+    {
+      "model_name": "MV65201A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65201B": [
+    {
+      "model_name": "MV65201B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65301A": [
+    {
+      "model_name": "MV65301A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65301B": [
+    {
+      "model_name": "MV65301B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65401A": [
+    {
+      "model_name": "MV65401A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65401B": [
+    {
+      "model_name": "MV65401B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65601A": [
+    {
+      "model_name": "MV65601A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV65601B": [
+    {
+      "model_name": "MV65601B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11021A": [
+    {
+      "model_name": "MV11021A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11021B": [
+    {
+      "model_name": "MV11021B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11031A": [
+    {
+      "model_name": "MV11031A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11031B": [
+    {
+      "model_name": "MV11031B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11051A": [
+    {
+      "model_name": "MV11051A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11051B": [
+    {
+      "model_name": "MV11051B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11081A": [
+    {
+      "model_name": "MV11081A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11081B": [
+    {
+      "model_name": "MV11081B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11101A": [
+    {
+      "model_name": "MV11101A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11101B": [
+    {
+      "model_name": "MV11101B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11151A": [
+    {
+      "model_name": "MV11151A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11151B": [
+    {
+      "model_name": "MV11151B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11201A": [
+    {
+      "model_name": "MV11201A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11201B": [
+    {
+      "model_name": "MV11201B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11301A": [
+    {
+      "model_name": "MV11301A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11301B": [
+    {
+      "model_name": "MV11301B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11401A": [
+    {
+      "model_name": "MV11401A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11401B": [
+    {
+      "model_name": "MV11401B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11601A": [
+    {
+      "model_name": "MV11601A",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV11601B": [
+    {
+      "model_name": "MV11601B",
+      "table": "standard_telecentric_lenses_2_3_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "LS2003C": [
+    {
+      "model_name": "LS2003C",
+      "table": "line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS2502B": [
+    {
+      "model_name": "LS2502B",
+      "table": "line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS2801A": [
+    {
+      "model_name": "LS2801A",
+      "table": "line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS3508A": [
+    {
+      "model_name": "LS3508A",
+      "table": "line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS4010A": [
+    {
+      "model_name": "LS4010A",
+      "table": "line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS2003D": [
+    {
+      "model_name": "LS2003D",
+      "table": "line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "MH65075A": [
+    {
+      "model_name": "MH65075A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65075B": [
+    {
+      "model_name": "MH65075B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65101A": [
+    {
+      "model_name": "MH65101A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65101B": [
+    {
+      "model_name": "MH65101B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65151A": [
+    {
+      "model_name": "MH65151A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65151B": [
+    {
+      "model_name": "MH65151B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65201A": [
+    {
+      "model_name": "MH65201A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65201B": [
+    {
+      "model_name": "MH65201B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65301A": [
+    {
+      "model_name": "MH65301A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65301B": [
+    {
+      "model_name": "MH65301B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65401A": [
+    {
+      "model_name": "MH65401A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH65401B": [
+    {
+      "model_name": "MH65401B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11031D": [
+    {
+      "model_name": "MH11031D",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11051D": [
+    {
+      "model_name": "MH11051D",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11061A": [
+    {
+      "model_name": "MH11061A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11061B": [
+    {
+      "model_name": "MH11061B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11075A": [
+    {
+      "model_name": "MH11075A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11075B": [
+    {
+      "model_name": "MH11075B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11101A": [
+    {
+      "model_name": "MH11101A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11101B": [
+    {
+      "model_name": "MH11101B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11151A": [
+    {
+      "model_name": "MH11151A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11151B": [
+    {
+      "model_name": "MH11151B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11201A": [
+    {
+      "model_name": "MH11201A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11201B": [
+    {
+      "model_name": "MH11201B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11301A": [
+    {
+      "model_name": "MH11301A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11301B": [
+    {
+      "model_name": "MH11301B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11401A": [
+    {
+      "model_name": "MH11401A",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11401B": [
+    {
+      "model_name": "MH11401B",
+      "table": "standard_telecentric_lenses_1_1_inch",
+      "product_type": "telecentric"
+    }
+  ],
+  "LS04020A": [
+    {
+      "model_name": "LS04020A",
+      "table": "new_series_line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS04028A": [
+    {
+      "model_name": "LS04028A",
+      "table": "new_series_line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS04035A": [
+    {
+      "model_name": "LS04035A",
+      "table": "new_series_line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS04050A": [
+    {
+      "model_name": "LS04050A",
+      "table": "new_series_line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS04060A": [
+    {
+      "model_name": "LS04060A",
+      "table": "new_series_line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS04080A": [
+    {
+      "model_name": "LS04080A",
+      "table": "new_series_line_scan_lens_4k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "MC2501A": [
+    {
+      "model_name": "MC2501A",
+      "table": "line_scan_lens_8k5u",
+      "product_type": "line_scan"
+    },
+    {
+      "model_name": "MC2501A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MC3501A": [
+    {
+      "model_name": "MC3501A",
+      "table": "line_scan_lens_8k5u",
+      "product_type": "line_scan"
+    },
+    {
+      "model_name": "MC3501A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MC5001A": [
+    {
+      "model_name": "MC5001A",
+      "table": "line_scan_lens_8k5u",
+      "product_type": "line_scan"
+    },
+    {
+      "model_name": "MC5001A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MC8001A": [
+    {
+      "model_name": "MC8001A",
+      "table": "line_scan_lens_8k5u",
+      "product_type": "line_scan"
+    },
+    {
+      "model_name": "MC8001A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MC8001B1": [
+    {
+      "model_name": "MC8001B1",
+      "table": "line_scan_lens_8k5u",
+      "product_type": "line_scan"
+    },
+    {
+      "model_name": "MC8001B1",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "TC7730A": [
+    {
+      "model_name": "TC7730A",
+      "table": "telecentric_lenses_65mp",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC11301D": [
+    {
+      "model_name": "TC11301D",
+      "table": "telecentric_lenses_65mp",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC11401D": [
+    {
+      "model_name": "TC11401D",
+      "table": "telecentric_lenses_65mp",
+      "product_type": "telecentric"
+    }
+  ],
+  "LS4105B": [
+    {
+      "model_name": "LS4105B",
+      "table": "line_scan_lens_8k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "MS4505A": [
+    {
+      "model_name": "MS4505A",
+      "table": "line_scan_lens_8k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS0813A": [
+    {
+      "model_name": "LS0813A",
+      "table": "line_scan_lens_8k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS6016A": [
+    {
+      "model_name": "LS6016A",
+      "table": "line_scan_lens_8k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS8014A": [
+    {
+      "model_name": "LS8014A",
+      "table": "line_scan_lens_8k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS8020A": [
+    {
+      "model_name": "LS8020A",
+      "table": "line_scan_lens_8k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS8003A": [
+    {
+      "model_name": "LS8003A",
+      "table": "line_scan_lens_8k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS0802A": [
+    {
+      "model_name": "LS0802A",
+      "table": "line_scan_lens_8k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS4105C": [
+    {
+      "model_name": "LS4105C",
+      "table": "line_scan_lens_8k7u",
+      "product_type": "line_scan"
+    }
+  ],
+  "MV20012B": [
+    {
+      "model_name": "MV20012B",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC0501A": [
+    {
+      "model_name": "TC0501A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH27022D": [
+    {
+      "model_name": "MH27022D",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV20023B": [
+    {
+      "model_name": "MV20023B",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV30041D": [
+    {
+      "model_name": "MV30041D",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MV35041D": [
+    {
+      "model_name": "MV35041D",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC2275A": [
+    {
+      "model_name": "TC2275A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC2275B": [
+    {
+      "model_name": "TC2275B",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH32011A": [
+    {
+      "model_name": "MH32011A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH27021D": [
+    {
+      "model_name": "MH27021D",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC0527A": [
+    {
+      "model_name": "TC0527A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC0527D": [
+    {
+      "model_name": "TC0527D",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC1531A": [
+    {
+      "model_name": "TC1531A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC1531B": [
+    {
+      "model_name": "TC1531B",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH20034B": [
+    {
+      "model_name": "MH20034B",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC0503A": [
+    {
+      "model_name": "TC0503A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC0503B": [
+    {
+      "model_name": "TC0503B",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC1537A": [
+    {
+      "model_name": "TC1537A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC1537B": [
+    {
+      "model_name": "TC1537B",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH35042A": [
+    {
+      "model_name": "MH35042A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH12051B": [
+    {
+      "model_name": "MH12051B",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11055C": [
+    {
+      "model_name": "MH11055C",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "MH11055F": [
+    {
+      "model_name": "MH11055F",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC2403A": [
+    {
+      "model_name": "TC2403A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC2105A": [
+    {
+      "model_name": "TC2105A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC2205A": [
+    {
+      "model_name": "TC2205A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC22055A": [
+    {
+      "model_name": "TC22055A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC2207A": [
+    {
+      "model_name": "TC2207A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "TC1507A": [
+    {
+      "model_name": "TC1507A",
+      "table": "non_standard_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "LS6017A": [
+    {
+      "model_name": "LS6017A",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS9005A": [
+    {
+      "model_name": "LS9005A",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS9001A": [
+    {
+      "model_name": "LS9001A",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1626A": [
+    {
+      "model_name": "LS1626A",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1603A": [
+    {
+      "model_name": "LS1603A",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1642A": [
+    {
+      "model_name": "LS1642A",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1605A": [
+    {
+      "model_name": "LS1605A",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1667A": [
+    {
+      "model_name": "LS1667A",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1607A": [
+    {
+      "model_name": "LS1607A",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1675A": [
+    {
+      "model_name": "LS1675A",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1605D": [
+    {
+      "model_name": "LS1605D",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1610D": [
+    {
+      "model_name": "LS1610D",
+      "table": "line_scan_lens_16k3_5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1601B": [
+    {
+      "model_name": "LS1601B",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1626B": [
+    {
+      "model_name": "LS1626B",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1603B": [
+    {
+      "model_name": "LS1603B",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1605B": [
+    {
+      "model_name": "LS1605B",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1662C": [
+    {
+      "model_name": "LS1662C",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1667B": [
+    {
+      "model_name": "LS1667B",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1683A": [
+    {
+      "model_name": "LS1683A",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1687A": [
+    {
+      "model_name": "LS1687A",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1610A": [
+    {
+      "model_name": "LS1610A",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1613A": [
+    {
+      "model_name": "LS1613A",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1615A": [
+    {
+      "model_name": "LS1615A",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1617A": [
+    {
+      "model_name": "LS1617A",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1620A": [
+    {
+      "model_name": "LS1620A",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1620B": [
+    {
+      "model_name": "LS1620B",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1630A": [
+    {
+      "model_name": "LS1630A",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1630B": [
+    {
+      "model_name": "LS1630B",
+      "table": "line_scan_lens_16k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1202A": [
+    {
+      "model_name": "LS1202A",
+      "table": "line_scan_lens_12k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1203A": [
+    {
+      "model_name": "LS1203A",
+      "table": "line_scan_lens_12k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1205A": [
+    {
+      "model_name": "LS1205A",
+      "table": "line_scan_lens_12k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1207A": [
+    {
+      "model_name": "LS1207A",
+      "table": "line_scan_lens_12k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1208A": [
+    {
+      "model_name": "LS1208A",
+      "table": "line_scan_lens_12k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1210A": [
+    {
+      "model_name": "LS1210A",
+      "table": "line_scan_lens_12k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "LS1212A": [
+    {
+      "model_name": "LS1212A",
+      "table": "line_scan_lens_12k5u",
+      "product_type": "line_scan"
+    }
+  ],
+  "FS2505A-552": [
+    {
+      "model_name": "FS2505A-552",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT4255": [
+    {
+      "model_name": "AT4255",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "EXC5805": [
+    {
+      "model_name": "EXC5805",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT5804": [
+    {
+      "model_name": "AT5804",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT7204": [
+    {
+      "model_name": "AT7204",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT2510": [
+    {
+      "model_name": "AT2510",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT5809": [
+    {
+      "model_name": "AT5809",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT4275": [
+    {
+      "model_name": "AT4275",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT4210": [
+    {
+      "model_name": "AT4210",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT4224": [
+    {
+      "model_name": "AT4224",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "MT05-507": [
+    {
+      "model_name": "MT05-507",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "EX7215": [
+    {
+      "model_name": "EX7215",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT7224": [
+    {
+      "model_name": "AT7224",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AD7250": [
+    {
+      "model_name": "AD7250",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AD7200": [
+    {
+      "model_name": "AD7200",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AD9525": [
+    {
+      "model_name": "AD9525",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AD9550": [
+    {
+      "model_name": "AD9550",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AD9500": [
+    {
+      "model_name": "AD9500",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT5806": [
+    {
+      "model_name": "AT5806",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT9003": [
+    {
+      "model_name": "AT9003",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT9050": [
+    {
+      "model_name": "AT9050",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT9503": [
+    {
+      "model_name": "AT9503",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT9550": [
+    {
+      "model_name": "AT9550",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "MT04-513": [
+    {
+      "model_name": "MT04-513",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "MT04-511": [
+    {
+      "model_name": "MT04-511",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "MT04-508": [
+    {
+      "model_name": "MT04-508",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT4208": [
+    {
+      "model_name": "AT4208",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT4214": [
+    {
+      "model_name": "AT4214",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "AT5815": [
+    {
+      "model_name": "AT5815",
+      "table": "adapters",
+      "product_type": "accessory"
+    }
+  ],
+  "FK0810A": [
+    {
+      "model_name": "FK0810A",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK1613A": [
+    {
+      "model_name": "FK1613A",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK2513A": [
+    {
+      "model_name": "FK2513A",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK0601A": [
+    {
+      "model_name": "FK0601A",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK1202A3": [
+    {
+      "model_name": "FK1202A3",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK1602": [
+    {
+      "model_name": "FK1602",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK2502": [
+    {
+      "model_name": "FK2502",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK3502": [
+    {
+      "model_name": "FK3502",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK5002": [
+    {
+      "model_name": "FK5002",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK0815A": [
+    {
+      "model_name": "FK0815A",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK1603A": [
+    {
+      "model_name": "FK1603A",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK2503A": [
+    {
+      "model_name": "FK2503A",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK3503A": [
+    {
+      "model_name": "FK3503A",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FK7510A": [
+    {
+      "model_name": "FK7510A",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "ML7510K": [
+    {
+      "model_name": "ML7510K",
+      "table": "anti_vibration_lenses",
+      "product_type": "anti_vibration"
+    }
+  ],
+  "FA0802M3": [
+    {
+      "model_name": "FA0802M3",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "FA1602M3": [
+    {
+      "model_name": "FA1602M3",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "FA2502M3": [
+    {
+      "model_name": "FA2502M3",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "FA3502M3": [
+    {
+      "model_name": "FA3502M3",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "FA5002M3": [
+    {
+      "model_name": "FA5002M3",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "FA1216M6": [
+    {
+      "model_name": "FA1216M6",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "FA1616M3": [
+    {
+      "model_name": "FA1616M3",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "FA2516M3": [
+    {
+      "model_name": "FA2516M3",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "FA3516M3": [
+    {
+      "model_name": "FA3516M3",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "FA5016M4": [
+    {
+      "model_name": "FA5016M4",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "ML5010M1": [
+    {
+      "model_name": "ML5010M1",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "FA1625M": [
+    {
+      "model_name": "FA1625M",
+      "table": "autofocus_lenses",
+      "product_type": "autofocus"
+    }
+  ],
+  "AD5810": [
+    {
+      "model_name": "AD5810",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "AF5825": [
+    {
+      "model_name": "AF5825",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "AD5850": [
+    {
+      "model_name": "AD5850",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "AD5800": [
+    {
+      "model_name": "AD5800",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MS5515B1-506": [
+    {
+      "model_name": "MS5515B1-506",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "EX7210": [
+    {
+      "model_name": "EX7210",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "EX727215": [
+    {
+      "model_name": "EX727215",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "EX7220": [
+    {
+      "model_name": "EX7220",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "EX7235": [
+    {
+      "model_name": "EX7235",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "EX7250": [
+    {
+      "model_name": "EX7250",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "EX9020": [
+    {
+      "model_name": "EX9020",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "EX9050": [
+    {
+      "model_name": "EX9050",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "EX9520": [
+    {
+      "model_name": "EX9520",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "EX9550": [
+    {
+      "model_name": "EX9550",
+      "table": "extension_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "FA0401C": [
+    {
+      "model_name": "FA0401C",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0601C": [
+    {
+      "model_name": "FA0601C",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0801C": [
+    {
+      "model_name": "FA0801C",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1201C": [
+    {
+      "model_name": "FA1201C",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1601C": [
+    {
+      "model_name": "FA1601C",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA2501C": [
+    {
+      "model_name": "FA2501C",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA3501C": [
+    {
+      "model_name": "FA3501C",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA5001C": [
+    {
+      "model_name": "FA5001C",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA7501C": [
+    {
+      "model_name": "FA7501C",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0613A": [
+    {
+      "model_name": "FA0613A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0813A": [
+    {
+      "model_name": "FA0813A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1213A": [
+    {
+      "model_name": "FA1213A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1613A": [
+    {
+      "model_name": "FA1613A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA2513A": [
+    {
+      "model_name": "FA2513A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA3513A": [
+    {
+      "model_name": "FA3513A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA5013A": [
+    {
+      "model_name": "FA5013A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA7513A": [
+    {
+      "model_name": "FA7513A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0613B": [
+    {
+      "model_name": "FA0613B",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0802D": [
+    {
+      "model_name": "FA0802D",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1202D": [
+    {
+      "model_name": "FA1202D",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1602D": [
+    {
+      "model_name": "FA1602D",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA2502D": [
+    {
+      "model_name": "FA2502D",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA3502D": [
+    {
+      "model_name": "FA3502D",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA5002D": [
+    {
+      "model_name": "FA5002D",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0810A": [
+    {
+      "model_name": "FA0810A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1210A": [
+    {
+      "model_name": "FA1210A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1610A": [
+    {
+      "model_name": "FA1610A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA2510A": [
+    {
+      "model_name": "FA2510A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA3510A": [
+    {
+      "model_name": "FA3510A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA5010A": [
+    {
+      "model_name": "FA5010A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA7510A": [
+    {
+      "model_name": "FA7510A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "HC1205A": [
+    {
+      "model_name": "HC1205A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "HC1605A": [
+    {
+      "model_name": "HC1605A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "HC2505A": [
+    {
+      "model_name": "HC2505A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "HC3505A": [
+    {
+      "model_name": "HC3505A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "HC5005A": [
+    {
+      "model_name": "HC5005A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "HC7505A": [
+    {
+      "model_name": "HC7505A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0615A": [
+    {
+      "model_name": "FA0615A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0815A": [
+    {
+      "model_name": "FA0815A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1216A": [
+    {
+      "model_name": "FA1216A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1616A": [
+    {
+      "model_name": "FA1616A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA2516A": [
+    {
+      "model_name": "FA2516A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA3516A": [
+    {
+      "model_name": "FA3516A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA5016A": [
+    {
+      "model_name": "FA5016A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1216D": [
+    {
+      "model_name": "FA1216D",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1220A": [
+    {
+      "model_name": "FA1220A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1620A": [
+    {
+      "model_name": "FA1620A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA2520A": [
+    {
+      "model_name": "FA2520A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA3520A": [
+    {
+      "model_name": "FA3520A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA5020A": [
+    {
+      "model_name": "FA5020A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0825A": [
+    {
+      "model_name": "FA0825A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1225A": [
+    {
+      "model_name": "FA1225A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1625A": [
+    {
+      "model_name": "FA1625A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA2525A": [
+    {
+      "model_name": "FA2525A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA3525A": [
+    {
+      "model_name": "FA3525A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA5025A": [
+    {
+      "model_name": "FA5025A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA0825B": [
+    {
+      "model_name": "FA0825B",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1245A": [
+    {
+      "model_name": "FA1245A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1645A": [
+    {
+      "model_name": "FA1645A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA2545A": [
+    {
+      "model_name": "FA2545A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA3545A": [
+    {
+      "model_name": "FA3545A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA5045A": [
+    {
+      "model_name": "FA5045A",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "FA1245B": [
+    {
+      "model_name": "FA1245B",
+      "table": "fa_lenses",
+      "product_type": "fa_lens"
+    }
+  ],
+  "MT07": [
+    {
+      "model_name": "MT07",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT08": [
+    {
+      "model_name": "MT08",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT09": [
+    {
+      "model_name": "MT09",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT14": [
+    {
+      "model_name": "MT14",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT15": [
+    {
+      "model_name": "MT15",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT16": [
+    {
+      "model_name": "MT16",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT17": [
+    {
+      "model_name": "MT17",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT24": [
+    {
+      "model_name": "MT24",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT4972": [
+    {
+      "model_name": "MT4972",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT5672": [
+    {
+      "model_name": "MT5672",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT6472": [
+    {
+      "model_name": "MT6472",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT387203": [
+    {
+      "model_name": "MT387203",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT567202": [
+    {
+      "model_name": "MT567202",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT14-F01": [
+    {
+      "model_name": "MT14-F01",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT14-F02": [
+    {
+      "model_name": "MT14-F02",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT14-F04": [
+    {
+      "model_name": "MT14-F04",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT14-F06": [
+    {
+      "model_name": "MT14-F06",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "MT14-F07": [
+    {
+      "model_name": "MT14-F07",
+      "table": "focusing_rings",
+      "product_type": "accessory"
+    }
+  ],
+  "RF3601A": [
+    {
+      "model_name": "RF3601A",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF3602A": [
+    {
+      "model_name": "RF3602A",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF3603A": [
+    {
+      "model_name": "RF3603A",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF3604A": [
+    {
+      "model_name": "RF3604A",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF3605A": [
+    {
+      "model_name": "RF3605A",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF3608A": [
+    {
+      "model_name": "RF3608A",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF3651B": [
+    {
+      "model_name": "RF3651B",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF3652B": [
+    {
+      "model_name": "RF3652B",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF3654A": [
+    {
+      "model_name": "RF3654A",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF24001A": [
+    {
+      "model_name": "RF24001A",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF27021A": [
+    {
+      "model_name": "RF27021A",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "RF3607B": [
+    {
+      "model_name": "RF3607B",
+      "table": "inspection_360_systems",
+      "product_type": "inspection"
+    }
+  ],
+  "MC2501M": [
+    {
+      "model_name": "MC2501M",
+      "table": "large_format_autofocus_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MC5001M1": [
+    {
+      "model_name": "MC5001M1",
+      "table": "large_format_autofocus_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MC8001M": [
+    {
+      "model_name": "MC8001M",
+      "table": "large_format_autofocus_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MS5515M9": [
+    {
+      "model_name": "MS5515M9",
+      "table": "large_format_autofocus_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MS5515M11": [
+    {
+      "model_name": "MS5515M11",
+      "table": "large_format_autofocus_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MS9015M1": [
+    {
+      "model_name": "MS9015M1",
+      "table": "large_format_autofocus_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MS9015M2": [
+    {
+      "model_name": "MS9015M2",
+      "table": "large_format_autofocus_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MS5515A": [
+    {
+      "model_name": "MS5515A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MS9015A": [
+    {
+      "model_name": "MS9015A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MS9015B": [
+    {
+      "model_name": "MS9015B",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MS5515D": [
+    {
+      "model_name": "MS5515D",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF5013A": [
+    {
+      "model_name": "MF5013A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MS8025A": [
+    {
+      "model_name": "MS8025A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF9005A": [
+    {
+      "model_name": "MF9005A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF9001A": [
+    {
+      "model_name": "MF9001A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "LS9801A": [
+    {
+      "model_name": "LS9801A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF3502A": [
+    {
+      "model_name": "MF3502A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF3502D": [
+    {
+      "model_name": "MF3502D",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF3503A": [
+    {
+      "model_name": "MF3503A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF4010A": [
+    {
+      "model_name": "MF4010A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF5001C": [
+    {
+      "model_name": "MF5001C",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF5015A": [
+    {
+      "model_name": "MF5015A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF6016A": [
+    {
+      "model_name": "MF6016A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF8003A": [
+    {
+      "model_name": "MF8003A",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "MF5015B": [
+    {
+      "model_name": "MF5015B",
+      "table": "large_format_lenses",
+      "product_type": "large_format"
+    }
+  ],
+  "FA6001A": [
+    {
+      "model_name": "FA6001A",
+      "table": "laser_coaxial_lenses",
+      "product_type": "laser_coaxial"
+    }
+  ],
+  "LH5420": [
+    {
+      "model_name": "LH5420",
+      "table": "lens_holders",
+      "product_type": "accessory"
+    }
+  ],
+  "LH6015": [
+    {
+      "model_name": "LH6015",
+      "table": "lens_holders",
+      "product_type": "accessory"
+    }
+  ],
+  "LH7206": [
+    {
+      "model_name": "LH7206",
+      "table": "lens_holders",
+      "product_type": "accessory"
+    }
+  ],
+  "FS0305A": [
+    {
+      "model_name": "FS0305A",
+      "table": "m12_mount_lenses",
+      "product_type": "m12_mount"
+    }
+  ],
+  "FS0605A": [
+    {
+      "model_name": "FS0605A",
+      "table": "m12_mount_lenses",
+      "product_type": "m12_mount"
+    }
+  ],
+  "FS0805A": [
+    {
+      "model_name": "FS0805A",
+      "table": "m12_mount_lenses",
+      "product_type": "m12_mount"
+    }
+  ],
+  "FS1205A": [
+    {
+      "model_name": "FS1205A",
+      "table": "m12_mount_lenses",
+      "product_type": "m12_mount"
+    }
+  ],
+  "FS1605A": [
+    {
+      "model_name": "FS1605A",
+      "table": "m12_mount_lenses",
+      "product_type": "m12_mount"
+    }
+  ],
+  "FS2505A": [
+    {
+      "model_name": "FS2505A",
+      "table": "m12_mount_lenses",
+      "product_type": "m12_mount"
+    }
+  ],
+  "ML1610C": [
+    {
+      "model_name": "ML1610C",
+      "table": "macro_lenses",
+      "product_type": "macro"
+    }
+  ],
+  "ML2510C": [
+    {
+      "model_name": "ML2510C",
+      "table": "macro_lenses",
+      "product_type": "macro"
+    }
+  ],
+  "ML3510C": [
+    {
+      "model_name": "ML3510C",
+      "table": "macro_lenses",
+      "product_type": "macro"
+    }
+  ],
+  "ML5010C": [
+    {
+      "model_name": "ML5010C",
+      "table": "macro_lenses",
+      "product_type": "macro"
+    }
+  ],
+  "ML7510C": [
+    {
+      "model_name": "ML7510C",
+      "table": "macro_lenses",
+      "product_type": "macro"
+    }
+  ],
+  "ML5010D1": [
+    {
+      "model_name": "ML5010D1",
+      "table": "macro_lenses",
+      "product_type": "macro"
+    }
+  ],
+  "BA1501A": [
+    {
+      "model_name": "BA1501A",
+      "table": "magnifying_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "BA2001A": [
+    {
+      "model_name": "BA2001A",
+      "table": "magnifying_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "TC1105M": [
+    {
+      "model_name": "TC1105M",
+      "table": "motorized_bi_telecentric_lenses",
+      "product_type": "telecentric"
+    }
+  ],
+  "IR1202A": [
+    {
+      "model_name": "IR1202A",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "IR2502A": [
+    {
+      "model_name": "IR2502A",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "IR2516A": [
+    {
+      "model_name": "IR2516A",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "IR3502A": [
+    {
+      "model_name": "IR3502A",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "IR5002A": [
+    {
+      "model_name": "IR5002A",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "HC5005N": [
+    {
+      "model_name": "HC5005N",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "VI1202A": [
+    {
+      "model_name": "VI1202A",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "VI1602A": [
+    {
+      "model_name": "VI1602A",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "VI2502A": [
+    {
+      "model_name": "VI2502A",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "VI3502A": [
+    {
+      "model_name": "VI3502A",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "UV2501A": [
+    {
+      "model_name": "UV2501A",
+      "table": "spectral_lenses",
+      "product_type": "spectral"
+    }
+  ],
+  "TD1218A": [
+    {
+      "model_name": "TD1218A",
+      "table": "three_cmos_lenses",
+      "product_type": "three_cmos"
+    }
+  ],
+  "TD1618A": [
+    {
+      "model_name": "TD1618A",
+      "table": "three_cmos_lenses",
+      "product_type": "three_cmos"
+    }
+  ],
+  "TD2518A": [
+    {
+      "model_name": "TD2518A",
+      "table": "three_cmos_lenses",
+      "product_type": "three_cmos"
+    }
+  ],
+  "TD2803A": [
+    {
+      "model_name": "TD2803A",
+      "table": "three_cmos_lenses",
+      "product_type": "three_cmos"
+    }
+  ],
+  "LH1635A": [
+    {
+      "model_name": "LH1635A",
+      "table": "ultra_high_resolution_line_scan_lenses",
+      "product_type": "line_scan"
+    }
+  ],
+  "ZM0434A": [
+    {
+      "model_name": "ZM0434A",
+      "table": "zoom_lenses",
+      "product_type": "zoom"
+    }
+  ],
+  "ZM0434B": [
+    {
+      "model_name": "ZM0434B",
+      "table": "zoom_lenses",
+      "product_type": "zoom"
+    }
+  ],
+  "TC6552A": [
+    {
+      "model_name": "TC6552A",
+      "table": "zoom_lenses",
+      "product_type": "zoom"
+    }
+  ],
+  "TC6552B": [
+    {
+      "model_name": "TC6552B",
+      "table": "zoom_lenses",
+      "product_type": "zoom"
+    }
+  ],
+  "ZM0308C": [
+    {
+      "model_name": "ZM0308C",
+      "table": "zoom_lenses",
+      "product_type": "zoom"
+    }
+  ],
+  "CA20005A": [
+    {
+      "model_name": "CA20005A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CA10007A": [
+    {
+      "model_name": "CA10007A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CAIR10007A": [
+    {
+      "model_name": "CAIR10007A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CA4021A": [
+    {
+      "model_name": "CA4021A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CA2045A": [
+    {
+      "model_name": "CA2045A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CA1045A": [
+    {
+      "model_name": "CA1045A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CA0467A": [
+    {
+      "model_name": "CA0467A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CA2030A": [
+    {
+      "model_name": "CA2030A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CAIR2030A": [
+    {
+      "model_name": "CAIR2030A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT100A": [
+    {
+      "model_name": "CT100A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT100B": [
+    {
+      "model_name": "CT100B",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT160A": [
+    {
+      "model_name": "CT160A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT160B": [
+    {
+      "model_name": "CT160B",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT200A": [
+    {
+      "model_name": "CT200A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT200B": [
+    {
+      "model_name": "CT200B",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT200A1": [
+    {
+      "model_name": "CT200A1",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT200B1": [
+    {
+      "model_name": "CT200B1",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT320A": [
+    {
+      "model_name": "CT320A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT320B": [
+    {
+      "model_name": "CT320B",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT201A": [
+    {
+      "model_name": "CT201A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "CT201B": [
+    {
+      "model_name": "CT201B",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "TA202045A": [
+    {
+      "model_name": "TA202045A",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "TA202045B": [
+    {
+      "model_name": "TA202045B",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ],
+  "TA202045A1": [
+    {
+      "model_name": "TA202045A1",
+      "table": "microscope_lenses",
+      "product_type": "microscope"
+    }
+  ]
+}
