@@ -113,8 +113,14 @@ Replaces the brittle `product_type`-only filter.
 - [x] **`smart_eval_dataset.json`** — 11 queries the old dataset couldn't measure: model-name lookups, implicit-family, multi-table (expander), cross-table superlatives, aggregate, multi-model comparison. Each `expected_sql` verified against the live DB. Tagged with `category` for per-type scoring.
 - [x] **Harness takes a dataset path** — `python run_execution_accuracy.py smart_eval_dataset.json` (defaults to `golden_dataset.json`). Result-set comparison, no code duplication.
 - [ ] Per-category score breakdown in the dashboard (currently per failure-type); add once we see the first run.
-- [ ] Ambiguous / out-of-scope handling (Phase 3) — not yet covered.
 - [ ] **Consolidate** the two eval harnesses (`run_full_evaluation.py` overlaps) — deferred.
+
+### Phase 5 — Conversational layer
+- [x] **Query understanding** (`conversation.py` `assess_query`). Runs after the scope gate: rewrites the message into a self-contained query (resolving follow-ups via history), asks ONE clarifying question when too vague (`status="needs_clarification"`), and records an `assumption` when it interprets a vague term. Prefers a stated assumption over a question.
+- [x] **Multi-turn memory.** `mvp_api` accepts `history`; `mvp_frontend` keeps and sends the running conversation (stateless server).
+- [x] **Well-explained answers.** Synthesis prompt upgraded to lead with the assumption, explain why results answer the question, format cleanly, and keep INR/USD correct.
+- [ ] **Latency** ⚠️ pre-pipeline now does 2 small-model calls (scope + understanding) before routing/generation. On the M2 Air that's ~6–16s warm (more cold). **Optimization:** merge scope + understanding into ONE call. Deferred.
+- [ ] Eval for clarification/assumption behavior (harder — conversational, not result-set). Open.
 
 ---
 
