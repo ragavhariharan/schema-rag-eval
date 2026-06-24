@@ -27,32 +27,10 @@ app.add_middleware(
 # Initialize the SQL Agent once
 agent = SQLAgent()
 
-# Deterministic handoff replies when the query isn't the catalog agent's job.
-# (In the full assistant the orchestrator would route to the named agent;
-# standalone, the SQA explains and defers.)
-OUT_OF_SCOPE_MESSAGES = {
-    "calculation": (
-        "That looks like an engineering calculation. I'm the EarthTekniks product-"
-        "catalog assistant — our calculation assistant can compute that (FOV, "
-        "magnification, depth of field, sensor maths, etc.). I can, however, look up "
-        "the specs of any lens in our catalog."
-    ),
-    "domain": (
-        "That's a question about EarthTekniks itself. Our website/company assistant "
-        "can help with that. I'm here for lens-catalog lookups — models, specs, and "
-        "prices."
-    ),
-    "chitchat": (
-        "Hi! I'm the EarthTekniks lens-catalog assistant. Ask me about a lens model, "
-        "a specification (FOV, focal length, aperture, working distance…), or to find "
-        "lenses by price or family."
-    ),
-    "default": (
-        "I'm the EarthTekniks lens-catalog assistant — I can look up lens models, "
-        "specifications, and prices. Could you rephrase your question around the lens "
-        "catalog?"
-    ),
-}
+OUT_OF_SCOPE_MESSAGE = (
+    "I'm the EarthTekniks lens-catalog assistant — I can look up lens models, "
+    "specifications, and prices. Could you rephrase your question around the lens catalog?"
+)
 
 # Request Models
 class ChatRequest(BaseModel):
@@ -144,14 +122,11 @@ async def chat_endpoint(request: ChatRequest):
         products = result.get("products", [])
         assumption = result.get("assumption", "")
 
-        # ── Phase 3: out-of-scope handoff ─────────────────────────────────
-        # Query belongs to the calculation or domain agent (or is chitchat).
-        # Reply with a clean, deterministic handoff — no SQL, no LLM synthesis.
+        # ── Phase 3: scope gate ────────────────────────────────────────────
+        # Not a catalog query — reply with a single fixed message, no SQL.
         if status == "out_of_scope":
             return ChatResponse(
-                response=OUT_OF_SCOPE_MESSAGES.get(
-                    result.get("scope"), OUT_OF_SCOPE_MESSAGES["default"]
-                ),
+                response=OUT_OF_SCOPE_MESSAGE,
                 sql=None,
                 products=None,
                 status=status,

@@ -3,25 +3,23 @@ sql_agent.py
 ═══════════════════════════════════════════════════════════════════════════════════
 SQL Agent (SQA) — Data Retrieval Layer for the EarthTekniks AI System.
 
-The SQL Agent is the sole owner of database access and product retrieval.
-It provides a controlled, read-only interface between the engineering system
-and external product databases.
+Sole owner of database access and product retrieval: provides a controlled,
+read-only interface between natural-language queries and the product database.
 
-Responsibilities (per architecture doc Section 9):
+Responsibilities:
   9.1  Database Schema Understanding     → schema_registry.json
-  9.2  Query Generation                  → Structured filters OR NL via RAG pipeline
+  9.2  Query Generation                  → NL via RAG pipeline
   9.3  Query Validation                  → SQLValidator (sqlglot)
   9.4  Query Execution                   → psycopg2 against Supabase PostgreSQL
   9.5  Result Normalization              → DataFrame → {"products": [...]}
   9.6  Empty Result Detection            → {"status": "no_results"}
   9.7  Database Error Handling           → {"status": "error", "error_type": "..."}
   9.8  Read-Only Enforcement             → Validator + readonly psycopg2 connection
-  9.9  State Updates                     → Reads state["filters"], writes state["products"]
+  9.9  State Updates                     → Reads state["user_input"], writes state["products"]
 
 Execution Flow:
-  Receive Search Filters → Validate Filters → Generate SQL Query →
-  Validate Query → Execute Against External Database → Normalize Results →
-  Write Products To State → Return Control To Router
+  Natural Language Query → Scope Gate → Conversational Rewrite →
+  Schema-RAG Retrieval → SQL Generation → Validation → Execution → Normalize Results
 ═══════════════════════════════════════════════════════════════════════════════════
 """
 
@@ -32,7 +30,7 @@ import pandas as pd
 
 from sql_validator import SQLValidator
 from pipeline import run_pipeline, execute_sql_safely, resolve_models
-from scope import classify_scope, ROUTE_TO
+from scope import classify_scope
 from conversation import assess_query
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -94,8 +92,7 @@ class SQLAgent:
             result = self._execute_from_natural_language(user_input)
         else:
             # ── Phase 3: scope gate ───────────────────────────────────────
-            # Decline cleanly (and signal the right agent) for queries that are
-            # engineering calculations, company/website questions, or chitchat.
+            # Decline cleanly if the query isn't a catalog lookup.
             scope = classify_scope(user_input)
             if scope["scope"] != "sql":
                 result = self._out_of_scope_response(scope)
@@ -220,19 +217,15 @@ class SQLAgent:
         return response
 
     # ═══════════════════════════════════════════════════════════════════════
-    # PHASE 3: OUT-OF-SCOPE HANDOFF
+    # PHASE 3: OUT-OF-SCOPE GATE
     # ═══════════════════════════════════════════════════════════════════════
 
     def _out_of_scope_response(self, scope: dict) -> dict:
-        """Build a response for a query that isn't the SQA's job, signalling
-        which agent should handle it (or that it's chitchat)."""
-        label = scope["scope"]
+        """Build a response for a query that isn't a catalog lookup."""
         return {
             "products": [],
             "count": 0,
             "status": "out_of_scope",
-            "scope": label,
-            "route_to": ROUTE_TO.get(label),
             "message": scope.get("reason", ""),
         }
 

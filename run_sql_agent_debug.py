@@ -88,10 +88,9 @@ def run_debug_pipeline(user_query: str, collection, validator):
         sc = classify_scope(user_query)
         if sc["scope"] != "sql":
             stage_header(0, "SCOPE GATE", "🧭")
-            kv("Scope", f"OUT OF SCOPE → {sc['scope']}")
+            kv("Scope", "NOT SQL")
             kv("Reason", sc.get("reason", ""))
-            print("\n  ⛔ Not a catalog query — handed off to another agent; "
-                  "SQL pipeline skipped.")
+            print("\n  ⛔ Not a catalog query — SQL pipeline skipped.")
             return
 
     # ── STAGE 1: ROUTING → RETRIEVAL → SQL GENERATION ─────────────────────
