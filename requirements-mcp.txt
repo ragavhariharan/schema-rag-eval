@@ -1,0 +1,10 @@
+# EarthTekniks Lens Catalog MCP server — deterministic core
+fastmcp>=3.0
+psycopg2-binary>=2.9
+sqlglot>=25
+python-dotenv>=1.0
+pydantic>=2
+
+# Optional pipeline-as-a-tool (ETK_ENABLE_PIPELINE_TOOL=1) additionally needs:
+#   ollama
+#   chromadb
