@@ -116,10 +116,10 @@ Replaces the brittle `product_type`-only filter.
 - [ ] **Consolidate** the two eval harnesses (`run_full_evaluation.py` overlaps) — deferred.
 
 ### Phase 5 — Conversational layer
-- [x] **Query understanding** (`conversation.py` `assess_query`). Runs after the scope gate: rewrites the message into a self-contained query (resolving follow-ups via history), asks ONE clarifying question when too vague (`status="needs_clarification"`), and records an `assumption` when it interprets a vague term. Prefers a stated assumption over a question.
+- [x] **Query understanding** (`conversation.py` `understand`). Single combined call (scope + understanding): classifies scope, rewrites the message into a self-contained query (resolving follow-ups via history), asks ONE clarifying question when too vague (`status="needs_clarification"`), and records an `assumption` when it interprets a vague term. Prefers a stated assumption over a question.
 - [x] **Multi-turn memory.** `mvp_api` accepts `history`; `mvp_frontend` keeps and sends the running conversation (stateless server).
 - [x] **Well-explained answers.** Synthesis prompt upgraded to lead with the assumption, explain why results answer the question, format cleanly, and keep INR/USD correct.
-- [ ] **Latency** ⚠️ pre-pipeline now does 2 small-model calls (scope + understanding) before routing/generation. On the M2 Air that's ~6–16s warm (more cold). **Optimization:** merge scope + understanding into ONE call. Deferred.
+- [x] **Latency — scope + understanding merged into ONE call.** `scope.classify_scope` is now a thin wrapper over `understand()`. Clarification replies dropped from ~36s (cold, two calls) to **~4s warm**. Scope eval still 14/14.
 - [ ] Eval for clarification/assumption behavior (harder — conversational, not result-set). Open.
 
 ---
