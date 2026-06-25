@@ -32,8 +32,8 @@ import pandas as pd
 
 from sql_validator import SQLValidator
 from pipeline import run_pipeline, execute_sql_safely, resolve_models
-from scope import classify_scope, ROUTE_TO
-from conversation import assess_query
+from scope import ROUTE_TO
+from conversation import understand
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -90,31 +90,22 @@ class SQLAgent:
             )
         elif resolve_models(user_input):
             # Fast path: a catalog model name is named → definitely in scope and
-            # self-contained; skip the scope/understanding steps.
+            # self-contained; skip the understanding step.
             result = self._execute_from_natural_language(user_input)
         else:
-            # ── Phase 3: scope gate ───────────────────────────────────────
-            # Decline cleanly (and signal the right agent) for queries that are
-            # engineering calculations, company/website questions, or chitchat.
-            scope = classify_scope(user_input)
-            if scope["scope"] != "sql":
-                result = self._out_of_scope_response(scope)
+            # ── Single combined understanding call (scope + clarify/assume) ──
+            # Scope: decline cleanly for calculation/website/chitchat queries.
+            # Understanding: resolve follow-ups against history, ask one question
+            # if too vague, and capture any interpretation as an assumption.
+            u = understand(user_input, history)
+            if u["scope"] != "sql":
+                result = self._out_of_scope_response(u)
+            elif not u["answerable"]:
+                result = self._clarification_response(u["clarifying_question"])
             else:
-                # ── Phase 5: conversational understanding ─────────────────
-                # Resolve follow-ups against history; ask one question if the
-                # request is too vague; capture any interpretation as an
-                # assumption to surface in the answer.
-                assessment = assess_query(user_input, history)
-                if not assessment["answerable"]:
-                    result = self._clarification_response(
-                        assessment["clarifying_question"]
-                    )
-                else:
-                    result = self._execute_from_natural_language(
-                        assessment["standalone_query"]
-                    )
-                    if assessment.get("assumption"):
-                        result["assumption"] = assessment["assumption"]
+                result = self._execute_from_natural_language(u["standalone_query"])
+                if u.get("assumption"):
+                    result["assumption"] = u["assumption"]
 
         # ── 9.9: Write products to state ──────────────────────────────────
         state["products"] = result.get("products", [])
