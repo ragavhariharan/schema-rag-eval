@@ -24,9 +24,21 @@ from typing import Optional
 
 from fastmcp import FastMCP
 
-from etk_mcp import indexes, query
+from etk_mcp import indexes, knowledge, query
 
-mcp = FastMCP("EarthTekniks Lens Catalog")
+
+def _build_auth():
+    """Optional static bearer-token auth. OFF for local dev; set ETK_MCP_TOKEN to
+    require `Authorization: Bearer <token>` — REQUIRED before exposing publicly
+    (e.g. via a Cloudflare tunnel)."""
+    token = os.getenv("ETK_MCP_TOKEN", "").strip()
+    if not token:
+        return None
+    from fastmcp.server.auth.providers.jwt import StaticTokenVerifier
+    return StaticTokenVerifier(tokens={token: {"client_id": "etk-mcp", "scopes": []}})
+
+
+mcp = FastMCP("EarthTekniks Lens Catalog", auth=_build_auth())
 
 
 # ── Schema discovery (served from in-memory indexes; no DB hit) ──────────────────
@@ -54,6 +66,28 @@ def describe_table(table: str) -> dict:
     sensor_raw vs sensor_size_raw mean the same thing). ALWAYS describe_table before
     writing SQL against it with run_select."""
     return indexes.describe_table(table)
+
+
+# ── Knowledge layer (RAG over docs; search -> get knowledge -> query) ────────────
+
+@mcp.tool
+def search_knowledge(query: str, top_k: int = 10) -> dict:
+    """Find which lens table(s)/family fit a USE CASE or natural-language question --
+    e.g. "measure a flat part without perspective error", "inspect a bottle 360 degrees",
+    "image in near-infrared", "high-magnification close-up". Ranks tables by relevance
+    over their knowledge docs (purpose, column meanings, example queries). START HERE
+    when you don't know which lens family/table an application needs, then call
+    get_table_knowledge() on a top hit."""
+    return knowledge.search(query, top_k)
+
+
+@mcp.tool
+def get_table_knowledge(table: str) -> dict:
+    """Full knowledge for a table: its purpose / WHEN to use this lens type, every
+    column's MEANING (not just the name), worked natural-language->SQL example queries,
+    gotchas, and related tables. Use this to understand a lens family and how to query
+    it before writing SQL. (describe_table is the lighter, columns-only version.)"""
+    return knowledge.get_knowledge(table)
 
 
 @mcp.tool
@@ -94,17 +128,22 @@ def search_products(
     return query.search_products(table, family, filters, columns, sort, limit)
 
 
-@mcp.tool
-def find_extreme(metric: str, scope: str = "all", direction: str = "min", limit: int = 1) -> dict:
-    """Superlative lookup across many tables — e.g. cheapest/most-expensive,
-    lightest/heaviest, widest aperture.
-
-    metric: the spec column to rank by (e.g. list_price, weight_g, f_no_min).
-    scope:  "all" (whole catalog), a family name, or a single table name.
-    direction: "min" (smallest/cheapest) or "max" (largest/most expensive).
-    Combines all tables that have `metric` with UNION ALL, then ranks — so
-    'cheapest lens overall' = find_extreme("list_price", "all", "min")."""
-    return query.find_extreme(metric, scope, direction, limit)
+# ── SOFT-DELETED: find_extreme ───────────────────────────────────────────────────
+# Superlatives (cheapest/heaviest/widest overall) are expressible with run_select,
+# so this tool was retired to keep the surface lean. The implementation remains in
+# etk_mcp/query.find_extreme — re-register this block to bring the tool back.
+#
+# @mcp.tool
+# def find_extreme(metric: str, scope: str = "all", direction: str = "min", limit: int = 1) -> dict:
+#     """Superlative lookup across many tables — e.g. cheapest/most-expensive,
+#     lightest/heaviest, widest aperture.
+#
+#     metric: the spec column to rank by (e.g. list_price, weight_g, f_no_min).
+#     scope:  "all" (whole catalog), a family name, or a single table name.
+#     direction: "min" (smallest/cheapest) or "max" (largest/most expensive).
+#     Combines all tables that have `metric` with UNION ALL, then ranks — so
+#     'cheapest lens overall' = find_extreme("list_price", "all", "min")."""
+#     return query.find_extreme(metric, scope, direction, limit)
 
 
 @mcp.tool

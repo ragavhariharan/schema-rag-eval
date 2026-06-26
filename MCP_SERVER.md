@@ -79,8 +79,76 @@ Then ask Claude e.g. *"what's the cheapest lens overall?"* — it will call `fin
 ## Inspect / test
 
 ```bash
-fastmcp dev server.py        # MCP Inspector UI: browse + call tools
 python test_mcp_server.py    # deterministic-tool smoke test vs live DB
+```
+
+Quick programmatic check over the **real MCP protocol** (in your venv — recommended):
+
+```python
+import asyncio
+from fastmcp import Client
+import server
+
+async def main():
+    async with Client(server.mcp) as c:          # in-memory transport
+        print([t.name for t in await c.list_tools()])
+        r = await c.call_tool("find_extreme",
+                {"metric": "list_price", "scope": "all", "direction": "min"})
+        print(r.data["rows"])
+
+asyncio.run(main())
+```
+
+Interactive MCP Inspector UI — point it at **your venv's python** (needs Node/npx),
+bypassing the FastMCP CLI's own environment management:
+
+```bash
+npx @modelcontextprotocol/inspector venv/bin/python server.py
+```
+
+> Note: `fastmcp dev inspector server.py` runs the server in an isolated `uv`
+> environment that won't have this project's deps. If you use it, pass
+> `--with-requirements requirements-mcp.txt`. The in-memory `Client` above and the
+> Inspector-via-npx command are simpler because they use your existing venv.
+
+## Public exposure (Cloudflare Tunnel)
+
+Expose the local HTTP server to the internet with a Cloudflare **quick tunnel** —
+no Cloudflare account or domain needed.
+
+```bash
+# Terminal 1: run the server over HTTP
+python server.py --http --port 8765
+
+# Terminal 2: open a public tunnel to it
+cloudflared tunnel --url http://localhost:8765
+#   → prints  https://<random>.trycloudflare.com
+```
+
+Clients then connect to `https://<random>.trycloudflare.com/mcp`. Test it:
+```bash
+python mcp_client_demo.py https://<random>.trycloudflare.com/mcp
+```
+
+Caveats of a **quick** tunnel:
+- The URL is **ephemeral** — it changes every time `cloudflared` restarts. For a
+  **stable** URL you need a named tunnel: a free Cloudflare account + a domain, then
+  `cloudflared tunnel create <name>` + a DNS route (see Cloudflare docs).
+- The endpoint is **unauthenticated** by default. To require a bearer token, set
+  `ETK_MCP_TOKEN=<secret>` before starting the server (the server enables
+  `StaticTokenVerifier` automatically); clients pass the same token. Strongly
+  recommended for anything beyond quick testing.
+
+Optional auth, for reference:
+```bash
+ETK_MCP_TOKEN=my-secret python server.py --http      # server requires the token
+ETK_MCP_TOKEN=my-secret python mcp_client_demo.py <url>   # client sends it
+```
+
+Stop everything:
+```bash
+pkill -f "cloudflared tunnel"
+lsof -ti :8765 | xargs kill
 ```
 
 ## Safety
